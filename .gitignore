@@ -1,0 +1,10 @@
+# dev-server config (not needed for the published site)
+.claude/
+
+# unused duplicate at repo root — the site uses img/hero.png and img/hero.webp
+/hero.png
+
+# misc
+node_modules/
+.DS_Store
+Thumbs.db

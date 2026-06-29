@@ -1,0 +1,817 @@
+﻿<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Approvisor — Achiziții și operațiuni pentru HoReCa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --white: #ffffff;
+      --ink: #0D1B2A;
+      --ink-muted: #5A6678;
+      --red: #8B1A1A;
+      --red-soft: #B83333;
+      --red-light: #FBEAEA;
+      --lime: #9AE02A;
+      --lime-dark: #5E9A00;
+      --page-bg: #F2F5FA;
+      --radius: 26px;
+      --gap: 120px;
+      --maxw: 1760px;
+      --pad: clamp(20px, 5vw, 80px);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--page-bg);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+    .inner { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--pad); }
+    svg.ic { width: 26px; height: 26px; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ════════════ HERO SLIDE ════════════ */
+    .hero {
+      position: relative;
+      height: 82vh;
+      min-height: 580px;
+      background:
+        radial-gradient(100% 65% at 82% 6%, rgba(154,224,42,0.13) 0%, rgba(154,224,42,0) 50%),
+        radial-gradient(80% 55% at 6% 4%, rgba(139,26,26,0.06) 0%, rgba(139,26,26,0) 50%),
+        linear-gradient(158deg, #CDE1F6 0%, #E2EEF9 52%, #E8F3EC 100%);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .hero-nav { position: relative; z-index: 20; }
+    .hero-nav .nav-inner {
+      width: 100%; padding: 26px 40px 26px 28px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo { display: flex; align-items: center; text-decoration: none; }
+    .logo img { height: 40px; width: auto; }
+    .hero-nav nav ul { list-style: none; display: flex; gap: 4px; }
+    .hero-nav nav ul a {
+      text-decoration: none; color: var(--ink);
+      font-size: 15px; font-weight: 600; opacity: .72;
+      padding: 9px 16px; border-radius: 100px;
+      white-space: nowrap;
+      transition: opacity .2s, background .2s;
+    }
+    .hero-nav nav ul a:hover { opacity: 1; background: rgba(255,255,255,0.55); }
+    .nav-cta {
+      background: var(--ink); color: var(--white);
+      padding: 13px 24px; border-radius: 100px;
+      font-size: 15px; font-weight: 700;
+      text-decoration: none; display: flex; align-items: center; gap: 6px;
+      transition: background .2s, transform .2s; white-space: nowrap;
+    }
+    .nav-cta:hover { background: var(--red); transform: translateY(-1px); }
+
+    /* hero body: 3 zones — text | image | data cards */
+    .hero-body {
+      flex: 1; width: 100%;
+      padding: 0;
+      display: flex; align-items: stretch; gap: 0;
+      position: relative; z-index: 10;
+    }
+    .hero-left {
+      width: 40%; flex-shrink: 0; align-self: flex-end;
+      padding: 0 40px 80px 28px;
+      z-index: 15;
+    }
+    h1 {
+      font-size: clamp(44px, 4vw, 72px);
+      font-weight: 800; line-height: 0.88;
+      letter-spacing: -3.5px; color: var(--ink); margin-bottom: 28px;
+    }
+    h1 em { font-style: normal; color: var(--red); }
+    .hero-sub { font-size: 17px; line-height: 1.6; color: var(--ink-muted); margin-bottom: 40px; }
+    .hero-proof { display: flex; align-items: center; gap: 16px; }
+    .avatar-stack { display: flex; }
+    .avatar {
+      width: 42px; height: 42px; border-radius: 50%;
+      border: 3px solid #E2EEF9; margin-left: -12px;
+      font-size: 12px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; color: white;
+    }
+    .avatar:first-child { margin-left: 0; }
+    .av1 { background: #5C73F2; } .av2 { background: #F27B5C; } .av3 { background: #5CC98F; color: var(--white) !important; }
+    .proof-text { font-size: 13px; color: var(--ink-muted); line-height: 1.4; }
+    .proof-text strong { color: var(--ink); display: block; font-size: 14px; font-weight: 700; }
+
+    /* hero stage — image zone, fills right 58% */
+    .hero-stage { flex: 1; position: relative; align-self: stretch; min-height: 560px; overflow: visible; }
+    .hero-img {
+      position: absolute;
+      left: -200px;
+      top: -60px;
+      width: calc(100% + 80px);
+      height: calc(100% + 120px);
+      object-fit: cover;
+      object-position: 20% 10%;
+      filter: drop-shadow(0 24px 48px rgba(13,27,42,0.12));
+      mask-image: linear-gradient(to right, transparent 0%, black 32%);
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 32%);
+    }
+
+    /* hero data cards — float over image */
+    .hero-cards {
+      position: absolute;
+      right: 44px; bottom: 88px;
+      width: 210px;
+      display: flex; flex-direction: column; gap: 12px;
+      z-index: 20;
+    }
+    .stat-card {
+      background: rgba(255,255,255,0.88); border-radius: 18px; padding: 18px 20px;
+      box-shadow: 0 12px 40px rgba(13,27,42,0.14);
+      border: 1px solid rgba(255,255,255,0.7);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .stat-card.dark {
+      background: rgba(13,27,42,0.92); border-color: transparent;
+    }
+    .stat-card.dark .stat-num { color: var(--white); }
+    .stat-card.dark .stat-lbl { color: rgba(255,255,255,0.55); }
+    .stat-num { font-size: 42px; font-weight: 800; color: var(--ink); line-height: 1; display: flex; align-items: baseline; gap: 2px; }
+    .stat-num sup { font-size: 20px; font-weight: 700; }
+    .stat-lbl { font-size: 12px; color: var(--ink-muted); margin-top: 6px; line-height: 1.4; }
+    .stat-pill { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 700; color: var(--red); background: var(--red-light); padding: 3px 9px; border-radius: 100px; margin-top: 8px; }
+    .hero::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 120px; background: linear-gradient(to bottom, rgba(242,245,250,0) 0%, var(--page-bg) 100%); pointer-events: none; z-index: 5; }
+
+    /* ════════════ SECTIONS ════════════ */
+    section { padding: var(--gap) 0; }
+    .section-head { max-width: 640px; margin-bottom: 56px; }
+    .section-label { font-size: 12px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--red); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+    .section-label::before { content: ''; width: 28px; height: 2px; background: var(--red); display: inline-block; }
+    h2 { font-size: clamp(38px, 4vw, 58px); font-weight: 800; line-height: 1.02; letter-spacing: -2.5px; color: var(--ink); margin-bottom: 18px; }
+    .section-sub { font-size: 18px; color: var(--ink-muted); line-height: 1.6; }
+
+    .reveal { opacity: 0; transform: translateY(40px); transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1); }
+    .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+    .reveal-children > * { opacity: 0; transform: translateY(28px); transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
+    .reveal-children.in > * { opacity: 1; transform: none; }
+    .reveal-children.in > *:nth-child(2){transition-delay:.07s}
+    .reveal-children.in > *:nth-child(3){transition-delay:.14s}
+    .reveal-children.in > *:nth-child(4){transition-delay:.21s}
+    .reveal-children.in > *:nth-child(5){transition-delay:.28s}
+    .reveal-children.in > *:nth-child(6){transition-delay:.35s}
+    @media (prefers-reduced-motion: reduce){ .reveal-children > *{opacity:1;transform:none;transition:none} }
+    .stat-card { transition: transform .3s cubic-bezier(.16,1,.3,1), box-shadow .3s; }
+    .stat-card:hover { transform: translateY(-5px); box-shadow: 0 22px 55px rgba(13,27,42,0.20); }
+    .role-card { transition: transform .25s, box-shadow .25s; }
+    .role-card:hover { transform: translateY(-6px); box-shadow: 0 28px 64px rgba(13,27,42,0.14); }
+
+    /* PROBLEMS */
+    .problems-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
+    .prob-card {
+      position: relative; background: var(--white); border-radius: 24px; padding: 38px 34px 34px;
+      box-shadow: 0 2px 30px rgba(13,27,42,0.05); overflow: hidden;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .prob-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(13,27,42,0.10); }
+    .prob-num { position: absolute; top: 18px; right: 26px; font-size: 86px; font-weight: 800; line-height: 1; color: var(--red); opacity: 0.06; letter-spacing: -4px; }
+    .prob-icon { width: 56px; height: 56px; border-radius: 16px; background: var(--ink); display: flex; align-items: center; justify-content: center; margin-bottom: 26px; position: relative; z-index: 1; }
+    .prob-icon svg { stroke: var(--lime); }
+    .prob-title { font-size: 19px; font-weight: 700; margin-bottom: 12px; line-height: 1.25; }
+    .prob-desc { font-size: 14px; color: var(--ink-muted); line-height: 1.65; margin-bottom: 24px; }
+    .prob-solution { font-size: 13px; font-weight: 700; color: var(--red); padding-top: 20px; border-top: 1px solid #EEF1F5; display: flex; align-items: center; gap: 8px; }
+    .prob-solution svg { width: 16px; height: 16px; stroke: var(--red); stroke-width: 2.5; fill: none; }
+
+    /* FLOW */
+    .flow-wrap { background: var(--ink); border-radius: var(--radius); padding: 64px; color: var(--white); }
+    .flow-head { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: end; margin-bottom: 64px; }
+    .flow-head .section-label { color: var(--lime); }
+    .flow-head .section-label::before { background: var(--lime); }
+    .flow-head h2 { color: var(--white); }
+    .flow-head .section-sub { color: rgba(255,255,255,0.6); }
+    .flow-row { display: grid; position: relative; }
+    .flow-row-4 { grid-template-columns: repeat(4,1fr); }
+    .flow-row-3 { grid-template-columns: repeat(3,1fr); margin-top: 52px; }
+    .flow-row::after { content: ''; position: absolute; top: 28px; left: 11%; right: 11%; height: 2px; background: linear-gradient(90deg, rgba(255,255,255,0.12) 0%, var(--lime) 100%); z-index: 0; }
+    .flow-step { text-align: center; padding: 0 18px; position: relative; }
+    .flow-num { width: 58px; height: 58px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; margin: 0 auto 20px; position: relative; z-index: 1; border: 3px solid var(--ink); background: #1C2E45; color: var(--white); }
+    .flow-step:last-child .flow-num { background: var(--lime); color: var(--ink); }
+    .flow-step-name { font-size: 14px; font-weight: 700; margin-bottom: 7px; color: var(--white); }
+    .flow-step-desc { font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.5; }
+
+    /* STATS */
+    .stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; background: rgba(13,27,42,0.07); border-radius: var(--radius); overflow: hidden; box-shadow: 0 2px 30px rgba(13,27,42,0.05); }
+    .stat-box { background: var(--white); padding: 48px 34px; text-align: center; }
+    .stat-big { font-size: 58px; font-weight: 800; color: var(--red); letter-spacing: -2.5px; line-height: 1; }
+    .stat-small { font-size: 14px; color: var(--ink-muted); margin-top: 14px; line-height: 1.4; }
+
+    /* MODULES — interactive master/detail explorer */
+    /* one solid block — list + panel fused, no gaps; active row just changes colour */
+    .mod-explorer { display: grid; grid-template-columns: 320px 1fr; gap: 0; align-items: stretch; border-radius: 24px; overflow: hidden; box-shadow: 0 22px 54px rgba(13,27,42,0.12); }
+    .mod-list { display: flex; flex-direction: column; gap: 0; background: var(--white); }
+    .mod-item {
+      display: flex; align-items: center; gap: 14px; width: 100%; text-align: left;
+      font-family: inherit; cursor: pointer; appearance: none;
+      flex: 1 1 auto; min-height: 62px;
+      background: var(--white); border: none; border-bottom: 1px solid rgba(13,27,42,0.06);
+      padding: 18px 22px;
+      transition: background .35s cubic-bezier(.16,1,.3,1), color .35s;
+    }
+    .mod-list .mod-item:last-child { border-bottom: none; }
+    .mod-item:not(.active):hover { background: #F3F6FA; }
+    .mod-item:focus-visible { outline: 2px solid var(--red); outline-offset: -2px; }
+    .mod-item.active { background: var(--ink); }
+    .mod-ico { width: 40px; height: 40px; border-radius: 11px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: var(--red-light); transition: background .3s; }
+    .mod-ico svg { width: 20px; height: 20px; fill: none; stroke: var(--red); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: stroke .3s; }
+    .mod-item.active .mod-ico { background: rgba(255,255,255,0.12); }
+    .mod-item.active .mod-ico svg { stroke: #fff; }
+    .mod-it-tx { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+    .mod-it-tx b { font-size: 15px; font-weight: 700; color: var(--ink); transition: color .3s; }
+    .mod-it-tx span { font-size: 12px; color: var(--ink-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color .3s; }
+    .mod-item.active .mod-it-tx b { color: #fff; }
+    .mod-item.active .mod-it-tx span { color: rgba(255,255,255,.55); }
+    .mod-it-ar { flex-shrink: 0; color: rgba(13,27,42,.25); opacity: 0; transform: translateX(-6px); transition: opacity .3s, transform .3s, color .3s; }
+    .mod-item.active .mod-it-ar { opacity: 1; transform: none; color: #fff; }
+
+    .mod-detail { background: var(--ink); border-radius: 0; padding: 44px; color: #fff; overflow: hidden; position: relative; z-index: 1; }
+    .mod-panel { display: none; }
+    .mod-panel.active { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; height: 100%; animation: modIn .5s cubic-bezier(.16,1,.3,1); }
+    @keyframes modIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) {
+      .mod-panel.active { animation: none; }
+      .mod-item, .mod-item:hover, .mod-item.active { transition: none; transform: none; }
+    }
+    .mod-icon { width: 54px; height: 54px; border-radius: 15px; display: flex; align-items: center; justify-content: center; margin-bottom: 22px; background: rgba(255,255,255,0.1); }
+    .mod-icon svg { stroke: #fff; }
+    .mod-name { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 13px; color: #fff; }
+    .mod-desc { font-size: 15px; line-height: 1.65; color: rgba(255,255,255,.72); }
+    .mod-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+    .mod-tag { font-size: 11px; font-weight: 600; padding: 6px 13px; border-radius: 100px; background: rgba(255,255,255,.12); color: rgba(255,255,255,.95); }
+
+    /* shared example-visual primitives (light-on-dark) */
+    .mod-visual { background: rgba(255,255,255,.06); border-radius: 18px; padding: 22px; display: flex; flex-direction: column; gap: 9px; }
+    .mv-label { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 5px; }
+    .price-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; background: rgba(255,255,255,.06); border-radius: 10px; padding: 11px 14px; font-size: 12px; }
+    .price-row .nm { color: rgba(255,255,255,.78); flex: 1; min-width: 0; }
+    .price-row .qty { color: var(--red-soft); font-weight: 700; flex-shrink: 0; }
+    .price-ok { color: #C6F562; font-weight: 700; } .price-warn { color: #FFD24A; font-weight: 700; }
+    .badge-ok { font-size: 10px; background: rgba(154,224,42,.2); color: #C6F562; padding: 3px 9px; border-radius: 100px; font-weight: 700; white-space: nowrap; }
+    .badge-warn { font-size: 10px; background: rgba(255,189,46,.2); color: #FFD24A; padding: 3px 9px; border-radius: 100px; font-weight: 700; white-space: nowrap; }
+    .mv-map { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,.06); border-radius: 10px; padding: 10px 13px; }
+    .mv-chip { font-size: 11px; color: rgba(255,255,255,.7); background: rgba(255,255,255,.07); border: 1px dashed rgba(255,255,255,.22); border-radius: 7px; padding: 6px 9px; white-space: nowrap; flex-shrink: 0; }
+    .mv-arrow { color: rgba(255,255,255,.35); flex-shrink: 0; }
+    .mv-to { font-size: 12px; color: #fff; font-weight: 600; flex: 1; min-width: 0; }
+    .mv-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 3px; padding: 4px 2px 0; font-size: 12px; color: rgba(255,255,255,.6); }
+    .mv-big { font-size: 40px; font-weight: 800; color: #fff; line-height: 1; letter-spacing: -1px; margin-bottom: 4px; }
+    .mv-big small { font-size: 16px; font-weight: 700; color: rgba(255,255,255,.5); margin-left: 4px; }
+    .mv-barline { display: flex; align-items: center; gap: 12px; font-size: 12px; }
+    .mv-barline .nm { color: rgba(255,255,255,.72); width: 70px; flex-shrink: 0; }
+    .mv-bar { flex: 1; height: 8px; border-radius: 100px; background: rgba(255,255,255,.1); overflow: hidden; }
+    .mv-bar > i { display: block; height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--red-soft), var(--red)); }
+    .mv-pct { color: #fff; font-weight: 700; width: 38px; text-align: right; flex-shrink: 0; }
+
+    /* APP SCREENSHOTS */
+    .shots-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
+    .shot { margin: 0; }
+    .shot-frame { background: var(--white); border-radius: 16px; overflow: hidden; box-shadow: 0 8px 40px rgba(13,27,42,0.08); border: 1px solid rgba(13,27,42,0.05); transition: transform .25s, box-shadow .25s; }
+    .shot:hover .shot-frame { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(13,27,42,0.12); }
+    .shot-bar { display: flex; gap: 7px; align-items: center; padding: 13px 16px; background: #F4F6FA; border-bottom: 1px solid rgba(13,27,42,0.05); }
+    .shot-bar span { width: 10px; height: 10px; border-radius: 50%; background: #D5DCE6; }
+    .shot-body { aspect-ratio: 16 / 10; background: linear-gradient(135deg, #EAF0F8 0%, #F7FAFD 100%); display: flex; align-items: center; justify-content: center; }
+    .shot-body img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .shot-ph { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .shot-ph svg { width: 34px; height: 34px; stroke: var(--red); opacity: .55; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+    .shot-ph b { font-size: 14px; font-weight: 700; color: var(--ink); }
+    .shot-ph em { font-style: normal; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ink-muted); opacity: .7; }
+    .shot figcaption { margin-top: 16px; font-size: 15px; font-weight: 700; color: var(--ink); text-align: center; }
+    .shot figcaption span { display: block; font-size: 13px; font-weight: 500; color: var(--ink-muted); margin-top: 3px; }
+
+    /* ROLES */
+    .roles-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .role-card { border-radius: 24px; padding: 46px; position: relative; overflow: hidden; }
+    .role-card.dark { background: var(--ink); }
+    .role-card.light { background: var(--white); box-shadow: 0 2px 30px rgba(13,27,42,0.05); }
+    .role-pill { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 7px 14px; border-radius: 100px; margin-bottom: 28px; }
+    .role-card.dark .role-pill { background: rgba(255,255,255,.1); color: rgba(255,255,255,.7); }
+    .role-card.light .role-pill { background: var(--red-light); color: var(--red); }
+    .role-title { font-size: 30px; font-weight: 800; line-height: 1.1; margin-bottom: 16px; }
+    .role-card.dark .role-title { color: var(--white); }
+    .role-card.light .role-title { color: var(--ink); }
+    .role-desc { font-size: 15px; line-height: 1.65; margin-bottom: 32px; }
+    .role-card.dark .role-desc { color: rgba(255,255,255,.6); }
+    .role-card.light .role-desc { color: var(--ink-muted); }
+    .role-list { list-style: none; display: flex; flex-direction: column; gap: 13px; }
+    .role-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; line-height: 1.5; }
+    .role-card.dark .role-list li { color: rgba(255,255,255,.8); }
+    .role-card.light .role-list li { color: var(--ink); }
+    .role-list li svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px; stroke-width: 2.5; fill: none; }
+    .role-card.dark .role-list li svg { stroke: var(--lime); }
+    .role-card.light .role-list li svg { stroke: var(--red); }
+
+    /* CTA */
+    .cta-section { padding-bottom: var(--gap); }
+    .cta-card { background: linear-gradient(135deg, var(--red) 0%, #5E1212 100%); border-radius: var(--radius); padding: 96px 64px; text-align: center; position: relative; overflow: hidden; }
+    .cta-card::before { content: ''; position: absolute; top: -120px; right: -100px; width: 380px; height: 380px; background: rgba(255,255,255,0.05); border-radius: 50%; }
+    .cta-card::after { content: ''; position: absolute; bottom: -90px; left: -90px; width: 320px; height: 320px; background: rgba(154,224,42,.10); border-radius: 50%; }
+    .cta-card h2 { color: var(--white); margin-bottom: 18px; position: relative; z-index: 1; }
+    .cta-card p { color: rgba(255,255,255,.75); font-size: 18px; max-width: 500px; margin: 0 auto 42px; line-height: 1.6; position: relative; z-index: 1; }
+    .cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+    .btn-primary { background: var(--lime); color: var(--ink); padding: 17px 36px; border-radius: 100px; font-size: 15px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: transform .2s, box-shadow .2s; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 34px rgba(154,224,42,.4); }
+    .btn-secondary { background: rgba(255,255,255,.12); color: var(--white); padding: 17px 36px; border-radius: 100px; font-size: 15px; font-weight: 600; text-decoration: none; border: 1px solid rgba(255,255,255,.2); transition: background .2s; }
+    .btn-secondary:hover { background: rgba(255,255,255,.2); }
+
+    /* FOOTER */
+    footer { border-top: 1px solid rgba(13,27,42,0.08); padding: 46px 0 38px; display: flex; align-items: center; justify-content: space-between; }
+    footer .f-logo img { height: 34px; }
+    footer p { font-size: 13px; color: var(--ink-muted); }
+    footer nav ul { list-style: none; display: flex; gap: 28px; }
+    footer nav ul a { text-decoration: none; font-size: 14px; color: var(--ink-muted); font-weight: 500; }
+    footer nav ul a:hover { color: var(--ink); }
+
+    /* ════════════ MOBILE ════════════ */
+    @media (max-width: 1100px) {
+      .hero-cards { width: 180px; }
+      .hero-left { width: 340px; }
+      .hero-nav nav ul a { font-size: 13px; padding: 8px 11px; }
+      .nav-cta { padding: 11px 18px; font-size: 14px; }
+      .hero-img { left: -80px; width: calc(100% + 20px); }
+    }
+    @media (max-width: 920px) {
+      :root { --gap: 72px; }
+      .hero { height: auto; min-height: 0; padding: 0 20px; }
+      .hero-nav .nav-inner { padding: 18px 0; }
+      .hero-nav nav ul { display: none; }
+      .logo img { height: 32px; }
+      .nav-cta { padding: 11px 18px; font-size: 14px; }
+      .hero-body { display: flex; flex-direction: column; }
+      .hero-left { width: auto; order: 1; padding: 6px 0 20px; align-self: stretch; }
+      h1 { font-size: clamp(40px, 11vw, 64px); line-height: 0.95; letter-spacing: -1.5px; margin-bottom: 18px; }
+      .hero-sub { font-size: 16px; margin-bottom: 26px; }
+      .hero-stage { order: 2; min-height: 0; aspect-ratio: 2160 / 1215; width: calc(100% + 40px); margin: 0 -20px; }
+      .hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; mask: none; -webkit-mask: none; filter: none; }
+      .hero-cards { order: 3; position: static; display: grid; grid-template-columns: repeat(3, 1fr); width: auto; gap: 10px; margin-top: 18px; }
+      .stat-card { padding: 14px 15px; }
+      .stat-num { font-size: 28px; }
+      .stat-lbl { font-size: 11px; }
+      .stat-pill { display: none; }
+      .hero::after { display: none; }
+      .section-head { margin-bottom: 40px; }
+      h2 { font-size: clamp(32px, 8vw, 46px); letter-spacing: -1px; }
+      .problems-grid { grid-template-columns: 1fr; gap: 16px; }
+      .flow-wrap { padding: 40px 26px; border-radius: 20px; }
+      .flow-head { grid-template-columns: 1fr; gap: 16px; margin-bottom: 44px; }
+      .flow-row-4 { grid-template-columns: repeat(2,1fr); gap: 32px; }
+      .flow-row-4::after, .flow-row-3::after { display: none; }
+      .flow-row-3 { grid-template-columns: 1fr; gap: 32px; margin-top: 32px; }
+      .stats-row { grid-template-columns: repeat(2,1fr); }
+      .mod-explorer { grid-template-columns: 1fr; gap: 0; border-radius: 18px; }
+      .mod-list { flex-direction: row; overflow-x: auto; scrollbar-width: none; gap: 0; padding: 0; scroll-snap-type: x mandatory; }
+      .mod-list::-webkit-scrollbar { display: none; }
+      .mod-item { flex: 0 0 auto; scroll-snap-align: start; min-height: 0; padding: 14px 18px; border-bottom: none; border-right: 1px solid rgba(13,27,42,0.06); }
+      .mod-it-tx span, .mod-it-ar { display: none; }
+      .mod-detail { padding: 28px 22px; }
+      .mod-panel.active { grid-template-columns: 1fr; gap: 24px; }
+      .mod-name { font-size: 22px; }
+      .roles-grid { grid-template-columns: 1fr; }
+      .shots-grid { grid-template-columns: 1fr; gap: 18px; }
+      .role-card { padding: 36px 28px; }
+      .cta-card { padding: 64px 28px; border-radius: 20px; }
+      .cta-btns { flex-direction: column; align-items: stretch; }
+      .btn-primary, .btn-secondary { justify-content: center; text-align: center; }
+      footer { flex-direction: column; gap: 18px; text-align: center; }
+      footer nav ul { justify-content: center; }
+    }
+    @media (max-width: 600px) {
+      h1 { font-size: clamp(34px, 9.5vw, 50px); }
+      .hero-sub { font-size: 15px; }
+      /* swipeable card row — a mobile-specific layout, not a shrunk grid */
+      .hero-cards {
+        display: flex; flex-direction: row; grid-template-columns: none;
+        overflow-x: auto; scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch; scrollbar-width: none;
+        margin: 18px -20px 0; padding: 4px 20px 12px; gap: 12px;
+      }
+      .hero-cards::-webkit-scrollbar { display: none; }
+      .stat-card { flex: 0 0 72%; max-width: 260px; scroll-snap-align: start; }
+      .stat-pill { display: inline-flex; }
+    }
+    @media (max-width: 480px) {
+      .stats-row { grid-template-columns: 1fr; }
+      .flow-row-4 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════════ HERO ════════ -->
+  <header class="hero">
+    <div class="hero-nav">
+      <div class="nav-inner">
+        <a href="#" class="logo"><img src="img/logo.png" alt="Approvisor" /></a>
+        <nav><ul>
+          <li><a href="#module">Module</a></li>
+          <li><a href="#cum-functioneaza">Cum funcționează</a></li>
+          <li><a href="#roluri">Roluri</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul></nav>
+        <a href="#contact" class="nav-cta">Cere demo ↗</a>
+      </div>
+    </div>
+
+    <div class="hero-body">
+      <div class="hero-left">
+        <h1>Comenzi rapide,<br>costuri clare,<br><em>fără Excel și WhatsApp.</em></h1>
+        <p class="hero-sub">Comenzi, facturi și stocuri într-un singur sistem — deja folosit de un lanț HoReCa cu 12 locații și 1000+ comenzi procesate.</p>
+        <div class="hero-proof">
+          <div class="avatar-stack">
+            <div class="avatar av1">RM</div>
+            <div class="avatar av2">AG</div>
+            <div class="avatar av3">DP</div>
+          </div>
+          <div class="proof-text">
+            <strong>Multi-locație, multi-furnizor</strong>
+            Catalog · aprobare · facturi · stoc & foodcost
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-stage">
+        <picture>
+          <source srcset="img/hero.webp" type="image/webp" />
+          <img src="img/hero.png" alt="Approvisor — control achiziții HoReCa" class="hero-img" width="2160" height="1215" fetchpriority="high" />
+        </picture>
+      </div>
+
+      <div class="hero-cards">
+        <div class="stat-card dark">
+          <div class="stat-num">1000<span style="font-size:24px">+</span></div>
+          <div class="stat-lbl">comenzi procesate<br>în producție</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">12</div>
+          <div class="stat-lbl">locații active<br>într-un lanț HoReCa</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" style="font-size:30px;color:var(--red)">Live</div>
+          <div class="stat-lbl">stoc, food cost și prețuri<br>per furnizor</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="inner">
+
+    <!-- PROBLEMS -->
+    <section id="probleme" class="reveal">
+      <div class="section-head reveal">
+        <div class="section-label">Problema</div>
+        <h2>Unde se pierd bani<br>în aprovizionare</h2>
+        <p class="section-sub">Trei probleme care apar în orice lanț HoReCa pe măsură ce crește.</p>
+      </div>
+      <div class="problems-grid reveal-children">
+        <div class="prob-card">
+          <span class="prob-num">01</span>
+          <div class="prob-icon"><svg class="ic" viewBox="0 0 24 24"><rect width="14" height="20" x="5" y="2" rx="2"/><path d="M12 18h.01"/></svg></div>
+          <div class="prob-title">Comenzi pe WhatsApp,<br>fără urmă</div>
+          <p class="prob-desc">Managerul trimite comanda în chat. Furnizorul confirmă sau nu. Nimeni nu știe dacă marfa vine, cine a aprobat sau cât s-a comandat luna asta.</p>
+          <div class="prob-solution"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>Flux de aprobare + email automat</div>
+        </div>
+        <div class="prob-card">
+          <span class="prob-num">02</span>
+          <div class="prob-icon"><svg class="ic" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg></div>
+          <div class="prob-title">Facturi importate,<br>prețuri neverificate</div>
+          <p class="prob-desc">Furnizorul livrează la alt preț decât cel negociat. Contabilitatea importă factura. Nimeni nu compară. Diferența rămâne neobservată luni de zile.</p>
+          <div class="prob-solution"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>Validare automată față de listă</div>
+        </div>
+        <div class="prob-card">
+          <span class="prob-num">03</span>
+          <div class="prob-icon"><svg class="ic" viewBox="0 0 24 24"><line x1="12" x2="12" y1="20" y2="10"/><line x1="18" x2="18" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="16"/></svg></div>
+          <div class="prob-title">Stoc și foodcost<br>în Excel, mereu în urmă</div>
+          <p class="prob-desc">Inventarul se face o dată pe lună în foi de calcul. Foodcost-ul e calculat retrospectiv. Deciziile de meniu se iau fără date reale.</p>
+          <div class="prob-solution"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>Stoc live + foodcost pe rețetă</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FLOW -->
+    <section id="cum-functioneaza" class="reveal">
+      <div class="flow-wrap reveal">
+        <div class="flow-head">
+          <div>
+            <div class="section-label">Cum funcționează</div>
+            <h2>Un ciclu complet,<br>un singur sistem</h2>
+          </div>
+          <p class="section-sub">Fiecare etapă din aprovizionare e conectată. Datele din catalog ajung în comandă, din comandă în factură, din factură în stoc — automat.</p>
+        </div>
+        <div class="flow-row flow-row-4">
+          <div class="flow-step"><div class="flow-num">1</div><div class="flow-step-name">Catalog & prețuri</div><div class="flow-step-desc">Produse, furnizori și liste de prețuri negociate, într-un singur loc.</div></div>
+          <div class="flow-step"><div class="flow-num">2</div><div class="flow-step-name">Comandă & aprobare</div><div class="flow-step-desc">Managerul comandă, responsabilul aprobă, furnizorul primește email automat.</div></div>
+          <div class="flow-step"><div class="flow-num">3</div><div class="flow-step-name">Facturi & validare</div><div class="flow-step-desc">Import factură și verificare automată față de prețurile negociate.</div></div>
+          <div class="flow-step"><div class="flow-num">4</div><div class="flow-step-name">Stoc & foodcost</div><div class="flow-step-desc">Factura intră în stoc, iar meniul și rețetele calculează costul în timp real.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <div class="stats-row reveal">
+      <div class="stat-box"><div class="stat-big">1000<span style="font-size:28px">+</span></div><div class="stat-small">comenzi procesate<br>în producție</div></div>
+      <div class="stat-box"><div class="stat-big">12</div><div class="stat-small">locații active<br>într-un lanț HoReCa</div></div>
+      <div class="stat-box"><div class="stat-big">700<span style="font-size:28px">+</span></div><div class="stat-small">produse<br>în catalog</div></div>
+      <div class="stat-box"><div class="stat-big" style="font-size:42px;letter-spacing:-1px">Live</div><div class="stat-small">foodcost, stoc<br>și prețuri</div></div>
+    </div>
+
+    <!-- MODULES -->
+    <section id="module" class="reveal">
+      <div class="section-head reveal">
+        <div class="section-label">Module</div>
+        <h2>Tot ce ai nevoie,<br>construit împreună</h2>
+      </div>
+      <div class="mod-explorer reveal">
+        <div class="mod-list" role="tablist" aria-label="Module Approvisor">
+          <button class="mod-item active" role="tab" id="tab-validare" aria-controls="panel-validare" aria-selected="true" data-mod="validare">
+            <span class="mod-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
+            <span class="mod-it-tx"><b>Validare prețuri</b><span>Factură vs. listă negociată</span></span>
+            <span class="mod-it-ar" aria-hidden="true">→</span>
+          </button>
+          <button class="mod-item" role="tab" id="tab-catalog" aria-controls="panel-catalog" aria-selected="false" tabindex="-1" data-mod="catalog">
+            <span class="mod-ico"><svg viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></span>
+            <span class="mod-it-tx"><b>Catalog</b><span>Produse, furnizori, prețuri</span></span>
+            <span class="mod-it-ar" aria-hidden="true">→</span>
+          </button>
+          <button class="mod-item" role="tab" id="tab-comenzi" aria-controls="panel-comenzi" aria-selected="false" tabindex="-1" data-mod="comenzi">
+            <span class="mod-ico"><svg viewBox="0 0 24 24"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></span>
+            <span class="mod-it-tx"><b>Comenzi</b><span>Construiește și aprobă</span></span>
+            <span class="mod-it-ar" aria-hidden="true">→</span>
+          </button>
+          <button class="mod-item" role="tab" id="tab-import" aria-controls="panel-import" aria-selected="false" tabindex="-1" data-mod="import">
+            <span class="mod-ico"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M12 18v-6"/><path d="m9 15 3 3 3-3"/></svg></span>
+            <span class="mod-it-tx"><b>Import facturi</b><span>Din orice ERP, prin Excel</span></span>
+            <span class="mod-it-ar" aria-hidden="true">→</span>
+          </button>
+          <button class="mod-item" role="tab" id="tab-inventar" aria-controls="panel-inventar" aria-selected="false" tabindex="-1" data-mod="inventar">
+            <span class="mod-ico"><svg viewBox="0 0 24 24"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M2 7h20"/><path d="M12 7v15"/></svg></span>
+            <span class="mod-it-tx"><b>Inventar & Foodcost</b><span>Stoc live + cost pe rețetă</span></span>
+            <span class="mod-it-ar" aria-hidden="true">→</span>
+          </button>
+          <button class="mod-item" role="tab" id="tab-statistici" aria-controls="panel-statistici" aria-selected="false" tabindex="-1" data-mod="statistici">
+            <span class="mod-ico"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></span>
+            <span class="mod-it-tx"><b>Statistici</b><span>Dashboard și drill-down</span></span>
+            <span class="mod-it-ar" aria-hidden="true">→</span>
+          </button>
+        </div>
+
+        <div class="mod-detail">
+          <div class="mod-panel active" role="tabpanel" id="panel-validare" aria-labelledby="tab-validare" data-mod="validare">
+            <div>
+              <div class="mod-icon"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+              <div class="mod-name">Validare prețuri</div>
+              <p class="mod-desc">Compară automat prețurile din facturi față de listele negociate. Toleranță configurabilă, fereastră de date, furnizori excluși — fiecare linie primește un status, cu rezolvare manuală unde e nevoie.</p>
+              <div class="mod-tags"><span class="mod-tag">Toleranță %</span><span class="mod-tag">Fereastră de prețuri</span><span class="mod-tag">Audit trail</span></div>
+            </div>
+            <div class="mod-visual">
+              <div class="mv-label">Rezultat validare</div>
+              <div class="price-row"><span class="nm">Ulei floarea soarelui 5L</span><span class="price-ok">38,50 lei</span><span class="badge-ok">OK</span></div>
+              <div class="price-row"><span class="nm">Făină albă tip 550</span><span class="price-warn">4,20 lei</span><span class="badge-warn">+6%</span></div>
+              <div class="price-row"><span class="nm">Zahăr cristal 1kg</span><span class="price-ok">6,80 lei</span><span class="badge-ok">OK</span></div>
+            </div>
+          </div>
+
+          <div class="mod-panel" role="tabpanel" id="panel-catalog" aria-labelledby="tab-catalog" data-mod="catalog" hidden>
+            <div>
+              <div class="mod-icon"><svg class="ic" viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></div>
+              <div class="mod-name">Catalog</div>
+              <p class="mod-desc">Catalog centralizat de produse și furnizori, cu liste de prețuri din Excel. Alias mapping — factura se potrivește automat cu catalogul, indiferent de cum scrie furnizorul produsul.</p>
+              <div class="mod-tags"><span class="mod-tag">Import Excel</span><span class="mod-tag">Alias mapping</span></div>
+            </div>
+            <div class="mod-visual">
+              <div class="mv-label">Alias mapping</div>
+              <div class="mv-map"><span class="mv-chip">„U.FL.SOARE 5L"</span><span class="mv-arrow">→</span><span class="mv-to">Ulei floarea soarelui 5L</span></div>
+              <div class="mv-map"><span class="mv-chip">„FAINA 550 25KG"</span><span class="mv-arrow">→</span><span class="mv-to">Făină albă tip 550</span></div>
+              <div class="mv-map"><span class="mv-chip">„ZAHAR CR. 1000G"</span><span class="mv-arrow">→</span><span class="mv-to">Zahăr cristal 1kg</span></div>
+            </div>
+          </div>
+
+          <div class="mod-panel" role="tabpanel" id="panel-comenzi" aria-labelledby="tab-comenzi" data-mod="comenzi" hidden>
+            <div>
+              <div class="mod-icon"><svg class="ic" viewBox="0 0 24 24"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></div>
+              <div class="mod-name">Comenzi</div>
+              <p class="mod-desc">Managerul construiește comanda direct din catalog. Flux de aprobare configurabil — la aprobarea finală, emailul pleacă automat către furnizor, în formatul lui.</p>
+              <div class="mod-tags"><span class="mod-tag">Template-uri</span><span class="mod-tag">Email automat</span></div>
+            </div>
+            <div class="mod-visual">
+              <div class="mv-label">Comandă #1042 · Metro</div>
+              <div class="price-row"><span class="qty">12 ×</span><span class="nm">Ulei floarea soarelui 5L</span></div>
+              <div class="price-row"><span class="qty">8 ×</span><span class="nm">Făină albă tip 550</span></div>
+              <div class="price-row"><span class="nm">Status aprobare</span><span class="badge-ok">Aprobat · Owner</span></div>
+              <div class="mv-foot"><span>✓ Email trimis automat către furnizor</span></div>
+            </div>
+          </div>
+
+          <div class="mod-panel" role="tabpanel" id="panel-import" aria-labelledby="tab-import" data-mod="import" hidden>
+            <div>
+              <div class="mod-icon"><svg class="ic" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M12 18v-6"/><path d="m9 15 3 3 3-3"/></svg></div>
+              <div class="mod-name">Import facturi</div>
+              <p class="mod-desc">Importă facturi din orice ERP care exportă Excel — tu alegi ce coloană mapează pe ce câmp, o singură dată. Re-importul aceluiași fișier nu creează duplicate.</p>
+              <div class="mod-tags"><span class="mod-tag">Mapare configurabilă</span><span class="mod-tag">Idempotent</span></div>
+            </div>
+            <div class="mod-visual">
+              <div class="mv-label">Mapare coloane</div>
+              <div class="mv-map"><span class="mv-chip">Coloana A</span><span class="mv-arrow">→</span><span class="mv-to">Produs</span></div>
+              <div class="mv-map"><span class="mv-chip">Coloana C</span><span class="mv-arrow">→</span><span class="mv-to">Cantitate</span></div>
+              <div class="mv-map"><span class="mv-chip">Coloana E</span><span class="mv-arrow">→</span><span class="mv-to">Preț unitar</span></div>
+              <div class="mv-foot"><span>Re-import același fișier</span><span class="badge-ok">0 duplicate</span></div>
+            </div>
+          </div>
+
+          <div class="mod-panel" role="tabpanel" id="panel-inventar" aria-labelledby="tab-inventar" data-mod="inventar" hidden>
+            <div>
+              <div class="mod-icon"><svg class="ic" viewBox="0 0 24 24"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M2 7h20"/><path d="M12 7v15"/></svg></div>
+              <div class="mod-name">Inventar & Foodcost</div>
+              <p class="mod-desc">Stoc per locație, rețete locale și meniu zilnic cu foodcost live. Facturile intră direct în stoc cu cost FIFO, iar transferurile între locații se urmăresc automat.</p>
+              <div class="mod-tags"><span class="mod-tag">FIFO</span><span class="mod-tag">Rețete</span><span class="mod-tag">Meniu zilnic</span></div>
+            </div>
+            <div class="mod-visual">
+              <div class="mv-label">Rețetă · Burger clasic</div>
+              <div class="price-row"><span class="nm">Chiflă brioche</span><span class="price-ok">1,20 lei</span></div>
+              <div class="price-row"><span class="nm">Carne vită 180g</span><span class="price-ok">4,60 lei</span></div>
+              <div class="price-row"><span class="nm">Cheddar + sosuri</span><span class="price-ok">1,90 lei</span></div>
+              <div class="mv-barline"><span class="nm">Food cost</span><span class="mv-bar"><i style="width:31%"></i></span><span class="mv-pct">31%</span></div>
+            </div>
+          </div>
+
+          <div class="mod-panel" role="tabpanel" id="panel-statistici" aria-labelledby="tab-statistici" data-mod="statistici" hidden>
+            <div>
+              <div class="mod-icon"><svg class="ic" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></div>
+              <div class="mod-name">Statistici</div>
+              <p class="mod-desc">Dashboard pentru conducere: cheltuieli totale, top produse și breakdown pe furnizor, locație și categorie. Drill-down până la linia de factură.</p>
+              <div class="mod-tags"><span class="mod-tag">Multi-locație</span><span class="mod-tag">Drill-down</span></div>
+            </div>
+            <div class="mod-visual">
+              <div class="mv-label">Cheltuieli · Iunie</div>
+              <div class="mv-big">84.320<small>lei</small></div>
+              <div class="mv-barline"><span class="nm">Metro</span><span class="mv-bar"><i style="width:38%"></i></span><span class="mv-pct">38%</span></div>
+              <div class="mv-barline"><span class="nm">Selgros</span><span class="mv-bar"><i style="width:27%"></i></span><span class="mv-pct">27%</span></div>
+              <div class="mv-barline"><span class="nm">Local</span><span class="mv-bar"><i style="width:21%"></i></span><span class="mv-pct">21%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- APP SCREENSHOTS -->
+    <section id="aplicatie" class="reveal">
+      <div class="section-head reveal">
+        <div class="section-label">În aplicație</div>
+        <h2>Cum arată<br>în Approvisor</h2>
+        <p class="section-sub">Capturi reale din platformă — exact ce folosesc echipa și conducerea zilnic.</p>
+      </div>
+      <div class="shots-grid reveal-children">
+        <figure class="shot">
+          <div class="shot-frame">
+            <div class="shot-bar"><span></span><span></span><span></span></div>
+            <!-- Înlocuiește div.shot-ph cu: <img src="img/screen-comanda.png" alt="Comandă nouă în Approvisor"> -->
+            <div class="shot-body">
+              <div class="shot-ph"><svg viewBox="0 0 24 24"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg><b>Comandă nouă</b><em>Screenshot în curând</em></div>
+            </div>
+          </div>
+          <figcaption>Comandă nouă<span>Managerul construiește coșul din catalog</span></figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="shot-frame">
+            <div class="shot-bar"><span></span><span></span><span></span></div>
+            <!-- Înlocuiește div.shot-ph cu: <img src="img/screen-comenzi.png" alt="Comenzi și aprobare în Approvisor"> -->
+            <div class="shot-body">
+              <div class="shot-ph"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg><b>Comenzi & aprobare</b><em>Screenshot în curând</em></div>
+            </div>
+          </div>
+          <figcaption>Comenzi & aprobare<span>Status și istoric pe fiecare locație</span></figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="shot-frame">
+            <div class="shot-bar"><span></span><span></span><span></span></div>
+            <!-- Înlocuiește div.shot-ph cu: <img src="img/screen-foodcost.png" alt="Meniu și foodcost în Approvisor"> -->
+            <div class="shot-body">
+              <div class="shot-ph"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg><b>Meniu & Foodcost</b><em>Screenshot în curând</em></div>
+            </div>
+          </div>
+          <figcaption>Stoc & Foodcost<span>Cost pe rețetă, în timp real</span></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ROLES -->
+    <section id="roluri" class="reveal">
+      <div class="section-head reveal">
+        <div class="section-label">Roluri</div>
+        <h2>Fiecare om vede<br>exact ce are nevoie</h2>
+        <p class="section-sub">Două roluri, drepturi clare, zero suprapuneri. Admin guvernează, Manager operează.</p>
+      </div>
+      <div class="roles-grid reveal-children">
+        <div class="role-card dark">
+          <div class="role-pill">Admin · Back Office</div>
+          <div class="role-title">Controlul total<br>din spate</div>
+          <p class="role-desc">Vizibilitate completă pe toate locațiile, toți furnizorii, toate documentele. Setează regulile, validează, analizează.</p>
+          <ul class="role-list">
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Catalog și liste de prețuri centralizate</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Politici de aprobare per locație și furnizor</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Validare automată facturi cu toleranță configurabilă</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Statistici și rapoarte cross-locație</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Bibliotecă globală de rețete</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Audit trail complet pe fiecare acțiune</li>
+          </ul>
+        </div>
+        <div class="role-card light">
+          <div class="role-pill">Manager · Locație</div>
+          <div class="role-title">Operațiuni rapide<br>la locație</div>
+          <p class="role-desc">Scoped automat pe locația sa. Comandă din catalog, urmărește stocul, calculează foodcost — fără acces la datele altor locații.</p>
+          <ul class="role-list">
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Construiește și trimite comenzi din catalog</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Template-uri și duplicare comenzi anterioare</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Gestionare stoc local și inventariere</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Rețete locale și meniu zilnic cu foodcost live</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Transferuri de stoc între locații</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Import rețete standard din biblioteca Admin</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section reveal" id="contact">
+      <div class="cta-card">
+        <div class="section-label" style="color:rgba(255,255,255,.5);justify-content:center">Începe acum</div>
+        <h2>Gata să renunți<br>la Excel și WhatsApp?</h2>
+        <p>Arată-ne operațiunea ta și îți demonstrăm cum arată Approvisor cu datele tale reale.</p>
+        <div class="cta-btns">
+          <a href="mailto:contact@approvisor.ro" class="btn-primary">Cere o demonstrație ↗</a>
+          <a href="mailto:contact@approvisor.ro" class="btn-secondary">Contactează-ne</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <a href="#" class="f-logo"><img src="img/logo.png" alt="Approvisor" /></a>
+      <p>© 2025 Approvisor · Platformă de achiziții pentru HoReCa</p>
+      <nav><ul>
+        <li><a href="#module">Module</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul></nav>
+    </footer>
+
+  </div>
+
+  <script>
+    (function(){
+      var els = document.querySelectorAll('.reveal, .reveal-children');
+      // Fallback: no IntersectionObserver support → reveal everything immediately
+      if (!('IntersectionObserver' in window)) {
+        els.forEach(function(el){ el.classList.add('in'); });
+        return;
+      }
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+      els.forEach(function(el){ io.observe(el); });
+    })();
+
+    /* Module explorer — master/detail tabs */
+    (function(){
+      var tabs = Array.prototype.slice.call(document.querySelectorAll('.mod-item'));
+      var panels = document.querySelectorAll('.mod-panel');
+      if (!tabs.length) return;
+      function activate(id, focusTab){
+        tabs.forEach(function(t){
+          var on = t.dataset.mod === id;
+          t.classList.toggle('active', on);
+          t.setAttribute('aria-selected', on ? 'true' : 'false');
+          t.tabIndex = on ? 0 : -1;
+          if (on && focusTab) t.focus();
+        });
+        panels.forEach(function(p){
+          var on = p.dataset.mod === id;
+          p.classList.toggle('active', on);
+          p.hidden = !on;
+        });
+      }
+      tabs.forEach(function(t, i){
+        t.addEventListener('click', function(){ activate(t.dataset.mod, false); });
+        t.addEventListener('keydown', function(e){
+          var n = null;
+          if (e.key === 'ArrowDown' || e.key === 'ArrowRight') n = (i + 1) % tabs.length;
+          else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') n = (i - 1 + tabs.length) % tabs.length;
+          else if (e.key === 'Home') n = 0;
+          else if (e.key === 'End') n = tabs.length - 1;
+          if (n !== null) { e.preventDefault(); activate(tabs[n].dataset.mod, true); }
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>
