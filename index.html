@@ -161,9 +161,23 @@
     .stat-lbl { font-size: 12px; color: var(--ink-muted); margin-top: 6px; line-height: 1.4; }
     .stat-pill { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 700; color: var(--red); background: var(--red-light); padding: 3px 9px; border-radius: 100px; margin-top: 8px; }
     .hero::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 120px; background: linear-gradient(to bottom, rgba(242,245,250,0) 0%, var(--page-bg) 100%); pointer-events: none; z-index: 5; }
-    /* HERO shrink-to-fit experiment: on narrow screens, render the exact desktop hero scaled down (JS sets zoom to fit) */
-    .hero-shrink { width: 1280px; height: 640px; min-height: 0; }
-    .hero-shrink h1 { font-size: 60px; }
+    /* HERO shrink-to-fit: nav stays full size; the hero body renders the desktop
+       composition on a 720px canvas, scaled to the phone width (JS sets zoom) */
+    .hero-shrink { height: auto; min-height: 0; }
+    .hero-shrink .hero-body { width: 720px; height: 600px; flex: 0 0 auto; }
+    .hero-shrink .hero-left { width: 62%; padding: 0 24px 44px 24px; }
+    .hero-shrink h1 { font-size: 48px; letter-spacing: -2px; margin-bottom: 16px; }
+    .hero-shrink .hero-sub { font-size: 24px; line-height: 1.45; margin-bottom: 22px; }
+    .hero-shrink .sub-full { display: none; }
+    .hero-shrink .sub-short { display: inline; }
+    .hero-shrink .avatar { width: 52px; height: 52px; font-size: 16px; }
+    .hero-shrink .proof-text { font-size: 19px; line-height: 1.35; }
+    .hero-shrink .proof-text strong { font-size: 21px; }
+    .hero-shrink .hero-stage { min-height: 0; }
+    .hero-shrink .hero-img { left: -120px; top: -20px; width: calc(100% + 140px); height: calc(100% + 60px); }
+    .hero-shrink .hero-cards { right: 14px; bottom: 36px; width: 190px; }
+    .hero-shrink .stat-num { font-size: 38px; }
+    .hero-shrink .stat-lbl { font-size: 19px; }
 
     /* ════════════ SECTIONS ════════════ */
     section { padding: var(--gap) 0; }
@@ -302,7 +316,7 @@
     .carousel-btn:hover { box-shadow: 0 14px 36px rgba(13,27,42,0.22); }
     .carousel-btn:active { transform: translateY(-50%) scale(.93); }
     .carousel-btn.prev { left: -14px; } .carousel-btn.next { right: -14px; }
-    .carousel-dots { display: flex; gap: 9px; justify-content: center; margin-top: 26px; }
+    .carousel-dots { display: none; gap: 9px; justify-content: center; margin-top: 18px; }
     .carousel-dots button { width: 8px; height: 8px; padding: 0; border: none; border-radius: 100px; background: rgba(13,27,42,0.18); cursor: pointer; transition: width .25s, background .25s; }
     .carousel-dots button.active { width: 24px; background: var(--red); }
     .shot-frame { background: var(--white); border-radius: 16px; overflow: hidden; box-shadow: 0 8px 40px rgba(13,27,42,0.08); border: 1px solid rgba(13,27,42,0.05); transition: transform .25s, box-shadow .25s; }
@@ -385,7 +399,11 @@
     }
     @media (max-width: 920px) {
       :root { --gap: 72px; }
-      /* hero is handled by the shrink-to-fit experiment (JS-driven zoom on .hero) */
+      /* hero body is scaled by the shrink-to-fit JS; nav stays full size and tappable */
+      .hero-nav nav ul { display: none; }
+      .hero-nav .nav-inner { padding: 14px 20px; }
+      .logo img { height: 26px; }
+      .nav-cta { padding: 12px 18px; font-size: 14px; }
       .section-head { margin-bottom: 40px; }
       h2 { font-size: clamp(32px, 8vw, 46px); letter-spacing: -1px; }
       .problems-grid { display: flex; grid-template-columns: none; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; gap: 14px; margin: 0 -20px; padding: 2px 20px 12px; }
@@ -410,8 +428,10 @@
       .role-card { flex: 0 0 88%; scroll-snap-align: center; }
       .quotes-carousel .carousel-track { gap: 14px; margin: 0 -20px; padding: 2px 20px 12px; }
       .quotes-carousel .quote-card { flex: 0 0 85%; scroll-snap-align: center; }
+      #aplicatie .carousel-track { gap: 14px; margin: 0 -20px; padding: 2px 20px 12px; }
       .shot { flex: 0 0 88%; }
       .carousel-btn { display: none; }
+      .carousel-dots { display: flex; }
       .role-card { padding: 36px 28px; }
       .cta-card { padding: 64px 28px; border-radius: 20px; }
       .cta-btns { flex-direction: column; align-items: stretch; }
@@ -876,23 +896,59 @@
       if (next) next.addEventListener('click', function(){ go(current() + 1); });
     });
 
-    /* HERO shrink-to-fit: on narrow screens, render the exact desktop hero scaled down to fit */
+    /* HERO shrink-to-fit: on narrow screens, scale the desktop hero composition to the phone width (nav stays full size) */
     (function(){
       var hero = document.querySelector('.hero');
-      if (!hero) return;
-      var DESIGN = 1280, CROSS = 920;
+      var hb = hero && hero.querySelector('.hero-body');
+      if (!hero || !hb) return;
+      var DESIGN = 720, CROSS = 920;
       function fit(){
         var w = document.documentElement.clientWidth;
         if (w < CROSS) {
           hero.classList.add('hero-shrink');
-          hero.style.zoom = (w / DESIGN).toFixed(4);
+          hb.style.zoom = (w / DESIGN).toFixed(4);
         } else {
           hero.classList.remove('hero-shrink');
-          hero.style.zoom = '';
+          hb.style.zoom = '';
         }
       }
       fit();
       window.addEventListener('resize', fit);
+    })();
+
+    /* Swipe dots for the horizontal carousels (visible on mobile) */
+    (function(){
+      var tracks = [
+        document.querySelector('.problems-grid'),
+        document.querySelector('.mod-detail'),
+        document.querySelector('.roles-grid'),
+        document.querySelector('.quotes-carousel .carousel-track'),
+        document.querySelector('#aplicatie .carousel-track')
+      ];
+      tracks.forEach(function(track){
+        if (!track || track.children.length < 2) return;
+        var slides = Array.prototype.slice.call(track.children);
+        var dots = document.createElement('div');
+        dots.className = 'carousel-dots';
+        slides.forEach(function(s, i){
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.setAttribute('aria-label', 'Slide ' + (i + 1));
+          b.addEventListener('click', function(){
+            track.scrollTo({ left: slides[i].offsetLeft - slides[0].offsetLeft, behavior: 'smooth' });
+          });
+          dots.appendChild(b);
+        });
+        track.parentNode.insertBefore(dots, track.nextSibling);
+        function update(){
+          var edge = track.scrollLeft, best = 0, bd = Infinity;
+          slides.forEach(function(s, i){ var d = Math.abs((s.offsetLeft - slides[0].offsetLeft) - edge); if (d < bd) { bd = d; best = i; } });
+          Array.prototype.forEach.call(dots.children, function(b, k){ b.classList.toggle('active', k === best); });
+        }
+        var raf;
+        track.addEventListener('scroll', function(){ cancelAnimationFrame(raf); raf = requestAnimationFrame(update); }, { passive: true });
+        update();
+      });
     })();
   </script>
 
