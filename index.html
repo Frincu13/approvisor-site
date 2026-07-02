@@ -1,9 +1,19 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ro">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Approvisor — Achiziții și operațiuni pentru HoReCa</title>
+  <title>Approvisor · Achiziții și operațiuni pentru HoReCa</title>
+  <meta name="description" content="Platformă de achiziții pentru lanțuri HoReCa: comenzi, validare facturi, stoc și foodcost într-un singur sistem. Folosită zilnic într-un lanț cu 12 locații și 1000+ comenzi." />
+  <meta name="theme-color" content="#0D1B2A" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="apple-touch-icon" href="favicon.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Approvisor · achiziții și operațiuni pentru HoReCa" />
+  <meta property="og:description" content="Comenzi, facturi și stocuri într-un singur sistem. Deja folosit de un lanț HoReCa cu 12 locații și 1000+ comenzi procesate." />
+  <meta property="og:url" content="https://frincu13.github.io/approvisor-site/" />
+  <meta property="og:image" content="https://frincu13.github.io/approvisor-site/img/hero.png" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -16,8 +26,6 @@
       --red: #8B1A1A;
       --red-soft: #B83333;
       --red-light: #FBEAEA;
-      --lime: #9AE02A;
-      --lime-dark: #5E9A00;
       --page-bg: #F2F5FA;
       --radius: 26px;
       --gap: 120px;
@@ -32,17 +40,25 @@
       overflow-x: hidden;
     }
     .inner { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--pad); }
+    /* ── audit upgrades: a11y, states, texture, tabular figures ── */
+    .skip-link { position: absolute; left: 12px; top: -52px; z-index: 200; background: var(--ink); color: #fff; padding: 10px 16px; border-radius: 0 0 10px 10px; font-size: 14px; font-weight: 600; text-decoration: none; transition: top .2s; }
+    .skip-link:focus { top: 0; }
+    :focus-visible { outline: 2px solid var(--red); outline-offset: 3px; border-radius: 6px; }
+    .stat-num, .stat-big, .mv-big, .flow-num, .mv-pct, .price-ok, .price-warn { font-variant-numeric: tabular-nums; }
+    .nav-cta:active, .btn-primary:active, .btn-secondary:active, .mod-item:active, .shot:active, .prob-card:active, .mod-card:active { transform: translateY(1px) scale(.995); }
+    body::before { content: ''; position: fixed; inset: 0; z-index: 50; pointer-events: none; opacity: .035;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+    @media (prefers-reduced-motion: reduce) { .nav-cta:active, .btn-primary:active, .btn-secondary:active, .mod-item:active, .shot:active, .prob-card:active, .mod-card:active { transform: none; } }
     svg.ic { width: 26px; height: 26px; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
 
     /* ════════════ HERO SLIDE ════════════ */
     .hero {
       position: relative;
-      height: 82vh;
-      min-height: 580px;
+      height: 76vh;
+      min-height: 560px;
       background:
-        radial-gradient(100% 65% at 82% 6%, rgba(154,224,42,0.13) 0%, rgba(154,224,42,0) 50%),
-        radial-gradient(80% 55% at 6% 4%, rgba(139,26,26,0.06) 0%, rgba(139,26,26,0) 50%),
-        linear-gradient(158deg, #CDE1F6 0%, #E2EEF9 52%, #E8F3EC 100%);
+        radial-gradient(85% 60% at 90% 0%, rgba(139,26,26,0.07) 0%, rgba(139,26,26,0) 55%),
+        linear-gradient(165deg, #E9F0F8 0%, #F2F5FA 58%, #F5EDEF 100%);
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -72,7 +88,7 @@
     }
     .nav-cta:hover { background: var(--red); transform: translateY(-1px); }
 
-    /* hero body: 3 zones — text | image | data cards */
+    /* hero body: 3 zones - text | image | data cards */
     .hero-body {
       flex: 1; width: 100%;
       padding: 0;
@@ -80,13 +96,13 @@
       position: relative; z-index: 10;
     }
     .hero-left {
-      width: 40%; flex-shrink: 0; align-self: flex-end;
+      width: 44%; flex-shrink: 0; align-self: flex-end;
       padding: 0 40px 80px 28px;
       z-index: 15;
     }
     h1 {
-      font-size: clamp(44px, 4vw, 72px);
-      font-weight: 800; line-height: 0.88;
+      font-size: clamp(46px, 4.7vw, 88px);
+      font-weight: 800; line-height: 0.9;
       letter-spacing: -3.5px; color: var(--ink); margin-bottom: 28px;
     }
     h1 em { font-style: normal; color: var(--red); }
@@ -94,17 +110,17 @@
     .hero-proof { display: flex; align-items: center; gap: 16px; }
     .avatar-stack { display: flex; }
     .avatar {
-      width: 42px; height: 42px; border-radius: 50%;
-      border: 3px solid #E2EEF9; margin-left: -12px;
+      width: 42px; height: 42px; border-radius: 32%;
+      border: 3px solid var(--white); margin-left: -12px;
       font-size: 12px; font-weight: 700;
       display: flex; align-items: center; justify-content: center; color: white;
     }
     .avatar:first-child { margin-left: 0; }
-    .av1 { background: #5C73F2; } .av2 { background: #F27B5C; } .av3 { background: #5CC98F; color: var(--white) !important; }
+    .av1, .av2, .av3 { background: var(--ink); }
     .proof-text { font-size: 13px; color: var(--ink-muted); line-height: 1.4; }
     .proof-text strong { color: var(--ink); display: block; font-size: 14px; font-weight: 700; }
 
-    /* hero stage — image zone, fills right 58% */
+    /* hero stage - image zone, fills right 58% */
     .hero-stage { flex: 1; position: relative; align-self: stretch; min-height: 560px; overflow: visible; }
     .hero-img {
       position: absolute;
@@ -113,24 +129,24 @@
       width: calc(100% + 80px);
       height: calc(100% + 120px);
       object-fit: cover;
-      object-position: 20% 10%;
+      object-position: 20% 22%;
       filter: drop-shadow(0 24px 48px rgba(13,27,42,0.12));
       mask-image: linear-gradient(to right, transparent 0%, black 32%);
       -webkit-mask-image: linear-gradient(to right, transparent 0%, black 32%);
     }
 
-    /* hero data cards — float over image */
+    /* hero data cards - float over image */
     .hero-cards {
       position: absolute;
-      right: 44px; bottom: 88px;
-      width: 210px;
+      right: 60px; bottom: 112px;
+      width: 212px;
       display: flex; flex-direction: column; gap: 12px;
       z-index: 20;
     }
     .stat-card {
-      background: rgba(255,255,255,0.88); border-radius: 18px; padding: 18px 20px;
-      box-shadow: 0 12px 40px rgba(13,27,42,0.14);
-      border: 1px solid rgba(255,255,255,0.7);
+      background: #fff; border-radius: 18px; padding: 18px 20px;
+      box-shadow: 0 20px 50px rgba(13,27,42,0.20);
+      border: 1px solid rgba(13,27,42,0.06);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
     }
@@ -172,33 +188,33 @@
     /* PROBLEMS */
     .problems-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
     .prob-card {
-      position: relative; background: var(--white); border-radius: 24px; padding: 38px 34px 34px;
+      position: relative; display: flex; flex-direction: column; background: var(--white); border-radius: 24px; padding: 38px 34px 34px;
       box-shadow: 0 2px 30px rgba(13,27,42,0.05); overflow: hidden;
       transition: transform .25s, box-shadow .25s;
     }
     .prob-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(13,27,42,0.10); }
-    .prob-num { position: absolute; top: 18px; right: 26px; font-size: 86px; font-weight: 800; line-height: 1; color: var(--red); opacity: 0.06; letter-spacing: -4px; }
-    .prob-icon { width: 56px; height: 56px; border-radius: 16px; background: var(--ink); display: flex; align-items: center; justify-content: center; margin-bottom: 26px; position: relative; z-index: 1; }
-    .prob-icon svg { stroke: var(--lime); }
+    .prob-num { display: none; }
+    .prob-icon { width: 56px; height: 56px; border-radius: 16px; background: var(--red-light); display: flex; align-items: center; justify-content: center; margin-bottom: 26px; position: relative; z-index: 1; }
+    .prob-icon svg { stroke: var(--red); }
     .prob-title { font-size: 19px; font-weight: 700; margin-bottom: 12px; line-height: 1.25; }
     .prob-desc { font-size: 14px; color: var(--ink-muted); line-height: 1.65; margin-bottom: 24px; }
-    .prob-solution { font-size: 13px; font-weight: 700; color: var(--red); padding-top: 20px; border-top: 1px solid #EEF1F5; display: flex; align-items: center; gap: 8px; }
+    .prob-solution { margin-top: auto; font-size: 13px; font-weight: 700; color: var(--red); padding-top: 20px; border-top: 1px solid #EEF1F5; display: flex; align-items: center; gap: 8px; }
     .prob-solution svg { width: 16px; height: 16px; stroke: var(--red); stroke-width: 2.5; fill: none; }
 
     /* FLOW */
     .flow-wrap { background: var(--ink); border-radius: var(--radius); padding: 64px; color: var(--white); }
     .flow-head { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: end; margin-bottom: 64px; }
-    .flow-head .section-label { color: var(--lime); }
-    .flow-head .section-label::before { background: var(--lime); }
+    .flow-head .section-label { color: #D98A8A; }
+    .flow-head .section-label::before { background: #D98A8A; }
     .flow-head h2 { color: var(--white); }
     .flow-head .section-sub { color: rgba(255,255,255,0.6); }
     .flow-row { display: grid; position: relative; }
     .flow-row-4 { grid-template-columns: repeat(4,1fr); }
     .flow-row-3 { grid-template-columns: repeat(3,1fr); margin-top: 52px; }
-    .flow-row::after { content: ''; position: absolute; top: 28px; left: 11%; right: 11%; height: 2px; background: linear-gradient(90deg, rgba(255,255,255,0.12) 0%, var(--lime) 100%); z-index: 0; }
+    .flow-row::after { content: ''; position: absolute; top: 28px; left: 11%; right: 11%; height: 2px; background: linear-gradient(90deg, rgba(255,255,255,0.12) 0%, var(--red-soft) 100%); z-index: 0; }
     .flow-step { text-align: center; padding: 0 18px; position: relative; }
     .flow-num { width: 58px; height: 58px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; margin: 0 auto 20px; position: relative; z-index: 1; border: 3px solid var(--ink); background: #1C2E45; color: var(--white); }
-    .flow-step:last-child .flow-num { background: var(--lime); color: var(--ink); }
+    .flow-step:last-child .flow-num { background: var(--red-soft); color: var(--white); border-color: var(--red-soft); }
     .flow-step-name { font-size: 14px; font-weight: 700; margin-bottom: 7px; color: var(--white); }
     .flow-step-desc { font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.5; }
 
@@ -208,8 +224,8 @@
     .stat-big { font-size: 58px; font-weight: 800; color: var(--red); letter-spacing: -2.5px; line-height: 1; }
     .stat-small { font-size: 14px; color: var(--ink-muted); margin-top: 14px; line-height: 1.4; }
 
-    /* MODULES — interactive master/detail explorer */
-    /* one solid block — list + panel fused, no gaps; active row just changes colour */
+    /* MODULES - interactive master/detail explorer */
+    /* one solid block - list + panel fused, no gaps; active row just changes colour */
     .mod-explorer { display: grid; grid-template-columns: 320px 1fr; gap: 0; align-items: stretch; border-radius: 24px; overflow: hidden; box-shadow: 0 22px 54px rgba(13,27,42,0.12); }
     .mod-list { display: flex; flex-direction: column; gap: 0; background: var(--white); }
     .mod-item {
@@ -257,9 +273,9 @@
     .price-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; background: rgba(255,255,255,.06); border-radius: 10px; padding: 11px 14px; font-size: 12px; }
     .price-row .nm { color: rgba(255,255,255,.78); flex: 1; min-width: 0; }
     .price-row .qty { color: var(--red-soft); font-weight: 700; flex-shrink: 0; }
-    .price-ok { color: #C6F562; font-weight: 700; } .price-warn { color: #FFD24A; font-weight: 700; }
-    .badge-ok { font-size: 10px; background: rgba(154,224,42,.2); color: #C6F562; padding: 3px 9px; border-radius: 100px; font-weight: 700; white-space: nowrap; }
-    .badge-warn { font-size: 10px; background: rgba(255,189,46,.2); color: #FFD24A; padding: 3px 9px; border-radius: 100px; font-weight: 700; white-space: nowrap; }
+    .price-ok { color: rgba(255,255,255,.92); font-weight: 700; } .price-warn { color: #E59595; font-weight: 700; }
+    .badge-ok { font-size: 10px; background: rgba(255,255,255,.1); color: rgba(255,255,255,.82); padding: 3px 9px; border-radius: 100px; font-weight: 700; white-space: nowrap; }
+    .badge-warn { font-size: 10px; background: rgba(184,51,51,.26); color: #E59595; padding: 3px 9px; border-radius: 100px; font-weight: 700; white-space: nowrap; }
     .mv-map { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,.06); border-radius: 10px; padding: 10px 13px; }
     .mv-chip { font-size: 11px; color: rgba(255,255,255,.7); background: rgba(255,255,255,.07); border: 1px dashed rgba(255,255,255,.22); border-radius: 7px; padding: 6px 9px; white-space: nowrap; flex-shrink: 0; }
     .mv-arrow { color: rgba(255,255,255,.35); flex-shrink: 0; }
@@ -274,8 +290,17 @@
     .mv-pct { color: #fff; font-weight: 700; width: 38px; text-align: right; flex-shrink: 0; }
 
     /* APP SCREENSHOTS */
-    .shots-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
-    .shot { margin: 0; }
+    .carousel { position: relative; }
+    .carousel-track { display: flex; gap: 22px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; padding: 6px 2px 4px; }
+    .carousel-track::-webkit-scrollbar { display: none; }
+    .shot { flex: 0 0 calc((100% - 44px) / 3); scroll-snap-align: start; margin: 0; }
+    .carousel-btn { position: absolute; top: 42%; transform: translateY(-50%); width: 52px; height: 52px; border-radius: 50%; border: 1px solid rgba(13,27,42,0.08); background: #fff; color: var(--ink); font-size: 20px; cursor: pointer; box-shadow: 0 10px 30px rgba(13,27,42,0.16); display: flex; align-items: center; justify-content: center; z-index: 4; transition: box-shadow .2s, transform .15s; }
+    .carousel-btn:hover { box-shadow: 0 14px 36px rgba(13,27,42,0.22); }
+    .carousel-btn:active { transform: translateY(-50%) scale(.93); }
+    .carousel-btn.prev { left: -14px; } .carousel-btn.next { right: -14px; }
+    .carousel-dots { display: flex; gap: 9px; justify-content: center; margin-top: 26px; }
+    .carousel-dots button { width: 8px; height: 8px; padding: 0; border: none; border-radius: 100px; background: rgba(13,27,42,0.18); cursor: pointer; transition: width .25s, background .25s; }
+    .carousel-dots button.active { width: 24px; background: var(--red); }
     .shot-frame { background: var(--white); border-radius: 16px; overflow: hidden; box-shadow: 0 8px 40px rgba(13,27,42,0.08); border: 1px solid rgba(13,27,42,0.05); transition: transform .25s, box-shadow .25s; }
     .shot:hover .shot-frame { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(13,27,42,0.12); }
     .shot-bar { display: flex; gap: 7px; align-items: center; padding: 13px 16px; background: #F4F6FA; border-bottom: 1px solid rgba(13,27,42,0.05); }
@@ -308,21 +333,32 @@
     .role-card.dark .role-list li { color: rgba(255,255,255,.8); }
     .role-card.light .role-list li { color: var(--ink); }
     .role-list li svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px; stroke-width: 2.5; fill: none; }
-    .role-card.dark .role-list li svg { stroke: var(--lime); }
+    .role-card.dark .role-list li svg { stroke: rgba(255,255,255,.85); }
     .role-card.light .role-list li svg { stroke: var(--red); }
 
     /* CTA */
     .cta-section { padding-bottom: var(--gap); }
     .cta-card { background: linear-gradient(135deg, var(--red) 0%, #5E1212 100%); border-radius: var(--radius); padding: 96px 64px; text-align: center; position: relative; overflow: hidden; }
     .cta-card::before { content: ''; position: absolute; top: -120px; right: -100px; width: 380px; height: 380px; background: rgba(255,255,255,0.05); border-radius: 50%; }
-    .cta-card::after { content: ''; position: absolute; bottom: -90px; left: -90px; width: 320px; height: 320px; background: rgba(154,224,42,.10); border-radius: 50%; }
+    .cta-card::after { display: none; }
     .cta-card h2 { color: var(--white); margin-bottom: 18px; position: relative; z-index: 1; }
     .cta-card p { color: rgba(255,255,255,.75); font-size: 18px; max-width: 500px; margin: 0 auto 42px; line-height: 1.6; position: relative; z-index: 1; }
     .cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
-    .btn-primary { background: var(--lime); color: var(--ink); padding: 17px 36px; border-radius: 100px; font-size: 15px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: transform .2s, box-shadow .2s; }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 34px rgba(154,224,42,.4); }
+    .btn-primary { background: var(--white); color: var(--ink); padding: 17px 36px; border-radius: 100px; font-size: 15px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: transform .2s, box-shadow .2s; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 34px rgba(0,0,0,.30); }
     .btn-secondary { background: rgba(255,255,255,.12); color: var(--white); padding: 17px 36px; border-radius: 100px; font-size: 15px; font-weight: 600; text-decoration: none; border: 1px solid rgba(255,255,255,.2); transition: background .2s; }
     .btn-secondary:hover { background: rgba(255,255,255,.2); }
+    .cta-note { margin: 28px auto 0; font-size: 13.5px; color: rgba(255,255,255,.62); position: relative; z-index: 1; display: flex; gap: 8px 20px; justify-content: center; flex-wrap: wrap; }
+    .cta-note span { display: inline-flex; align-items: center; gap: 8px; }
+    .cta-note span::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,.45); }
+
+    /* TESTIMONIAL */
+    .quote-wrap { max-width: 880px; margin: 0 auto; text-align: center; }
+    .quote-mark { font-size: 68px; line-height: .7; color: var(--red); font-weight: 800; font-family: Georgia, 'Times New Roman', serif; }
+    .quote-text { font-size: clamp(22px, 2.6vw, 33px); font-weight: 700; line-height: 1.32; letter-spacing: -0.5px; color: var(--ink); margin: 8px 0 28px; }
+    .quote-text.is-placeholder { color: var(--ink-muted); font-weight: 600; font-style: italic; opacity: .65; }
+    .quote-attr { font-size: 15px; color: var(--ink-muted); }
+    .quote-attr b { color: var(--ink); font-weight: 700; }
 
     /* FOOTER */
     footer { border-top: 1px solid rgba(13,27,42,0.08); padding: 46px 0 38px; display: flex; align-items: center; justify-content: space-between; }
@@ -377,7 +413,8 @@
       .mod-panel.active { grid-template-columns: 1fr; gap: 24px; }
       .mod-name { font-size: 22px; }
       .roles-grid { grid-template-columns: 1fr; }
-      .shots-grid { grid-template-columns: 1fr; gap: 18px; }
+      .shot { flex: 0 0 88%; }
+      .carousel-btn { display: none; }
       .role-card { padding: 36px 28px; }
       .cta-card { padding: 64px 28px; border-radius: 20px; }
       .cta-btns { flex-direction: column; align-items: stretch; }
@@ -388,7 +425,7 @@
     @media (max-width: 600px) {
       h1 { font-size: clamp(34px, 9.5vw, 50px); }
       .hero-sub { font-size: 15px; }
-      /* swipeable card row — a mobile-specific layout, not a shrunk grid */
+      /* swipeable card row - a mobile-specific layout, not a shrunk grid */
       .hero-cards {
         display: flex; flex-direction: row; grid-template-columns: none;
         overflow-x: auto; scroll-snap-type: x mandatory;
@@ -402,10 +439,14 @@
     @media (max-width: 480px) {
       .stats-row { grid-template-columns: 1fr; }
       .flow-row-4 { grid-template-columns: 1fr; }
+      .logo img { height: 24px; }
+      .nav-cta { padding: 10px 14px; font-size: 13px; }
     }
   </style>
 </head>
 <body>
+
+  <a class="skip-link" href="#main">Sari la conținut</a>
 
   <!-- ════════ HERO ════════ -->
   <header class="hero">
@@ -424,8 +465,8 @@
 
     <div class="hero-body">
       <div class="hero-left">
-        <h1>Comenzi rapide,<br>costuri clare,<br><em>fără Excel și WhatsApp.</em></h1>
-        <p class="hero-sub">Comenzi, facturi și stocuri într-un singur sistem — deja folosit de un lanț HoReCa cu 12 locații și 1000+ comenzi procesate.</p>
+        <h1>Comenzi rapide,<br>costuri clare,<br><em>totul într-un<br>singur sistem.</em></h1>
+        <p class="hero-sub">Echipa comandă în câteva minute, conducerea vede costurile și stocul în timp real. Deja folosit de un lanț HoReCa cu 12 locații și 1000+ comenzi procesate.</p>
         <div class="hero-proof">
           <div class="avatar-stack">
             <div class="avatar av1">RM</div>
@@ -442,14 +483,14 @@
       <div class="hero-stage">
         <picture>
           <source srcset="img/hero.webp" type="image/webp" />
-          <img src="img/hero.png" alt="Approvisor — control achiziții HoReCa" class="hero-img" width="2160" height="1215" fetchpriority="high" />
+          <img src="img/hero.png" alt="Approvisor · platformă de achiziții pentru HoReCa" class="hero-img" width="2160" height="1215" fetchpriority="high" />
         </picture>
       </div>
 
       <div class="hero-cards">
         <div class="stat-card dark">
           <div class="stat-num">1000<span style="font-size:24px">+</span></div>
-          <div class="stat-lbl">comenzi procesate<br>în producție</div>
+          <div class="stat-lbl">comenzi procesate</div>
         </div>
         <div class="stat-card">
           <div class="stat-num">12</div>
@@ -463,34 +504,34 @@
     </div>
   </header>
 
-  <div class="inner">
+  <main class="inner" id="main">
 
     <!-- PROBLEMS -->
     <section id="probleme" class="reveal">
       <div class="section-head reveal">
         <div class="section-label">Problema</div>
-        <h2>Unde se pierd bani<br>în aprovizionare</h2>
-        <p class="section-sub">Trei probleme care apar în orice lanț HoReCa pe măsură ce crește.</p>
+        <h2>Unde pierzi bani<br>fără să vezi</h2>
+        <p class="section-sub">De la comenzi la facturi și gestiune: trei locuri unde lanțurile HoReCa pierd bani pe măsură ce cresc.</p>
       </div>
       <div class="problems-grid reveal-children">
         <div class="prob-card">
           <span class="prob-num">01</span>
           <div class="prob-icon"><svg class="ic" viewBox="0 0 24 24"><rect width="14" height="20" x="5" y="2" rx="2"/><path d="M12 18h.01"/></svg></div>
-          <div class="prob-title">Comenzi pe WhatsApp,<br>fără urmă</div>
-          <p class="prob-desc">Managerul trimite comanda în chat. Furnizorul confirmă sau nu. Nimeni nu știe dacă marfa vine, cine a aprobat sau cât s-a comandat luna asta.</p>
-          <div class="prob-solution"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>Flux de aprobare + email automat</div>
+          <div class="prob-title">Comenzi pe mesaje,<br>fără evidență</div>
+          <p class="prob-desc">Comenzile se dau pe telefon și mesaje, fără o evidență clară a ce s-a comandat, de cine și cât. Ofertele vin separat de la fiecare furnizor, iar compararea produs cu produs cere prea mult timp, astfel că prețul ales rareori e cel mai bun, iar schimbările de preț trec neobservate.</p>
+          <div class="prob-solution"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>Comenzi și oferte, într-un loc</div>
         </div>
         <div class="prob-card">
           <span class="prob-num">02</span>
           <div class="prob-icon"><svg class="ic" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg></div>
-          <div class="prob-title">Facturi importate,<br>prețuri neverificate</div>
+          <div class="prob-title">Facturi cu prețuri<br>neverificate</div>
           <p class="prob-desc">Furnizorul livrează la alt preț decât cel negociat. Contabilitatea importă factura. Nimeni nu compară. Diferența rămâne neobservată luni de zile.</p>
           <div class="prob-solution"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>Validare automată față de listă</div>
         </div>
         <div class="prob-card">
           <span class="prob-num">03</span>
           <div class="prob-icon"><svg class="ic" viewBox="0 0 24 24"><line x1="12" x2="12" y1="20" y2="10"/><line x1="18" x2="18" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="16"/></svg></div>
-          <div class="prob-title">Stoc și foodcost<br>în Excel, mereu în urmă</div>
+          <div class="prob-title">Stoc și foodcost<br>în tabele, mereu în urmă</div>
           <p class="prob-desc">Inventarul se face o dată pe lună în foi de calcul. Foodcost-ul e calculat retrospectiv. Deciziile de meniu se iau fără date reale.</p>
           <div class="prob-solution"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>Stoc live + foodcost pe rețetă</div>
         </div>
@@ -505,7 +546,7 @@
             <div class="section-label">Cum funcționează</div>
             <h2>Un ciclu complet,<br>un singur sistem</h2>
           </div>
-          <p class="section-sub">Fiecare etapă din aprovizionare e conectată. Datele din catalog ajung în comandă, din comandă în factură, din factură în stoc — automat.</p>
+          <p class="section-sub">Fiecare etapă din aprovizionare e conectată. Datele din catalog ajung în comandă, din comandă în factură, din factură în stoc, automat.</p>
         </div>
         <div class="flow-row flow-row-4">
           <div class="flow-step"><div class="flow-num">1</div><div class="flow-step-name">Catalog & prețuri</div><div class="flow-step-desc">Produse, furnizori și liste de prețuri negociate, într-un singur loc.</div></div>
@@ -518,7 +559,7 @@
 
     <!-- STATS -->
     <div class="stats-row reveal">
-      <div class="stat-box"><div class="stat-big">1000<span style="font-size:28px">+</span></div><div class="stat-small">comenzi procesate<br>în producție</div></div>
+      <div class="stat-box"><div class="stat-big">1000<span style="font-size:28px">+</span></div><div class="stat-small">comenzi procesate</div></div>
       <div class="stat-box"><div class="stat-big">12</div><div class="stat-small">locații active<br>într-un lanț HoReCa</div></div>
       <div class="stat-box"><div class="stat-big">700<span style="font-size:28px">+</span></div><div class="stat-small">produse<br>în catalog</div></div>
       <div class="stat-box"><div class="stat-big" style="font-size:42px;letter-spacing:-1px">Live</div><div class="stat-small">foodcost, stoc<br>și prețuri</div></div>
@@ -532,45 +573,72 @@
       </div>
       <div class="mod-explorer reveal">
         <div class="mod-list" role="tablist" aria-label="Module Approvisor">
-          <button class="mod-item active" role="tab" id="tab-validare" aria-controls="panel-validare" aria-selected="true" data-mod="validare">
-            <span class="mod-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
-            <span class="mod-it-tx"><b>Validare prețuri</b><span>Factură vs. listă negociată</span></span>
-            <span class="mod-it-ar" aria-hidden="true">→</span>
-          </button>
-          <button class="mod-item" role="tab" id="tab-catalog" aria-controls="panel-catalog" aria-selected="false" tabindex="-1" data-mod="catalog">
+          <button class="mod-item active" role="tab" id="tab-catalog" aria-controls="panel-catalog" aria-selected="true" data-mod="catalog">
             <span class="mod-ico"><svg viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></span>
-            <span class="mod-it-tx"><b>Catalog</b><span>Produse, furnizori, prețuri</span></span>
+            <span class="mod-it-tx"><b>Catalog</b><span>Compari același produs la toți furnizorii</span></span>
             <span class="mod-it-ar" aria-hidden="true">→</span>
           </button>
           <button class="mod-item" role="tab" id="tab-comenzi" aria-controls="panel-comenzi" aria-selected="false" tabindex="-1" data-mod="comenzi">
             <span class="mod-ico"><svg viewBox="0 0 24 24"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></span>
-            <span class="mod-it-tx"><b>Comenzi</b><span>Construiește și aprobă</span></span>
+            <span class="mod-it-tx"><b>Comenzi</b><span>Coș rapid, 1 click → toți furnizorii</span></span>
             <span class="mod-it-ar" aria-hidden="true">→</span>
           </button>
-          <button class="mod-item" role="tab" id="tab-import" aria-controls="panel-import" aria-selected="false" tabindex="-1" data-mod="import">
-            <span class="mod-ico"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M12 18v-6"/><path d="m9 15 3 3 3-3"/></svg></span>
-            <span class="mod-it-tx"><b>Import facturi</b><span>Din orice ERP, prin Excel</span></span>
+          <button class="mod-item" role="tab" id="tab-validare" aria-controls="panel-validare" aria-selected="false" tabindex="-1" data-mod="validare">
+            <span class="mod-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
+            <span class="mod-it-tx"><b>Validare facturi</b><span>Preț comandat vs. preț facturat</span></span>
             <span class="mod-it-ar" aria-hidden="true">→</span>
           </button>
           <button class="mod-item" role="tab" id="tab-inventar" aria-controls="panel-inventar" aria-selected="false" tabindex="-1" data-mod="inventar">
             <span class="mod-ico"><svg viewBox="0 0 24 24"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M2 7h20"/><path d="M12 7v15"/></svg></span>
-            <span class="mod-it-tx"><b>Inventar & Foodcost</b><span>Stoc live + cost pe rețetă</span></span>
+            <span class="mod-it-tx"><b>Gestiune</b><span>Stoc, inventar și foodcost</span></span>
             <span class="mod-it-ar" aria-hidden="true">→</span>
           </button>
           <button class="mod-item" role="tab" id="tab-statistici" aria-controls="panel-statistici" aria-selected="false" tabindex="-1" data-mod="statistici">
             <span class="mod-ico"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></span>
-            <span class="mod-it-tx"><b>Statistici</b><span>Dashboard și drill-down</span></span>
+            <span class="mod-it-tx"><b>Statistici</b><span>Cheltuieli, comenzi și producție</span></span>
             <span class="mod-it-ar" aria-hidden="true">→</span>
           </button>
         </div>
 
         <div class="mod-detail">
-          <div class="mod-panel active" role="tabpanel" id="panel-validare" aria-labelledby="tab-validare" data-mod="validare">
+          <div class="mod-panel active" role="tabpanel" id="panel-catalog" aria-labelledby="tab-catalog" data-mod="catalog">
+            <div>
+              <div class="mod-icon"><svg class="ic" viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></div>
+              <div class="mod-name">Catalog</div>
+              <p class="mod-desc">Toate produsele de la toți furnizorii, într-un singur loc. Vezi același produs la mai mulți furnizori, cu prețurile lor unul lângă altul. Alegi în cunoștință de cauză, fără să contactezi fiecare furnizor separat.</p>
+              <div class="mod-tags"><span class="mod-tag">Toți furnizorii la un loc</span><span class="mod-tag">Compari prețuri</span><span class="mod-tag">Liste negociate</span></div>
+            </div>
+            <div class="mod-visual">
+              <div class="mv-label">Piept de pui 1kg · de la 3 furnizori</div>
+              <div class="price-row"><span class="nm">Metro</span><span class="price-ok">18,90 lei</span></div>
+              <div class="price-row"><span class="nm">Selgros</span><span class="price-ok">17,40 lei</span><span class="badge-ok">cel mai bun</span></div>
+              <div class="price-row"><span class="nm">Local Farm</span><span class="price-ok">19,20 lei</span></div>
+              <div class="mv-foot"><span>Compari și alegi instant, fără să suni pe fiecare</span></div>
+            </div>
+          </div>
+
+          <div class="mod-panel" role="tabpanel" id="panel-comenzi" aria-labelledby="tab-comenzi" data-mod="comenzi" hidden>
+            <div>
+              <div class="mod-icon"><svg class="ic" viewBox="0 0 24 24"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></div>
+              <div class="mod-name">Comenzi</div>
+              <p class="mod-desc">Construiești coșul o dată, din catalog, și trimiți comanda către toți furnizorii dintr-un singur click, fără apeluri separate sau liste întocmite manual. Aprobarea se face în aplicație, înainte de trimitere.</p>
+              <div class="mod-tags"><span class="mod-tag">Coș rapid</span><span class="mod-tag">1 click → toți furnizorii</span><span class="mod-tag">Aprobare</span></div>
+            </div>
+            <div class="mod-visual">
+              <div class="mv-label">Coșul tău · 3 furnizori</div>
+              <div class="price-row"><span class="qty">12 ×</span><span class="nm">Piept de pui · Selgros</span></div>
+              <div class="price-row"><span class="qty">8 ×</span><span class="nm">Ulei floarea soarelui · Metro</span></div>
+              <div class="price-row"><span class="qty">20 ×</span><span class="nm">Roșii · Local Farm</span></div>
+              <div class="mv-foot"><span>✓ Un click și comenzile pleacă la toți furnizorii deodată</span></div>
+            </div>
+          </div>
+
+          <div class="mod-panel" role="tabpanel" id="panel-validare" aria-labelledby="tab-validare" data-mod="validare" hidden>
             <div>
               <div class="mod-icon"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
-              <div class="mod-name">Validare prețuri</div>
-              <p class="mod-desc">Compară automat prețurile din facturi față de listele negociate. Toleranță configurabilă, fereastră de date, furnizori excluși — fiecare linie primește un status, cu rezolvare manuală unde e nevoie.</p>
-              <div class="mod-tags"><span class="mod-tag">Toleranță %</span><span class="mod-tag">Fereastră de prețuri</span><span class="mod-tag">Audit trail</span></div>
+              <div class="mod-name">Validare facturi</div>
+              <p class="mod-desc">Prețul pe care l-ai negociat față de prețul de pe factură, verificat automat, linie cu linie. Vezi imediat orice diferență, înainte de plată.</p>
+              <div class="mod-tags"><span class="mod-tag">Negociat vs. facturat</span><span class="mod-tag">Verificare automată</span><span class="mod-tag">Alertă la diferențe</span></div>
             </div>
             <div class="mod-visual">
               <div class="mv-label">Rezultat validare</div>
@@ -580,59 +648,12 @@
             </div>
           </div>
 
-          <div class="mod-panel" role="tabpanel" id="panel-catalog" aria-labelledby="tab-catalog" data-mod="catalog" hidden>
-            <div>
-              <div class="mod-icon"><svg class="ic" viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></div>
-              <div class="mod-name">Catalog</div>
-              <p class="mod-desc">Catalog centralizat de produse și furnizori, cu liste de prețuri din Excel. Alias mapping — factura se potrivește automat cu catalogul, indiferent de cum scrie furnizorul produsul.</p>
-              <div class="mod-tags"><span class="mod-tag">Import Excel</span><span class="mod-tag">Alias mapping</span></div>
-            </div>
-            <div class="mod-visual">
-              <div class="mv-label">Alias mapping</div>
-              <div class="mv-map"><span class="mv-chip">„U.FL.SOARE 5L"</span><span class="mv-arrow">→</span><span class="mv-to">Ulei floarea soarelui 5L</span></div>
-              <div class="mv-map"><span class="mv-chip">„FAINA 550 25KG"</span><span class="mv-arrow">→</span><span class="mv-to">Făină albă tip 550</span></div>
-              <div class="mv-map"><span class="mv-chip">„ZAHAR CR. 1000G"</span><span class="mv-arrow">→</span><span class="mv-to">Zahăr cristal 1kg</span></div>
-            </div>
-          </div>
-
-          <div class="mod-panel" role="tabpanel" id="panel-comenzi" aria-labelledby="tab-comenzi" data-mod="comenzi" hidden>
-            <div>
-              <div class="mod-icon"><svg class="ic" viewBox="0 0 24 24"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></div>
-              <div class="mod-name">Comenzi</div>
-              <p class="mod-desc">Managerul construiește comanda direct din catalog. Flux de aprobare configurabil — la aprobarea finală, emailul pleacă automat către furnizor, în formatul lui.</p>
-              <div class="mod-tags"><span class="mod-tag">Template-uri</span><span class="mod-tag">Email automat</span></div>
-            </div>
-            <div class="mod-visual">
-              <div class="mv-label">Comandă #1042 · Metro</div>
-              <div class="price-row"><span class="qty">12 ×</span><span class="nm">Ulei floarea soarelui 5L</span></div>
-              <div class="price-row"><span class="qty">8 ×</span><span class="nm">Făină albă tip 550</span></div>
-              <div class="price-row"><span class="nm">Status aprobare</span><span class="badge-ok">Aprobat · Owner</span></div>
-              <div class="mv-foot"><span>✓ Email trimis automat către furnizor</span></div>
-            </div>
-          </div>
-
-          <div class="mod-panel" role="tabpanel" id="panel-import" aria-labelledby="tab-import" data-mod="import" hidden>
-            <div>
-              <div class="mod-icon"><svg class="ic" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M12 18v-6"/><path d="m9 15 3 3 3-3"/></svg></div>
-              <div class="mod-name">Import facturi</div>
-              <p class="mod-desc">Importă facturi din orice ERP care exportă Excel — tu alegi ce coloană mapează pe ce câmp, o singură dată. Re-importul aceluiași fișier nu creează duplicate.</p>
-              <div class="mod-tags"><span class="mod-tag">Mapare configurabilă</span><span class="mod-tag">Idempotent</span></div>
-            </div>
-            <div class="mod-visual">
-              <div class="mv-label">Mapare coloane</div>
-              <div class="mv-map"><span class="mv-chip">Coloana A</span><span class="mv-arrow">→</span><span class="mv-to">Produs</span></div>
-              <div class="mv-map"><span class="mv-chip">Coloana C</span><span class="mv-arrow">→</span><span class="mv-to">Cantitate</span></div>
-              <div class="mv-map"><span class="mv-chip">Coloana E</span><span class="mv-arrow">→</span><span class="mv-to">Preț unitar</span></div>
-              <div class="mv-foot"><span>Re-import același fișier</span><span class="badge-ok">0 duplicate</span></div>
-            </div>
-          </div>
-
           <div class="mod-panel" role="tabpanel" id="panel-inventar" aria-labelledby="tab-inventar" data-mod="inventar" hidden>
             <div>
               <div class="mod-icon"><svg class="ic" viewBox="0 0 24 24"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M2 7h20"/><path d="M12 7v15"/></svg></div>
-              <div class="mod-name">Inventar & Foodcost</div>
-              <p class="mod-desc">Stoc per locație, rețete locale și meniu zilnic cu foodcost live. Facturile intră direct în stoc cu cost FIFO, iar transferurile între locații se urmăresc automat.</p>
-              <div class="mod-tags"><span class="mod-tag">FIFO</span><span class="mod-tag">Rețete</span><span class="mod-tag">Meniu zilnic</span></div>
+              <div class="mod-name">Gestiune &amp; foodcost</div>
+              <p class="mod-desc">Stocul se actualizează din facturile validate, pe fiecare locație. Vezi costul real al fiecărei rețete și al meniului, în timp real. Știi exact cât te costă fiecare preparat și ce marjă rămâne.</p>
+              <div class="mod-tags"><span class="mod-tag">Stoc live</span><span class="mod-tag">Cost pe rețetă</span><span class="mod-tag">Per locație</span></div>
             </div>
             <div class="mod-visual">
               <div class="mv-label">Rețetă · Burger clasic</div>
@@ -647,8 +668,8 @@
             <div>
               <div class="mod-icon"><svg class="ic" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></div>
               <div class="mod-name">Statistici</div>
-              <p class="mod-desc">Dashboard pentru conducere: cheltuieli totale, top produse și breakdown pe furnizor, locație și categorie. Drill-down până la linia de factură.</p>
-              <div class="mod-tags"><span class="mod-tag">Multi-locație</span><span class="mod-tag">Drill-down</span></div>
+              <p class="mod-desc">Vezi unde se duc banii: pe furnizor, locație și categorie, și ce comanzi cel mai des. Plus ce ai în stoc și cum evoluează producția. Poți ajunge până la linia de factură, ca să negociezi pe baza datelor reale.</p>
+              <div class="mod-tags"><span class="mod-tag">Cheltuieli & comenzi</span><span class="mod-tag">Stoc & producție</span><span class="mod-tag">Drill-down</span></div>
             </div>
             <div class="mod-visual">
               <div class="mv-label">Cheltuieli · Iunie</div>
@@ -662,46 +683,6 @@
       </div>
     </section>
 
-    <!-- APP SCREENSHOTS -->
-    <section id="aplicatie" class="reveal">
-      <div class="section-head reveal">
-        <div class="section-label">În aplicație</div>
-        <h2>Cum arată<br>în Approvisor</h2>
-        <p class="section-sub">Capturi reale din platformă — exact ce folosesc echipa și conducerea zilnic.</p>
-      </div>
-      <div class="shots-grid reveal-children">
-        <figure class="shot">
-          <div class="shot-frame">
-            <div class="shot-bar"><span></span><span></span><span></span></div>
-            <!-- Înlocuiește div.shot-ph cu: <img src="img/screen-comanda.png" alt="Comandă nouă în Approvisor"> -->
-            <div class="shot-body">
-              <div class="shot-ph"><svg viewBox="0 0 24 24"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg><b>Comandă nouă</b><em>Screenshot în curând</em></div>
-            </div>
-          </div>
-          <figcaption>Comandă nouă<span>Managerul construiește coșul din catalog</span></figcaption>
-        </figure>
-        <figure class="shot">
-          <div class="shot-frame">
-            <div class="shot-bar"><span></span><span></span><span></span></div>
-            <!-- Înlocuiește div.shot-ph cu: <img src="img/screen-comenzi.png" alt="Comenzi și aprobare în Approvisor"> -->
-            <div class="shot-body">
-              <div class="shot-ph"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg><b>Comenzi & aprobare</b><em>Screenshot în curând</em></div>
-            </div>
-          </div>
-          <figcaption>Comenzi & aprobare<span>Status și istoric pe fiecare locație</span></figcaption>
-        </figure>
-        <figure class="shot">
-          <div class="shot-frame">
-            <div class="shot-bar"><span></span><span></span><span></span></div>
-            <!-- Înlocuiește div.shot-ph cu: <img src="img/screen-foodcost.png" alt="Meniu și foodcost în Approvisor"> -->
-            <div class="shot-body">
-              <div class="shot-ph"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg><b>Meniu & Foodcost</b><em>Screenshot în curând</em></div>
-            </div>
-          </div>
-          <figcaption>Stoc & Foodcost<span>Cost pe rețetă, în timp real</span></figcaption>
-        </figure>
-      </div>
-    </section>
 
     <!-- ROLES -->
     <section id="roluri" class="reveal">
@@ -712,31 +693,90 @@
       </div>
       <div class="roles-grid reveal-children">
         <div class="role-card dark">
-          <div class="role-pill">Admin · Back Office</div>
-          <div class="role-title">Controlul total<br>din spate</div>
-          <p class="role-desc">Vizibilitate completă pe toate locațiile, toți furnizorii, toate documentele. Setează regulile, validează, analizează.</p>
+          <div class="role-pill">Administrator</div>
+          <div class="role-title">Vizibilitate totală<br>din spate</div>
+          <p class="role-desc">Imagine completă pe toate locațiile, toți furnizorii, toate documentele. Setează regulile, validează, analizează.</p>
           <ul class="role-list">
             <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Catalog și liste de prețuri centralizate</li>
             <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Politici de aprobare per locație și furnizor</li>
-            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Validare automată facturi cu toleranță configurabilă</li>
-            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Statistici și rapoarte cross-locație</li>
-            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Bibliotecă globală de rețete</li>
-            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Audit trail complet pe fiecare acțiune</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Verificare automată a prețurilor de pe facturi</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Vezi tot ce se comandă, din toate locațiile, live</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Statistici pe comenzi, global și per locație</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Status zilnic pe gestiune: consum, transferuri, venituri</li>
           </ul>
         </div>
         <div class="role-card light">
-          <div class="role-pill">Manager · Locație</div>
+          <div class="role-pill">Manager</div>
           <div class="role-title">Operațiuni rapide<br>la locație</div>
-          <p class="role-desc">Scoped automat pe locația sa. Comandă din catalog, urmărește stocul, calculează foodcost — fără acces la datele altor locații.</p>
+          <p class="role-desc">Vede doar locația lui. Comandă din catalog, urmărește stocul și foodcost-ul, fără acces la datele altor locații.</p>
           <ul class="role-list">
-            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Construiește și trimite comenzi din catalog</li>
-            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Template-uri și duplicare comenzi anterioare</li>
-            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Gestionare stoc local și inventariere</li>
-            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Rețete locale și meniu zilnic cu foodcost live</li>
-            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Transferuri de stoc între locații</li>
-            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Import rețete standard din biblioteca Admin</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Vezi produsul de la toți furnizorii și compari ușor prețul</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Comanda zilei o dată, pleacă singură la fiecare furnizor</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Comenzi repetitive, fără să le scrii de fiecare dată</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Stoc pe unitate, în timp real</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Foodcost calculat automat, cu prețuri la zi</li>
+            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Vezi consumul și costul zilnic al locației</li>
           </ul>
         </div>
+      </div>
+    </section>
+
+    <!-- APP SCREENSHOTS -->
+    <section id="aplicatie" class="reveal">
+      <div class="section-head reveal">
+        <div class="section-label">În aplicație</div>
+        <h2>Cum arată<br>în Approvisor</h2>
+        <p class="section-sub">O privire prin platformă, pe cele 5 zone.</p>
+      </div>
+      <div class="carousel reveal">
+        <div class="carousel-track">
+          <figure class="shot">
+            <div class="shot-frame">
+              <div class="shot-bar"><span></span><span></span><span></span></div>
+              <div class="shot-body"><picture><source srcset="img/screen-catalog.webp" type="image/webp" /><img src="img/screen-catalog.png" alt="Catalog în Approvisor" loading="lazy" /></picture></div>
+            </div>
+            <figcaption>Catalog<span>Produse și prețuri, de la toți furnizorii</span></figcaption>
+          </figure>
+          <figure class="shot">
+            <div class="shot-frame">
+              <div class="shot-bar"><span></span><span></span><span></span></div>
+              <div class="shot-body"><picture><source srcset="img/screen-comenzi.webp" type="image/webp" /><img src="img/screen-comenzi.png" alt="Comenzi în Approvisor" loading="lazy" /></picture></div>
+            </div>
+            <figcaption>Comenzi<span>Coș și trimitere către furnizori</span></figcaption>
+          </figure>
+          <figure class="shot">
+            <div class="shot-frame">
+              <div class="shot-bar"><span></span><span></span><span></span></div>
+              <div class="shot-body"><picture><source srcset="img/screen-statistici.webp" type="image/webp" /><img src="img/screen-statistici.png" alt="Statistici în Approvisor" loading="lazy" /></picture></div>
+            </div>
+            <figcaption>Statistici<span>Cheltuieli, comenzi și producție</span></figcaption>
+          </figure>
+          <figure class="shot">
+            <div class="shot-frame">
+              <div class="shot-bar"><span></span><span></span><span></span></div>
+              <div class="shot-body"><picture><source srcset="img/screen-validare.webp" type="image/webp" /><img src="img/screen-validare.png" alt="Validare facturi în Approvisor" loading="lazy" /></picture></div>
+            </div>
+            <figcaption>Validare facturi<span>Preț comandat vs. preț facturat</span></figcaption>
+          </figure>
+          <figure class="shot">
+            <div class="shot-frame">
+              <div class="shot-bar"><span></span><span></span><span></span></div>
+              <div class="shot-body"><picture><source srcset="img/screen-gestiune.webp" type="image/webp" /><img src="img/screen-gestiune.png" alt="Gestiune și foodcost în Approvisor" loading="lazy" /></picture></div>
+            </div>
+            <figcaption>Gestiune<span>Stoc și foodcost pe locație</span></figcaption>
+          </figure>
+        </div>
+        <button class="carousel-btn prev" aria-label="Categoria anterioară">&#8592;</button>
+        <button class="carousel-btn next" aria-label="Categoria următoare">&#8594;</button>
+      </div>
+    </section>
+
+    <!-- TESTIMONIAL -->
+    <section id="testimonial" class="reveal">
+      <div class="quote-wrap reveal">
+        <div class="quote-mark">&#8220;</div>
+        <p class="quote-text is-placeholder">Testimonial în curând, de la lanțul HoReCa cu 12 locații.</p>
+        <div class="quote-attr"><b>Nume, funcție</b> · lanț HoReCa cu 12 locații</div>
       </div>
     </section>
 
@@ -744,25 +784,27 @@
     <section class="cta-section reveal" id="contact">
       <div class="cta-card">
         <div class="section-label" style="color:rgba(255,255,255,.5);justify-content:center">Începe acum</div>
-        <h2>Gata să renunți<br>la Excel și WhatsApp?</h2>
+        <h2>Gata să renunți<br>la mesaje și tabele?</h2>
         <p>Arată-ne operațiunea ta și îți demonstrăm cum arată Approvisor cu datele tale reale.</p>
         <div class="cta-btns">
-          <a href="mailto:contact@approvisor.ro" class="btn-primary">Cere o demonstrație ↗</a>
-          <a href="mailto:contact@approvisor.ro" class="btn-secondary">Contactează-ne</a>
+          <a href="mailto:contact@approvisor.com" class="btn-primary">Cere o demonstrație ↗</a>
+          <a href="mailto:contact@approvisor.com" class="btn-secondary">Contactează-ne</a>
         </div>
+        <div class="cta-note"><span>Preț în funcție de numărul de locații</span><span>Te ajutăm la configurare, cu datele tale</span></div>
       </div>
     </section>
 
     <footer>
       <a href="#" class="f-logo"><img src="img/logo.png" alt="Approvisor" /></a>
-      <p>© 2025 Approvisor · Platformă de achiziții pentru HoReCa</p>
+      <p>© 2026 Approvisor · Platformă de achiziții pentru HoReCa</p>
       <nav><ul>
         <li><a href="#module">Module</a></li>
         <li><a href="#contact">Contact</a></li>
+        <li><a href="mailto:contact@approvisor.com">contact@approvisor.com</a></li>
       </ul></nav>
     </footer>
 
-  </div>
+  </main>
 
   <script>
     (function(){
@@ -780,7 +822,7 @@
       els.forEach(function(el){ io.observe(el); });
     })();
 
-    /* Module explorer — master/detail tabs */
+    /* Module explorer - master/detail tabs */
     (function(){
       var tabs = Array.prototype.slice.call(document.querySelectorAll('.mod-item'));
       var panels = document.querySelectorAll('.mod-panel');
@@ -810,6 +852,35 @@
           if (n !== null) { e.preventDefault(); activate(tabs[n].dataset.mod, true); }
         });
       });
+    })();
+
+    /* Carousel - app screenshots */
+    (function(){
+      var car = document.querySelector('.carousel');
+      if (!car) return;
+      var track = car.querySelector('.carousel-track');
+      var slides = Array.prototype.slice.call(track.querySelectorAll('.shot'));
+      var dots = Array.prototype.slice.call(car.querySelectorAll('.carousel-dots button'));
+      function current(){
+        var edge = track.scrollLeft, best = 0, bd = Infinity;
+        slides.forEach(function(s, i){ var d = Math.abs((s.offsetLeft - slides[0].offsetLeft) - edge); if (d < bd) { bd = d; best = i; } });
+        return best;
+      }
+      function go(i){
+        i = Math.max(0, Math.min(slides.length - 1, i));
+        track.scrollTo({ left: slides[i].offsetLeft - slides[0].offsetLeft, behavior: 'smooth' });
+      }
+      function update(){
+        var i = current();
+        dots.forEach(function(d, k){ d.classList.toggle('active', k === i); d.setAttribute('aria-selected', k === i ? 'true' : 'false'); });
+      }
+      var prev = car.querySelector('.carousel-btn.prev'), next = car.querySelector('.carousel-btn.next');
+      if (prev) prev.addEventListener('click', function(){ go(current() - 1); });
+      if (next) next.addEventListener('click', function(){ go(current() + 1); });
+      dots.forEach(function(d, i){ d.addEventListener('click', function(){ go(i); }); });
+      var raf;
+      track.addEventListener('scroll', function(){ cancelAnimationFrame(raf); raf = requestAnimationFrame(update); }, { passive: true });
+      update();
     })();
   </script>
 
