@@ -161,6 +161,9 @@
     .stat-lbl { font-size: 12px; color: var(--ink-muted); margin-top: 6px; line-height: 1.4; }
     .stat-pill { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 700; color: var(--red); background: var(--red-light); padding: 3px 9px; border-radius: 100px; margin-top: 8px; }
     .hero::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 120px; background: linear-gradient(to bottom, rgba(242,245,250,0) 0%, var(--page-bg) 100%); pointer-events: none; z-index: 5; }
+    /* HERO shrink-to-fit experiment: on narrow screens, render the exact desktop hero scaled down (JS sets zoom to fit) */
+    .hero-shrink { width: 1280px; height: 640px; min-height: 0; }
+    .hero-shrink h1 { font-size: 60px; }
 
     /* ════════════ SECTIONS ════════════ */
     section { padding: var(--gap) 0; }
@@ -353,8 +356,10 @@
     .cta-note span { display: inline-flex; align-items: center; gap: 8px; }
     .cta-note span::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,.45); }
 
-    /* TESTIMONIALS */
-    .quotes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    /* TESTIMONIALS - carousel */
+    .quotes-carousel .carousel-track { gap: 22px; }
+    .quotes-carousel .quote-card { flex: 0 0 calc((100% - 22px) / 2); scroll-snap-align: start; }
+    .quotes-carousel .carousel-btn { top: 50%; }
     .quote-card { background: var(--white); border-radius: 20px; padding: 34px 32px; box-shadow: 0 2px 30px rgba(13,27,42,0.05); display: flex; flex-direction: column; transition: transform .25s, box-shadow .25s; }
     .quote-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(13,27,42,0.09); }
     .q-mark { font-size: 40px; line-height: .4; color: var(--red); font-family: Georgia, 'Times New Roman', serif; margin-bottom: 18px; }
@@ -371,7 +376,7 @@
     footer nav ul a:hover { color: var(--ink); }
 
     /* ════════════ MOBILE ════════════ */
-    @media (max-width: 1100px) {
+    @media (max-width: 1100px) and (min-width: 920px) {
       .hero-cards { width: 180px; }
       .hero-left { width: 340px; }
       .hero-nav nav ul a { font-size: 13px; padding: 8px 11px; }
@@ -380,26 +385,12 @@
     }
     @media (max-width: 920px) {
       :root { --gap: 72px; }
-      .hero { height: auto; min-height: 0; padding: 0 20px; }
-      .hero-nav .nav-inner { padding: 18px 0; }
-      .hero-nav nav ul { display: none; }
-      .logo img { height: 32px; }
-      .nav-cta { padding: 11px 18px; font-size: 14px; }
-      .hero-body { display: flex; flex-direction: column; }
-      .hero-left { width: auto; order: 1; padding: 6px 0 20px; align-self: stretch; }
-      h1 { font-size: clamp(40px, 11vw, 64px); line-height: 0.95; letter-spacing: -1.5px; margin-bottom: 18px; }
-      .hero-sub { font-size: 16px; margin-bottom: 26px; }
-      .hero-stage { order: 2; min-height: 0; aspect-ratio: 2160 / 1215; width: calc(100% + 40px); margin: 0 -20px; }
-      .hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; mask: none; -webkit-mask: none; filter: none; }
-      .hero-cards { order: 3; position: static; display: grid; grid-template-columns: repeat(3, 1fr); width: auto; gap: 10px; margin-top: 18px; }
-      .stat-card { padding: 14px 15px; }
-      .stat-num { font-size: 28px; }
-      .stat-lbl { font-size: 11px; }
-      .stat-pill { display: none; }
-      .hero::after { display: none; }
+      /* hero is handled by the shrink-to-fit experiment (JS-driven zoom on .hero) */
       .section-head { margin-bottom: 40px; }
       h2 { font-size: clamp(32px, 8vw, 46px); letter-spacing: -1px; }
-      .problems-grid { grid-template-columns: 1fr; gap: 16px; }
+      .problems-grid { display: flex; grid-template-columns: none; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; gap: 14px; margin: 0 -20px; padding: 2px 20px 12px; }
+      .problems-grid::-webkit-scrollbar { display: none; }
+      .prob-card { flex: 0 0 84%; scroll-snap-align: center; }
       .flow-wrap { padding: 40px 26px; border-radius: 20px; }
       .flow-head { grid-template-columns: 1fr; gap: 16px; margin-bottom: 44px; }
       .flow-row-4 { grid-template-columns: repeat(2,1fr); gap: 32px; }
@@ -408,21 +399,17 @@
       .stats-row { grid-template-columns: repeat(2,1fr); }
       .stat-box { padding: 34px 18px; }
       .stat-big { font-size: 44px; }
-      .mod-explorer { grid-template-columns: 1fr; gap: 14px; border-radius: 0; overflow: visible; box-shadow: none; }
-      .mod-list { display: flex; flex-direction: row; flex-wrap: wrap; gap: 8px; }
-      .mod-item { flex: 0 0 auto; width: auto; min-height: 0; gap: 0; background: var(--white); border: 1px solid rgba(13,27,42,0.09); border-radius: 100px; padding: 9px 16px; box-shadow: none; }
-      .mod-item.active { width: auto; background: var(--ink); border-color: var(--ink); border-radius: 100px; box-shadow: none; transform: none; }
-      .mod-ico, .mod-it-tx span, .mod-it-ar { display: none; }
-      .mod-it-tx b { font-size: 13px; }
-      .mod-detail { border-radius: 18px; padding: 30px 24px; }
-      .mod-panel { display: none !important; }
-      .mod-panel.active { display: block !important; height: auto; grid-template-columns: 1fr; }
-      .mod-panel.active > div:first-child { margin-bottom: 22px; }
+      .mod-explorer { display: block; border-radius: 0; overflow: visible; box-shadow: none; }
+      .mod-list { display: none; }
+      .mod-detail { display: flex; background: transparent; border-radius: 0; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; gap: 14px; margin: 0 -20px; padding: 2px 20px 12px; }
+      .mod-detail::-webkit-scrollbar { display: none; }
+      .mod-detail .mod-panel, .mod-detail .mod-panel.active { display: flex !important; flex-direction: column; gap: 22px; height: auto; flex: 0 0 86%; scroll-snap-align: center; background: var(--ink); border-radius: 18px; padding: 30px 24px; animation: none; }
       .mod-name { font-size: 22px; }
-      .roles-grid { grid-template-columns: 1fr; }
-      .quotes-grid { display: flex; grid-template-columns: none; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; gap: 14px; margin: 0 -20px; padding: 2px 20px 10px; }
-      .quotes-grid::-webkit-scrollbar { display: none; }
-      .quote-card { flex: 0 0 85%; scroll-snap-align: center; }
+      .roles-grid { display: flex; grid-template-columns: none; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; gap: 14px; margin: 0 -20px; padding: 2px 20px 12px; }
+      .roles-grid::-webkit-scrollbar { display: none; }
+      .role-card { flex: 0 0 88%; scroll-snap-align: center; }
+      .quotes-carousel .carousel-track { gap: 14px; margin: 0 -20px; padding: 2px 20px 12px; }
+      .quotes-carousel .quote-card { flex: 0 0 85%; scroll-snap-align: center; }
       .shot { flex: 0 0 88%; }
       .carousel-btn { display: none; }
       .role-card { padding: 36px 28px; }
@@ -431,18 +418,6 @@
       .btn-primary, .btn-secondary { justify-content: center; text-align: center; }
       footer { flex-direction: column; gap: 18px; text-align: center; }
       footer nav ul { justify-content: center; }
-    }
-    @media (max-width: 600px) {
-      h1 { font-size: clamp(34px, 9.5vw, 50px); }
-      .hero-sub { font-size: 14px; line-height: 1.5; margin-bottom: 22px; }
-      .hero-sub .sub-full { display: none; }
-      .hero-sub .sub-short { display: inline; }
-      /* hero proof cards hidden on phones - numbers are in the subtitle + stats section */
-      .hero-cards { display: none; }
-    }
-    @media (max-width: 480px) {
-      .logo img { height: 24px; }
-      .nav-cta { padding: 10px 14px; font-size: 13px; }
     }
   </style>
 </head>
@@ -779,27 +754,31 @@
         <div class="section-label">Testimoniale</div>
         <h2>Ce spun cei care<br>îl folosesc zilnic</h2>
       </div>
-      <div class="quotes-grid reveal-children">
-        <figure class="quote-card">
-          <div class="q-mark">&#8220;</div>
-          <p>Ca să știu cât cheltuiesc pe toate locațiile, îmi lua o zi de adunat facturi. Acum văd totul într-un loc, în timp real, și nu mai iau decizii pe estimări.</p>
-          <figcaption><b>Patron</b>Lanț HoReCa · 12 locații</figcaption>
-        </figure>
-        <figure class="quote-card">
-          <div class="q-mark">&#8220;</div>
-          <p>Văd același produs la toți furnizorii, cu prețul lor, unul lângă altul. Negociez cu cifre, nu din memorie, iar diferențele de pe facturi nu mai trec neobservate.</p>
-          <figcaption><b>Director de achiziții</b>Lanț HoReCa</figcaption>
-        </figure>
-        <figure class="quote-card">
-          <div class="q-mark">&#8220;</div>
-          <p>Comanda zilnică o făceam pe telefon, cu fiecare furnizor pe rând. Acum o închei în câteva minute și pleacă singură la toți. Am recâștigat prima oră din zi.</p>
-          <figcaption><b>Manager de locație</b>Lanț HoReCa</figcaption>
-        </figure>
-        <figure class="quote-card">
-          <div class="q-mark">&#8220;</div>
-          <p>Văd food cost-ul pe fiecare rețetă, cu prețurile la zi. Când se scumpește un ingredient, știu imediat ce preparat mă costă mai mult și ajustez meniul.</p>
-          <figcaption><b>Șef-bucătar</b>Lanț HoReCa</figcaption>
-        </figure>
+      <div class="carousel quotes-carousel reveal">
+        <div class="carousel-track">
+          <figure class="quote-card">
+            <div class="q-mark">&#8220;</div>
+            <p>Ca să știu cât cheltuiesc pe toate locațiile, îmi lua o zi de adunat facturi. Acum văd totul într-un loc, în timp real, și nu mai iau decizii pe estimări.</p>
+            <figcaption><b>Patron</b>Lanț HoReCa · 12 locații</figcaption>
+          </figure>
+          <figure class="quote-card">
+            <div class="q-mark">&#8220;</div>
+            <p>Văd același produs la toți furnizorii, cu prețul lor, unul lângă altul. Negociez cu cifre, nu din memorie, iar diferențele de pe facturi nu mai trec neobservate.</p>
+            <figcaption><b>Director de achiziții</b>Lanț HoReCa</figcaption>
+          </figure>
+          <figure class="quote-card">
+            <div class="q-mark">&#8220;</div>
+            <p>Comanda zilnică o făceam pe telefon, cu fiecare furnizor pe rând. Acum o închei în câteva minute și pleacă singură la toți. Am recâștigat prima oră din zi.</p>
+            <figcaption><b>Manager de locație</b>Lanț HoReCa</figcaption>
+          </figure>
+          <figure class="quote-card">
+            <div class="q-mark">&#8220;</div>
+            <p>Văd food cost-ul pe fiecare rețetă, cu prețurile la zi. Când se scumpește un ingredient, știu imediat ce preparat mă costă mai mult și ajustez meniul.</p>
+            <figcaption><b>Șef-bucătar</b>Lanț HoReCa</figcaption>
+          </figure>
+        </div>
+        <button class="carousel-btn prev" aria-label="Testimonialul anterior">&#8592;</button>
+        <button class="carousel-btn next" aria-label="Testimonialul următor">&#8594;</button>
       </div>
     </section>
 
@@ -877,13 +856,12 @@
       });
     })();
 
-    /* Carousel - app screenshots */
-    (function(){
-      var car = document.querySelector('.carousel');
-      if (!car) return;
+    /* Carousels - app screenshots + testimonials (arrow nav on desktop, swipe on mobile) */
+    Array.prototype.forEach.call(document.querySelectorAll('.carousel'), function(car){
       var track = car.querySelector('.carousel-track');
-      var slides = Array.prototype.slice.call(track.querySelectorAll('.shot'));
-      var dots = Array.prototype.slice.call(car.querySelectorAll('.carousel-dots button'));
+      if (!track) return;
+      var slides = Array.prototype.slice.call(track.children);
+      if (!slides.length) return;
       function current(){
         var edge = track.scrollLeft, best = 0, bd = Infinity;
         slides.forEach(function(s, i){ var d = Math.abs((s.offsetLeft - slides[0].offsetLeft) - edge); if (d < bd) { bd = d; best = i; } });
@@ -893,17 +871,28 @@
         i = Math.max(0, Math.min(slides.length - 1, i));
         track.scrollTo({ left: slides[i].offsetLeft - slides[0].offsetLeft, behavior: 'smooth' });
       }
-      function update(){
-        var i = current();
-        dots.forEach(function(d, k){ d.classList.toggle('active', k === i); d.setAttribute('aria-selected', k === i ? 'true' : 'false'); });
-      }
       var prev = car.querySelector('.carousel-btn.prev'), next = car.querySelector('.carousel-btn.next');
       if (prev) prev.addEventListener('click', function(){ go(current() - 1); });
       if (next) next.addEventListener('click', function(){ go(current() + 1); });
-      dots.forEach(function(d, i){ d.addEventListener('click', function(){ go(i); }); });
-      var raf;
-      track.addEventListener('scroll', function(){ cancelAnimationFrame(raf); raf = requestAnimationFrame(update); }, { passive: true });
-      update();
+    });
+
+    /* HERO shrink-to-fit: on narrow screens, render the exact desktop hero scaled down to fit */
+    (function(){
+      var hero = document.querySelector('.hero');
+      if (!hero) return;
+      var DESIGN = 1280, CROSS = 920;
+      function fit(){
+        var w = document.documentElement.clientWidth;
+        if (w < CROSS) {
+          hero.classList.add('hero-shrink');
+          hero.style.zoom = (w / DESIGN).toFixed(4);
+        } else {
+          hero.classList.remove('hero-shrink');
+          hero.style.zoom = '';
+        }
+      }
+      fit();
+      window.addEventListener('resize', fit);
     })();
   </script>
 
