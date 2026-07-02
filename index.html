@@ -405,13 +405,15 @@
       .flow-row-4::after, .flow-row-3::after { display: none; }
       .flow-row-3 { grid-template-columns: 1fr; gap: 32px; margin-top: 32px; }
       .stats-row { grid-template-columns: repeat(2,1fr); }
+      .stat-box { padding: 34px 18px; }
+      .stat-big { font-size: 44px; }
       .mod-explorer { grid-template-columns: 1fr; gap: 0; border-radius: 18px; }
-      .mod-list { flex-direction: row; overflow-x: auto; scrollbar-width: none; gap: 0; padding: 0; scroll-snap-type: x mandatory; }
-      .mod-list::-webkit-scrollbar { display: none; }
-      .mod-item { flex: 0 0 auto; scroll-snap-align: start; min-height: 0; padding: 14px 18px; border-bottom: none; border-right: 1px solid rgba(13,27,42,0.06); }
-      .mod-it-tx span, .mod-it-ar { display: none; }
-      .mod-detail { padding: 28px 22px; }
-      .mod-panel.active { grid-template-columns: 1fr; gap: 24px; }
+      .mod-list { display: none; }
+      .mod-detail { padding: 4px 24px; border-radius: 18px; }
+      .mod-panel { display: block !important; height: auto; padding: 32px 0; }
+      .mod-panel.active { height: auto; animation: none; }
+      .mod-panel + .mod-panel { border-top: 1px solid rgba(255,255,255,0.1); }
+      .mod-panel > div:first-child { margin-bottom: 22px; }
       .mod-name { font-size: 22px; }
       .roles-grid { grid-template-columns: 1fr; }
       .quotes-grid { grid-template-columns: 1fr; }
@@ -427,20 +429,10 @@
     @media (max-width: 600px) {
       h1 { font-size: clamp(34px, 9.5vw, 50px); }
       .hero-sub { font-size: 15px; }
-      /* swipeable card row - a mobile-specific layout, not a shrunk grid */
-      .hero-cards {
-        display: flex; flex-direction: row; grid-template-columns: none;
-        overflow-x: auto; scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch; scrollbar-width: none;
-        margin: 18px -20px 0; padding: 4px 20px 12px; gap: 12px;
-      }
-      .hero-cards::-webkit-scrollbar { display: none; }
-      .stat-card { flex: 0 0 72%; max-width: 260px; scroll-snap-align: start; }
-      .stat-pill { display: inline-flex; }
+      /* hero proof cards hidden on phones - numbers are in the subtitle + stats section */
+      .hero-cards { display: none; }
     }
     @media (max-width: 480px) {
-      .stats-row { grid-template-columns: 1fr; }
-      .flow-row-4 { grid-template-columns: 1fr; }
       .logo img { height: 24px; }
       .nav-cta { padding: 10px 14px; font-size: 13px; }
     }
