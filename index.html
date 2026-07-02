@@ -407,16 +407,21 @@
       .stats-row { grid-template-columns: repeat(2,1fr); }
       .stat-box { padding: 34px 18px; }
       .stat-big { font-size: 44px; }
-      .mod-explorer { grid-template-columns: 1fr; gap: 0; border-radius: 18px; }
-      .mod-list { display: none; }
-      .mod-detail { padding: 4px 24px; border-radius: 18px; }
-      .mod-panel { display: block !important; height: auto; padding: 32px 0; }
-      .mod-panel.active { height: auto; animation: none; }
-      .mod-panel + .mod-panel { border-top: 1px solid rgba(255,255,255,0.1); }
-      .mod-panel > div:first-child { margin-bottom: 22px; }
+      .mod-explorer { grid-template-columns: 1fr; gap: 14px; border-radius: 0; overflow: visible; box-shadow: none; }
+      .mod-list { display: flex; flex-direction: row; flex-wrap: wrap; gap: 8px; }
+      .mod-item { flex: 0 0 auto; width: auto; min-height: 0; gap: 0; background: var(--white); border: 1px solid rgba(13,27,42,0.09); border-radius: 100px; padding: 9px 16px; box-shadow: none; }
+      .mod-item.active { width: auto; background: var(--ink); border-color: var(--ink); border-radius: 100px; box-shadow: none; transform: none; }
+      .mod-ico, .mod-it-tx span, .mod-it-ar { display: none; }
+      .mod-it-tx b { font-size: 13px; }
+      .mod-detail { border-radius: 18px; padding: 30px 24px; }
+      .mod-panel { display: none !important; }
+      .mod-panel.active { display: block !important; height: auto; grid-template-columns: 1fr; }
+      .mod-panel.active > div:first-child { margin-bottom: 22px; }
       .mod-name { font-size: 22px; }
       .roles-grid { grid-template-columns: 1fr; }
-      .quotes-grid { grid-template-columns: 1fr; }
+      .quotes-grid { display: flex; grid-template-columns: none; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; gap: 14px; margin: 0 -20px; padding: 2px 20px 10px; }
+      .quotes-grid::-webkit-scrollbar { display: none; }
+      .quote-card { flex: 0 0 85%; scroll-snap-align: center; }
       .shot { flex: 0 0 88%; }
       .carousel-btn { display: none; }
       .role-card { padding: 36px 28px; }
@@ -428,7 +433,7 @@
     }
     @media (max-width: 600px) {
       h1 { font-size: clamp(34px, 9.5vw, 50px); }
-      .hero-sub { font-size: 15px; }
+      .hero-sub { font-size: 14px; line-height: 1.5; margin-bottom: 22px; }
       /* hero proof cards hidden on phones - numbers are in the subtitle + stats section */
       .hero-cards { display: none; }
     }
