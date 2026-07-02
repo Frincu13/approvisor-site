@@ -352,13 +352,14 @@
     .cta-note span { display: inline-flex; align-items: center; gap: 8px; }
     .cta-note span::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,.45); }
 
-    /* TESTIMONIAL */
-    .quote-wrap { max-width: 880px; margin: 0 auto; text-align: center; }
-    .quote-mark { font-size: 68px; line-height: .7; color: var(--red); font-weight: 800; font-family: Georgia, 'Times New Roman', serif; }
-    .quote-text { font-size: clamp(22px, 2.6vw, 33px); font-weight: 700; line-height: 1.32; letter-spacing: -0.5px; color: var(--ink); margin: 8px 0 28px; }
-    .quote-text.is-placeholder { color: var(--ink-muted); font-weight: 600; font-style: italic; opacity: .65; }
-    .quote-attr { font-size: 15px; color: var(--ink-muted); }
-    .quote-attr b { color: var(--ink); font-weight: 700; }
+    /* TESTIMONIALS */
+    .quotes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+    .quote-card { background: var(--white); border-radius: 20px; padding: 34px 32px; box-shadow: 0 2px 30px rgba(13,27,42,0.05); display: flex; flex-direction: column; transition: transform .25s, box-shadow .25s; }
+    .quote-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(13,27,42,0.09); }
+    .q-mark { font-size: 40px; line-height: .4; color: var(--red); font-family: Georgia, 'Times New Roman', serif; margin-bottom: 18px; }
+    .quote-card p { font-size: 17px; line-height: 1.6; color: var(--ink); font-weight: 500; margin-bottom: 24px; }
+    .quote-card figcaption { margin-top: auto; font-size: 13px; color: var(--ink-muted); line-height: 1.4; }
+    .quote-card figcaption b { display: block; color: var(--ink); font-size: 15px; font-weight: 700; margin-bottom: 2px; }
 
     /* FOOTER */
     footer { border-top: 1px solid rgba(13,27,42,0.08); padding: 46px 0 38px; display: flex; align-items: center; justify-content: space-between; }
@@ -413,6 +414,7 @@
       .mod-panel.active { grid-template-columns: 1fr; gap: 24px; }
       .mod-name { font-size: 22px; }
       .roles-grid { grid-template-columns: 1fr; }
+      .quotes-grid { grid-template-columns: 1fr; }
       .shot { flex: 0 0 88%; }
       .carousel-btn { display: none; }
       .role-card { padding: 36px 28px; }
@@ -771,12 +773,33 @@
       </div>
     </section>
 
-    <!-- TESTIMONIAL -->
+    <!-- TESTIMONIALS -->
     <section id="testimonial" class="reveal">
-      <div class="quote-wrap reveal">
-        <div class="quote-mark">&#8220;</div>
-        <p class="quote-text is-placeholder">Testimonial în curând, de la lanțul HoReCa cu 12 locații.</p>
-        <div class="quote-attr"><b>Nume, funcție</b> · lanț HoReCa cu 12 locații</div>
+      <div class="section-head reveal">
+        <div class="section-label">Testimoniale</div>
+        <h2>Ce spun cei care<br>îl folosesc zilnic</h2>
+      </div>
+      <div class="quotes-grid reveal-children">
+        <figure class="quote-card">
+          <div class="q-mark">&#8220;</div>
+          <p>Ca să știu cât cheltuiesc pe toate locațiile, îmi lua o zi de adunat facturi. Acum văd totul într-un loc, în timp real, și nu mai iau decizii pe estimări.</p>
+          <figcaption><b>Patron</b>Lanț HoReCa · 12 locații</figcaption>
+        </figure>
+        <figure class="quote-card">
+          <div class="q-mark">&#8220;</div>
+          <p>Văd același produs la toți furnizorii, cu prețul lor, unul lângă altul. Negociez cu cifre, nu din memorie, iar diferențele de pe facturi nu mai trec neobservate.</p>
+          <figcaption><b>Director de achiziții</b>Lanț HoReCa</figcaption>
+        </figure>
+        <figure class="quote-card">
+          <div class="q-mark">&#8220;</div>
+          <p>Comanda zilnică o făceam pe telefon, cu fiecare furnizor pe rând. Acum o închei în câteva minute și pleacă singură la toți. Am recâștigat prima oră din zi.</p>
+          <figcaption><b>Manager de locație</b>Lanț HoReCa</figcaption>
+        </figure>
+        <figure class="quote-card">
+          <div class="q-mark">&#8220;</div>
+          <p>Văd food cost-ul pe fiecare rețetă, cu prețurile la zi. Când se scumpește un ingredient, știu imediat ce preparat mă costă mai mult și ajustez meniul.</p>
+          <figcaption><b>Șef-bucătar</b>Lanț HoReCa</figcaption>
+        </figure>
       </div>
     </section>
 
