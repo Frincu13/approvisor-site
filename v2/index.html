@@ -10,7 +10,10 @@
   <link rel="icon" type="image/png" href="../favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -27,16 +30,20 @@
       --red-deep: #8B1A1A;
       --maxw: 1400px;
       --pad: clamp(20px, 5vw, 72px);
+      --f-display: 'Inter Tight', sans-serif;
+      --f-body: 'Satoshi', sans-serif;
     }
     html { scroll-behavior: smooth; }
     html.lenis, html.lenis body { height: auto; }
     .lenis.lenis-smooth { scroll-behavior: auto !important; }
     body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: var(--f-body);
       background: var(--bg0);
       color: var(--tx);
+      line-height: 1.6;
       overflow-x: hidden;
     }
+    h1, h2, .giant .word, .stat-big, .mv-big, .mod-name, .prob-idx, .fstep-name { font-family: var(--f-display); }
     ::selection { background: var(--red-deep); color: #fff; }
     .inner { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--pad); }
     :focus-visible { outline: 2px solid var(--red); outline-offset: 3px; border-radius: 6px; }
@@ -129,7 +136,7 @@
     .flow-sticky { position: sticky; top: 120px; }
     .flow-steps { position: relative; padding-left: 40px; }
     .flow-rail { position: absolute; left: 10px; top: 8px; bottom: 8px; width: 2px; background: var(--line); overflow: hidden; }
-    .flow-rail i { position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, var(--red), var(--red-deep)); transform: scaleY(0); transform-origin: top; will-change: transform; }
+    .flow-rail i { position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: var(--red-mid); transform: scaleY(0); transform-origin: top; will-change: transform; }
     .fstep { padding: 26px 0; border-bottom: 1px solid var(--line); opacity: .35; transition: opacity .45s; position: relative; }
     .fstep:last-child { border-bottom: none; }
     .fstep::before { content: ''; position: absolute; left: -36px; top: 36px; width: 10px; height: 10px; border-radius: 50%; background: var(--bg0); border: 2px solid rgba(242,245,250,0.3); transition: border-color .4s, box-shadow .4s, background .4s; }
@@ -173,7 +180,7 @@
     .mv-barline { display: flex; align-items: center; gap: 12px; font-size: 12px; }
     .mv-barline .nm { color: var(--tx2); width: 64px; flex-shrink: 0; }
     .mv-bar { flex: 1; height: 7px; border-radius: 100px; background: rgba(255,255,255,0.09); overflow: hidden; }
-    .mv-bar > i { display: block; height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--red-mid), var(--red)); }
+    .mv-bar > i { display: block; height: 100%; border-radius: 100px; background: var(--red-mid); }
     .mv-pct { font-weight: 700; width: 38px; text-align: right; flex-shrink: 0; font-variant-numeric: tabular-nums; }
 
     /* SCREENSHOTS */
