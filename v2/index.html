@@ -694,7 +694,7 @@
 
       /* smooth scroll (Lenis) */
       if (typeof window.Lenis !== 'undefined') {
-        var lenis = new Lenis({ lerp: 0.1, smoothWheel: true, wheelMultiplier: 0.85 });
+        var lenis = new Lenis({ lerp: 0.16, smoothWheel: true, wheelMultiplier: 0.7 });
         lenis.on('scroll', ScrollTrigger.update);
         gsap.ticker.add(function(t){ lenis.raf(t * 1000); });
         gsap.ticker.lagSmoothing(0);
@@ -714,6 +714,12 @@
       gsap.to('#heroVisual', {
         y: -18,
         scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 }
+      });
+
+      /* hero exit: badge fades out before it slides under the fixed nav */
+      gsap.fromTo('.hero-badge', { autoAlpha: 1, y: 0 }, {
+        autoAlpha: 0, y: -16, ease: 'none', immediateRender: false,
+        scrollTrigger: { trigger: '.hero', start: 'top top', end: '150 top', scrub: true }
       });
 
       /* testimonials marquee (desktop): duplicate the cards into two halves for a seamless loop */
