@@ -67,16 +67,6 @@
 
     /* ── HERO: centered display headline, scene rising from the bottom ── */
     .hero { position: relative; min-height: 100svh; display: flex; flex-direction: column; overflow: hidden; padding: 150px 0 0; background: radial-gradient(120% 90% at 50% 0%, #10202F 0%, rgba(7,13,22,0) 62%); }
-    .aurora { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
-    .aurora span { position: absolute; border-radius: 50%; filter: blur(90px); opacity: .75; will-change: transform; }
-    .aurora .a1 { width: 56vw; height: 56vw; left: -14vw; top: -18vw; background: radial-gradient(circle, rgba(139,26,26,0.55) 0%, rgba(139,26,26,0) 68%); animation: drift1 26s ease-in-out infinite alternate; }
-    .aurora .a2 { width: 44vw; height: 44vw; right: -12vw; top: 8vh; background: radial-gradient(circle, rgba(184,51,51,0.38) 0%, rgba(184,51,51,0) 66%); animation: drift2 34s ease-in-out infinite alternate; }
-    .aurora .a3 { width: 50vw; height: 50vw; left: 26vw; bottom: -28vw; background: radial-gradient(circle, rgba(28,46,69,0.9) 0%, rgba(28,46,69,0) 70%); animation: drift3 40s ease-in-out infinite alternate; }
-    @keyframes drift1 { to { transform: translate(9vw, 7vh) scale(1.12); } }
-    @keyframes drift2 { to { transform: translate(-7vw, 10vh) scale(0.92); } }
-    @keyframes drift3 { to { transform: translate(-10vw, -6vh) scale(1.08); } }
-    @media (prefers-reduced-motion: reduce) { .aurora span { animation: none; } }
-
     .hero-center { position: relative; z-index: 2; text-align: center; }
     .hero-badge { display: inline-flex; align-items: center; gap: 9px; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--tx2); border: 1px solid var(--line); background: rgba(255,255,255,0.03); padding: 9px 16px; border-radius: 100px; margin-bottom: 30px; }
     .hero-badge i { width: 7px; height: 7px; border-radius: 50%; background: var(--red); display: inline-block; box-shadow: 0 0 12px rgba(214,72,72,0.9); }
@@ -92,9 +82,9 @@
     .hero-scene { position: relative; z-index: 1; flex: 1 1 0; min-height: 150px; margin-top: 14px; pointer-events: none; display: flex; align-items: flex-end; justify-content: center; }
     .hero-scene picture { display: flex; align-items: flex-end; justify-content: center; height: 107%; }
     .hero-scene img { height: 100%; width: auto; max-width: 92vw; object-fit: contain; object-position: bottom center; display: block;
-      -webkit-mask-image: radial-gradient(72% 68% at 50% 55%, #000 55%, transparent 98%);
-      mask-image: radial-gradient(72% 68% at 50% 55%, #000 55%, transparent 98%); }
-    .hero-scene::before { content: ''; position: absolute; left: 20%; right: 20%; top: 26%; bottom: -18%; background: radial-gradient(52% 55% at 50% 62%, rgba(184,51,51,0.34) 0%, rgba(184,51,51,0) 70%); filter: blur(46px); z-index: -1; }
+      -webkit-mask-image: radial-gradient(88% 135% at 50% 108%, #000 60%, transparent 95%);
+      mask-image: radial-gradient(88% 135% at 50% 108%, #000 60%, transparent 95%); }
+    .hero-scene::before { content: ''; position: absolute; left: 24%; right: 24%; top: 34%; bottom: -14%; background: radial-gradient(52% 55% at 50% 62%, rgba(184,51,51,0.18) 0%, rgba(184,51,51,0) 70%); filter: blur(50px); z-index: -1; }
 
     /* short viewports: compact the copy so the scene keeps presence */
     @media (max-height: 780px) and (min-width: 921px) {
@@ -348,7 +338,6 @@
 
     <!-- HERO -->
     <header class="hero">
-      <div class="aurora" aria-hidden="true"><span class="a1"></span><span class="a2"></span><span class="a3"></span></div>
       <div class="inner hero-center">
         <div class="hero-badge rv"><i></i>Achiziții & operațiuni pentru HoReCa</div>
         <h1 aria-label="Comenzi. Facturi. Stoc. Într-un singur sistem.">
@@ -362,7 +351,7 @@
         </div>
       </div>
       <div class="hero-scene" id="heroVisual" aria-hidden="true">
-        <picture><source srcset="../img/hero.webp" type="image/webp" /><img src="../img/hero.png" alt="" width="2160" height="1215" fetchpriority="high" /></picture>
+        <picture><source srcset="../img/hero-dark.webp" type="image/webp" /><img src="../img/hero-dark.png" alt="" width="1240" height="764" fetchpriority="high" /></picture>
       </div>
       <div class="hero-corner hc-left rv"><i></i>Deja folosit de un lanț HoReCa cu 12 locații și 1000+ comenzi procesate</div>
       <div class="hero-corner hc-right rv">Catalog · Comenzi · Validare<br>Gestiune · Statistici</div>
