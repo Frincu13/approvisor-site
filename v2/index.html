@@ -186,8 +186,11 @@
     .mv-bar > i { display: block; height: 100%; border-radius: 100px; background: var(--red-mid); }
     .mv-pct { font-weight: 700; width: 38px; text-align: right; flex-shrink: 0; font-variant-numeric: tabular-nums; }
 
-    /* SCREENSHOTS */
-    .shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    /* SCREENSHOTS: 5 shots, 3 + 2 centered */
+    .shots { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; }
+    .shot { grid-column: span 2; }
+    .shot:nth-child(4) { grid-column: 2 / span 2; }
+    .shot:nth-child(5) { grid-column: 4 / span 2; }
     .shot { perspective: 900px; }
     .shot .frame { transition: transform .4s cubic-bezier(.16,1,.3,1), box-shadow .4s; }
     .shot:hover .frame { box-shadow: 0 30px 70px rgba(0,0,0,0.6), 0 0 50px rgba(184,51,51,0.12); }
@@ -520,6 +523,20 @@
               <picture><source srcset="../img/screen-catalog.webp" type="image/webp" /><img src="../img/screen-catalog.png" alt="Catalog în Approvisor" loading="lazy" /></picture>
             </div>
             <figcaption>Catalog<span>Produse și prețuri, de la toți furnizorii</span></figcaption>
+          </figure>
+          <figure class="shot rv">
+            <div class="frame">
+              <div class="frame-bar"><span></span><span></span><span></span></div>
+              <picture><source srcset="../img/screen-comenzi.webp" type="image/webp" /><img src="../img/screen-comenzi.png" alt="Comenzi în Approvisor" loading="lazy" /></picture>
+            </div>
+            <figcaption>Comenzi<span>Coș și trimitere către furnizori</span></figcaption>
+          </figure>
+          <figure class="shot rv">
+            <div class="frame">
+              <div class="frame-bar"><span></span><span></span><span></span></div>
+              <picture><source srcset="../img/screen-statistici.webp" type="image/webp" /><img src="../img/screen-statistici.png" alt="Statistici în Approvisor" loading="lazy" /></picture>
+            </div>
+            <figcaption>Statistici<span>Cheltuieli, comenzi și producție</span></figcaption>
           </figure>
           <figure class="shot rv">
             <div class="frame">
