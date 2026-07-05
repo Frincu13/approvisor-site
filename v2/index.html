@@ -34,8 +34,6 @@
       --f-body: 'Satoshi', sans-serif;
     }
     html { scroll-behavior: smooth; }
-    html.lenis, html.lenis body { height: auto; }
-    .lenis.lenis-smooth { scroll-behavior: auto !important; }
     body {
       font-family: var(--f-body);
       background: var(--bg0);
@@ -660,7 +658,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
   <script>
     (function(){
       var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -691,14 +688,6 @@
       if (!hasGsap || reduced) return; /* content is fully visible without motion */
 
       gsap.registerPlugin(ScrollTrigger);
-
-      /* smooth scroll (Lenis) */
-      if (typeof window.Lenis !== 'undefined') {
-        var lenis = new Lenis({ lerp: 0.16, smoothWheel: true, wheelMultiplier: 0.7 });
-        lenis.on('scroll', ScrollTrigger.update);
-        gsap.ticker.add(function(t){ lenis.raf(t * 1000); });
-        gsap.ticker.lagSmoothing(0);
-      }
 
       /* hero intro */
       gsap.set('.h1-line > span', { yPercent: 110 });
