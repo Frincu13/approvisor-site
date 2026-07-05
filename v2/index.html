@@ -186,11 +186,15 @@
     .mv-bar > i { display: block; height: 100%; border-radius: 100px; background: var(--red-mid); }
     .mv-pct { font-weight: 700; width: 38px; text-align: right; flex-shrink: 0; font-variant-numeric: tabular-nums; }
 
-    /* SCREENSHOTS: 5 shots, 3 + 2 centered */
-    .shots { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; }
-    .shot { grid-column: span 2; }
-    .shot:nth-child(4) { grid-column: 2 / span 2; }
-    .shot:nth-child(5) { grid-column: 4 / span 2; }
+    /* SCREENSHOTS: carousel, 3-up on desktop */
+    .shots-carousel { position: relative; }
+    .shots-track { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; padding: 4px 2px; }
+    .shots-track::-webkit-scrollbar { display: none; }
+    .shot { flex: 0 0 calc((100% - 40px) / 3); scroll-snap-align: start; margin: 0; }
+    .car-btn { position: absolute; top: 40%; transform: translateY(-50%); width: 52px; height: 52px; border-radius: 50%; border: 1px solid var(--line); background: #101E30; color: var(--tx); font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 4; transition: border-color .25s, background .25s, transform .15s; }
+    .car-btn:hover { border-color: rgba(214,72,72,0.55); background: #14243A; }
+    .car-btn:active { transform: translateY(-50%) scale(.93); }
+    .car-btn.prev { left: -16px; } .car-btn.next { right: -16px; }
     .shot { perspective: 900px; }
     .shot .frame { transition: transform .4s cubic-bezier(.16,1,.3,1), box-shadow .4s; }
     .shot:hover .frame { box-shadow: 0 30px 70px rgba(0,0,0,0.6), 0 0 50px rgba(184,51,51,0.12); }
@@ -231,23 +235,6 @@
     .quote p { font-size: 16.5px; line-height: 1.65; font-weight: 500; margin-bottom: 24px; }
     .quote figcaption { margin-top: auto; font-size: 13px; color: var(--tx3); }
     .quote figcaption b { display: block; color: var(--tx); font-size: 14.5px; font-weight: 700; margin-bottom: 2px; }
-
-    /* CALCULATOR */
-    .calc { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 18px; align-items: stretch; }
-    .calc-panel { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 38px 34px; }
-    .calc-row { padding: 18px 0; border-bottom: 1px solid var(--line); }
-    .calc-row:last-child { border-bottom: none; }
-    .calc-lbl { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; font-size: 14.5px; font-weight: 500; color: var(--tx2); margin-bottom: 14px; }
-    .calc-lbl b { font-family: var(--f-display); font-size: 22px; font-weight: 700; color: var(--tx); font-variant-numeric: tabular-nums; white-space: nowrap; }
-    .calc input[type="range"] { width: 100%; accent-color: var(--red); height: 22px; cursor: pointer; background: transparent; }
-    .calc-result { background: var(--card); border: 1px solid rgba(214,72,72,0.35); border-radius: 20px; padding: 38px 34px; display: flex; flex-direction: column; position: relative; overflow: hidden; }
-    .calc-result::before { content: ''; position: absolute; right: -30%; top: -40%; width: 80%; height: 100%; background: radial-gradient(circle, rgba(184,51,51,0.22) 0%, rgba(184,51,51,0) 70%); filter: blur(30px); pointer-events: none; }
-    .calc-out-lbl { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--tx3); margin-bottom: 14px; }
-    .calc-out { font-family: var(--f-display); font-size: clamp(52px, 5vw, 84px); font-weight: 800; letter-spacing: -0.03em; line-height: 1; color: var(--red); font-variant-numeric: tabular-nums; }
-    .calc-out-sub { font-size: 14.5px; color: var(--tx2); margin-top: 10px; line-height: 1.6; }
-    .calc-note { margin-top: auto; padding-top: 24px; font-size: 14.5px; line-height: 1.65; color: var(--tx); border-top: 1px solid var(--line); }
-    .calc-note a { color: var(--red); font-weight: 700; text-decoration: none; }
-    .calc-note a:hover { text-decoration: underline; }
 
     /* FAQ */
     .faq { max-width: 780px; }
@@ -303,14 +290,12 @@
       .mods-view::-webkit-scrollbar { display: none; }
       .mods-track { padding: 4px var(--pad) 30px; }
       .mod-card { scroll-snap-align: center; }
-      .shots { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; gap: 14px; margin: 0 calc(var(--pad) * -1); padding: 2px var(--pad) 12px; }
-      .shots::-webkit-scrollbar { display: none; }
+      .shots-track { gap: 14px; margin: 0 calc(var(--pad) * -1); padding: 2px var(--pad) 12px; }
       .shot { flex: 0 0 86%; scroll-snap-align: center; }
+      .car-btn { display: none; }
       .quotes { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; gap: 14px; margin: 0 calc(var(--pad) * -1); padding: 2px var(--pad) 12px; }
       .quotes::-webkit-scrollbar { display: none; }
       .quote { flex: 0 0 85%; scroll-snap-align: center; }
-      .calc { grid-template-columns: 1fr; }
-      .calc-panel, .calc-result { padding: 28px 22px; }
       .faq summary { padding: 18px 20px; font-size: 15px; }
       .faq .faq-a { padding: 0 20px 20px; }
       .f-in { flex-direction: column; text-align: center; }
@@ -516,7 +501,8 @@
           <div class="sec-label rv">În aplicație</div>
           <h2 class="rv">Cum arată<br>în Approvisor</h2>
         </div>
-        <div class="shots">
+        <div class="shots-carousel">
+          <div class="shots-track">
           <figure class="shot rv">
             <div class="frame">
               <div class="frame-bar"><span></span><span></span><span></span></div>
@@ -552,6 +538,9 @@
             </div>
             <figcaption>Gestiune<span>Stoc și foodcost pe locație</span></figcaption>
           </figure>
+          </div>
+          <button class="car-btn prev" aria-label="Categoria anterioară">&#8592;</button>
+          <button class="car-btn next" aria-label="Categoria următoare">&#8594;</button>
         </div>
       </div>
     </section>
@@ -584,39 +573,6 @@
             <p>Văd food cost-ul pe fiecare rețetă, cu prețurile la zi. Când se scumpește un ingredient, știu imediat ce preparat mă costă mai mult și ajustez meniul.</p>
             <figcaption><b>Șef-bucătar</b>Lanț HoReCa</figcaption>
           </figure>
-        </div>
-      </div>
-    </section>
-
-    <!-- CALCULATOR -->
-    <section class="sec" id="calculator">
-      <div class="inner">
-        <div class="sec-head">
-          <div class="sec-label rv">Calculator</div>
-          <h2 class="rv">Cât timp îți ia<br>aprovizionarea acum?</h2>
-          <p class="sec-sub rv">Estimare pe cifrele tale: câte ore pe lună consumă echipa doar pe trimiterea comenzilor către furnizori.</p>
-        </div>
-        <div class="calc rv">
-          <div class="calc-panel">
-            <div class="calc-row">
-              <div class="calc-lbl"><span>Locații</span><b id="cvLoc">5</b></div>
-              <input type="range" id="cLoc" min="1" max="30" value="5" aria-label="Număr de locații" />
-            </div>
-            <div class="calc-row">
-              <div class="calc-lbl"><span>Comenzi pe săptămână, per locație</span><b id="cvCom">6</b></div>
-              <input type="range" id="cCom" min="1" max="21" value="6" aria-label="Comenzi pe săptămână per locație" />
-            </div>
-            <div class="calc-row">
-              <div class="calc-lbl"><span>Minute pe comandă: telefon, mesaje, verificări</span><b id="cvMin">15</b></div>
-              <input type="range" id="cMin" min="5" max="40" value="15" aria-label="Minute pe comandă" />
-            </div>
-          </div>
-          <div class="calc-result">
-            <div class="calc-out-lbl">Timp pe comenzi</div>
-            <div class="calc-out" id="calcOut">32 de ore</div>
-            <p class="calc-out-sub">pe lună, în toată rețeaua, doar pe trimiterea comenzilor. Fără timpul de comparat oferte, verificat facturi și făcut inventarul.</p>
-            <p class="calc-note">În Approvisor, coșul se construiește din catalog și pleacă la toți furnizorii dintr-un click, cu aprobare în aplicație. <a href="#contact">Cere o demonstrație</a></p>
-          </div>
         </div>
       </div>
     </section>
@@ -686,20 +642,22 @@
       window.addEventListener('scroll', navState, { passive: true });
       navState();
 
-      /* calculator: plain arithmetic on the visitor's own numbers (works without GSAP) */
-      var cLoc = document.getElementById('cLoc'), cCom = document.getElementById('cCom'), cMin = document.getElementById('cMin');
-      var calcOut = document.getElementById('calcOut');
-      if (cLoc && cCom && cMin && calcOut) {
-        var vLoc = document.getElementById('cvLoc'), vCom = document.getElementById('cvCom'), vMin = document.getElementById('cvMin');
-        var oreFmt = function(n){ var r = n % 100; return n + ((r >= 1 && r <= 19) ? ' ore' : ' de ore'); };
-        var recalc = function(){
-          vLoc.textContent = cLoc.value;
-          vCom.textContent = cCom.value;
-          vMin.textContent = cMin.value + ' min';
-          calcOut.textContent = oreFmt(Math.round(cLoc.value * cCom.value * 4.33 * cMin.value / 60));
+      /* screenshots carousel arrows (works without GSAP) */
+      var shTrack = document.querySelector('.shots-track');
+      if (shTrack) {
+        var shSlides = Array.prototype.slice.call(shTrack.children);
+        var shCur = function(){
+          var e = shTrack.scrollLeft, best = 0, bd = Infinity;
+          shSlides.forEach(function(s, i){ var d = Math.abs((s.offsetLeft - shSlides[0].offsetLeft) - e); if (d < bd) { bd = d; best = i; } });
+          return best;
         };
-        [cLoc, cCom, cMin].forEach(function(el){ el.addEventListener('input', recalc); });
-        recalc();
+        var shGo = function(i){
+          i = Math.max(0, Math.min(shSlides.length - 1, i));
+          shTrack.scrollTo({ left: shSlides[i].offsetLeft - shSlides[0].offsetLeft, behavior: 'smooth' });
+        };
+        var shPrev = document.querySelector('.car-btn.prev'), shNext = document.querySelector('.car-btn.next');
+        if (shPrev) shPrev.addEventListener('click', function(){ shGo(shCur() - 1); });
+        if (shNext) shNext.addEventListener('click', function(){ shGo(shCur() + 1); });
       }
 
       if (!hasGsap || reduced) return; /* content is fully visible without motion */
