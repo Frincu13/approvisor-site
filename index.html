@@ -3,441 +3,326 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Approvisor · Achiziții și operațiuni pentru HoReCa</title>
-  <meta name="description" content="Platformă de achiziții pentru lanțuri HoReCa: comenzi, validare facturi, stoc și foodcost într-un singur sistem. Folosită zilnic într-un lanț cu 12 locații și 1000+ comenzi." />
-  <meta name="theme-color" content="#0D1B2A" />
-  <link rel="icon" type="image/png" href="favicon.png" />
+  <title>Approvisor · Aprovizionare, facturi și stoc pentru HoReCa</title>
+  <meta name="description" content="Platformă de aprovizionare pentru lanțuri HoReCa: comenzi, validare facturi, stoc și costul preparatelor într-un singur sistem." />
+  <meta name="theme-color" content="#070D16" />
   <link rel="apple-touch-icon" href="favicon.png" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Approvisor · achiziții și operațiuni pentru HoReCa" />
-  <meta property="og:description" content="Comenzi, facturi și stocuri într-un singur sistem. Deja folosit de un lanț HoReCa cu 12 locații și 1000+ comenzi procesate." />
+  <meta property="og:title" content="Approvisor · aprovizionare, facturi și stoc pentru HoReCa" />
+  <meta property="og:description" content="Comenzi, facturi și stocuri într-un singur sistem. Folosit într-un lanț HoReCa cu 12 locații și peste 1.000 de comenzi procesate." />
   <meta property="og:url" content="https://frincu13.github.io/approvisor-site/" />
-  <meta property="og:image" content="https://frincu13.github.io/approvisor-site/img/hero.png" />
+  <meta property="og:image" content="https://frincu13.github.io/approvisor-site/img/hero-cut.png" />
   <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" href="favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --white: #ffffff;
-      --ink: #0D1B2A;
-      --ink-muted: #5A6678;
-      --red: #8B1A1A;
-      --red-soft: #B83333;
-      --red-light: #FBEAEA;
-      --page-bg: #F2F5FA;
-      --radius: 26px;
-      --gap: 120px;
-      --maxw: 1760px;
-      --pad: clamp(20px, 5vw, 80px);
+      --bg0: #070D16;
+      --bg1: #0D1B2A;
+      --card: rgba(255,255,255,0.04);
+      --card2: rgba(255,255,255,0.07);
+      --line: rgba(255,255,255,0.09);
+      --tx: #F2F5FA;
+      --tx2: rgba(242,245,250,0.62);
+      --tx3: rgba(242,245,250,0.4);
+      --red: #D64848;
+      --red-mid: #B83333;
+      --red-deep: #8B1A1A;
+      --maxw: 1400px;
+      --pad: clamp(20px, 5vw, 72px);
+      --f-display: 'Inter Tight', sans-serif;
+      --f-body: 'Satoshi', sans-serif;
     }
     html { scroll-behavior: smooth; }
     body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background: var(--page-bg);
-      color: var(--ink);
+      font-family: var(--f-body);
+      background: var(--bg0);
+      color: var(--tx);
+      line-height: 1.6;
       overflow-x: hidden;
     }
+    h1, h2, .giant .word, .stat-big, .mv-big, .mod-name, .prob-idx, .fstep-name { font-family: var(--f-display); }
+    ::selection { background: var(--red-deep); color: #fff; }
     .inner { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--pad); }
-    /* ── audit upgrades: a11y, states, texture, tabular figures ── */
-    .skip-link { position: absolute; left: 12px; top: -52px; z-index: 200; background: var(--ink); color: #fff; padding: 10px 16px; border-radius: 0 0 10px 10px; font-size: 14px; font-weight: 600; text-decoration: none; transition: top .2s; }
-    .skip-link:focus { top: 0; }
     :focus-visible { outline: 2px solid var(--red); outline-offset: 3px; border-radius: 6px; }
-    .stat-num, .stat-big, .mv-big, .flow-num, .mv-pct, .price-ok, .price-warn { font-variant-numeric: tabular-nums; }
-    .nav-cta:active, .btn-primary:active, .btn-secondary:active, .mod-item:active, .shot:active, .prob-card:active, .mod-card:active { transform: translateY(1px) scale(.995); }
-    body::before { content: ''; position: fixed; inset: 0; z-index: 50; pointer-events: none; opacity: .035;
+    .skip-link { position: absolute; left: 12px; top: -52px; z-index: 300; background: var(--red-deep); color: #fff; padding: 10px 16px; border-radius: 0 0 10px 10px; font-size: 14px; font-weight: 600; text-decoration: none; transition: top .2s; }
+    .skip-link:focus { top: 0; }
+
+    /* film grain */
+    body::before { content: ''; position: fixed; inset: 0; z-index: 90; pointer-events: none; opacity: .05;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
-    @media (prefers-reduced-motion: reduce) { .nav-cta:active, .btn-primary:active, .btn-secondary:active, .mod-item:active, .shot:active, .prob-card:active, .mod-card:active { transform: none; } }
-    svg.ic { width: 26px; height: 26px; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
 
-    /* ════════════ HERO SLIDE ════════════ */
-    .hero {
-      position: relative;
-      height: 76vh;
-      min-height: 560px;
-      background:
-        radial-gradient(85% 60% at 90% 0%, rgba(139,26,26,0.07) 0%, rgba(139,26,26,0) 55%),
-        linear-gradient(165deg, #E9F0F8 0%, #F2F5FA 58%, #F5EDEF 100%);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-    .hero-nav { position: relative; z-index: 20; }
-    .hero-nav .nav-inner {
-      width: 100%; padding: 26px 40px 26px 28px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .logo { display: flex; align-items: center; text-decoration: none; }
-    .logo img { height: 40px; width: auto; }
-    .hero-nav nav ul { list-style: none; display: flex; gap: 4px; }
-    .hero-nav nav ul a {
-      text-decoration: none; color: var(--ink);
-      font-size: 15px; font-weight: 600; opacity: .72;
-      padding: 9px 16px; border-radius: 100px;
-      white-space: nowrap;
-      transition: opacity .2s, background .2s;
-    }
-    .hero-nav nav ul a:hover { opacity: 1; background: rgba(255,255,255,0.55); }
-    .nav-cta {
-      background: var(--ink); color: var(--white);
-      padding: 13px 24px; border-radius: 100px;
-      font-size: 15px; font-weight: 700;
-      text-decoration: none; display: flex; align-items: center; gap: 6px;
-      transition: background .2s, transform .2s; white-space: nowrap;
-    }
-    .nav-cta:hover { background: var(--red); transform: translateY(-1px); }
+    /* ── NAV ── */
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; transition: background .35s, border-color .35s, backdrop-filter .35s; border-bottom: 1px solid transparent; }
+    .nav.scrolled { background: rgba(7,13,22,0.72); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom-color: var(--line); }
+    .nav-inner { max-width: var(--maxw); margin: 0 auto; padding: 18px var(--pad); display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .logo img { height: 30px; width: auto; filter: brightness(0) invert(1); display: block; }
+    .nav nav ul { list-style: none; display: flex; gap: 6px; }
+    .nav nav ul a { text-decoration: none; color: var(--tx2); font-size: 14px; font-weight: 600; padding: 9px 15px; border-radius: 100px; transition: color .2s, background .2s; white-space: nowrap; }
+    .nav nav ul a:hover { color: var(--tx); background: rgba(255,255,255,0.06); }
+    .nav-cta { background: var(--tx); color: var(--bg1); padding: 12px 22px; border-radius: 100px; font-size: 14px; font-weight: 700; text-decoration: none; white-space: nowrap; transition: background .25s, color .25s, transform .25s; }
+    .nav-cta:hover { background: var(--red); color: #fff; }
 
-    /* hero body: 3 zones - text | image | data cards */
-    .hero-body {
-      flex: 1; width: 100%;
-      padding: 0;
-      display: flex; align-items: stretch; gap: 0;
-      position: relative; z-index: 10;
-    }
-    .hero-left {
-      width: 44%; flex-shrink: 0; align-self: flex-end;
-      padding: 0 40px 80px 28px;
-      z-index: 15;
-    }
-    h1 {
-      font-size: clamp(46px, 4.7vw, 88px);
-      font-weight: 800; line-height: 0.9;
-      letter-spacing: -3.5px; color: var(--ink); margin-bottom: 28px;
-    }
+    /* ── HERO: centered display headline, scene rising from the bottom ── */
+    .hero { position: relative; min-height: 100svh; display: flex; flex-direction: column; overflow: hidden; padding: 150px 0 0; background: radial-gradient(120% 90% at 50% 0%, #10202F 0%, rgba(7,13,22,0) 62%); }
+    .hero-center { position: relative; z-index: 2; text-align: center; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 9px; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--tx2); border: 1px solid var(--line); background: rgba(255,255,255,0.03); padding: 9px 16px; border-radius: 100px; margin-bottom: 30px; }
+    .hero-badge i { width: 7px; height: 7px; border-radius: 50%; background: var(--red); display: inline-block; box-shadow: 0 0 12px rgba(214,72,72,0.9); }
+    h1 { font-size: clamp(44px, 5.6vw, 106px); font-weight: 800; line-height: 0.98; letter-spacing: -0.03em; }
     h1 em { font-style: normal; color: var(--red); }
-    .hero-sub { font-size: 17px; line-height: 1.6; color: var(--ink-muted); margin-bottom: 40px; }
-    .hero-sub .sub-short { display: none; }
-    .hero-proof { display: flex; align-items: center; gap: 16px; }
-    .avatar-stack { display: flex; }
-    .avatar {
-      width: 42px; height: 42px; border-radius: 32%;
-      border: 3px solid var(--white); margin-left: -12px;
-      font-size: 12px; font-weight: 700;
-      display: flex; align-items: center; justify-content: center; color: white;
-    }
-    .avatar:first-child { margin-left: 0; }
-    .av1, .av2, .av3 { background: var(--ink); }
-    .proof-text { font-size: 13px; color: var(--ink-muted); line-height: 1.4; }
-    .proof-text strong { color: var(--ink); display: block; font-size: 14px; font-weight: 700; }
+    h1 b { color: var(--red); font-weight: 800; }
+    .h1-line { display: block; overflow: hidden; padding-bottom: .08em; margin-bottom: -.08em; }
+    .h1-line > span { display: inline-block; will-change: transform; }
+    .hero-sub { font-size: clamp(16px, 1.3vw, 18px); line-height: 1.65; color: var(--tx2); max-width: 620px; margin: 24px auto 0; }
+    .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; margin-top: 34px; }
 
-    /* hero stage - image zone, fills right 58% */
-    .hero-stage { flex: 1; position: relative; align-self: stretch; min-height: 560px; overflow: visible; }
-    .hero-img {
-      position: absolute;
-      left: -200px;
-      top: -60px;
-      width: calc(100% + 80px);
-      height: calc(100% + 120px);
-      object-fit: cover;
-      object-position: 20% 22%;
-      filter: drop-shadow(0 24px 48px rgba(13,27,42,0.12));
-      mask-image: linear-gradient(to right, transparent 0%, black 32%);
-      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 32%);
+    /* the miniature scene: takes whatever height is left under the copy, anchored to the bottom */
+    .hero-scene { position: relative; z-index: 1; flex: 1 1 0; min-height: 150px; margin-top: 14px; pointer-events: none; display: flex; align-items: flex-end; justify-content: center; }
+    .hero-scene picture { display: flex; align-items: flex-end; justify-content: center; height: 103%; }
+    .hero-scene img { height: 100%; width: auto; max-width: 92vw; object-fit: contain; object-position: bottom center; display: block; }
+    .hero-scene::before { content: ''; position: absolute; left: 18%; right: 18%; top: 22%; bottom: -16%; background: radial-gradient(50% 52% at 50% 60%, rgba(184,51,51,0.32) 0%, rgba(184,51,51,0) 70%); filter: blur(52px); z-index: -1; }
+
+    /* short viewports: compact the copy so the scene keeps presence */
+    @media (max-height: 780px) and (min-width: 921px) {
+      .hero { padding-top: 118px; }
+      h1 { font-size: clamp(40px, 4.6vw, 78px); }
+      .hero-badge { margin-bottom: 20px; }
+      .hero-ctas { margin-top: 24px; }
     }
 
-    /* hero data cards - float over image */
-    .hero-cards {
-      position: absolute;
-      right: 60px; bottom: 112px;
-      width: 212px;
-      display: flex; flex-direction: column; gap: 12px;
-      z-index: 20;
-    }
-    .stat-card {
-      background: #fff; border-radius: 18px; padding: 18px 20px;
-      box-shadow: 0 20px 50px rgba(13,27,42,0.20);
-      border: 1px solid rgba(13,27,42,0.06);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-    }
-    .stat-card.dark {
-      background: rgba(13,27,42,0.92); border-color: transparent;
-    }
-    .stat-card.dark .stat-num { color: var(--white); }
-    .stat-card.dark .stat-lbl { color: rgba(255,255,255,0.55); }
-    .stat-num { font-size: 42px; font-weight: 800; color: var(--ink); line-height: 1; display: flex; align-items: baseline; gap: 2px; }
-    .stat-num sup { font-size: 20px; font-weight: 700; }
-    .stat-lbl { font-size: 12px; color: var(--ink-muted); margin-top: 6px; line-height: 1.4; }
-    .stat-pill { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 700; color: var(--red); background: var(--red-light); padding: 3px 9px; border-radius: 100px; margin-top: 8px; }
-    .hero::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 120px; background: linear-gradient(to bottom, rgba(242,245,250,0) 0%, var(--page-bg) 100%); pointer-events: none; z-index: 5; }
-    /* HERO shrink-to-fit: nav stays full size; the hero body renders the desktop
-       composition on a 720px canvas, scaled to the phone width (JS sets zoom) */
-    .hero-shrink { height: auto; min-height: 0; }
-    .hero-shrink .hero-body { width: 720px; height: 600px; flex: 0 0 auto; }
-    .hero-shrink .hero-left { width: 62%; padding: 0 24px 44px 24px; }
-    .hero-shrink h1 { font-size: 48px; letter-spacing: -2px; margin-bottom: 16px; }
-    .hero-shrink .hero-sub { font-size: 24px; line-height: 1.45; margin-bottom: 22px; }
-    .hero-shrink .sub-full { display: none; }
-    .hero-shrink .sub-short { display: inline; }
-    .hero-shrink .avatar { width: 52px; height: 52px; font-size: 16px; }
-    .hero-shrink .proof-text { font-size: 19px; line-height: 1.35; }
-    .hero-shrink .proof-text strong { font-size: 21px; }
-    .hero-shrink .hero-stage { min-height: 0; }
-    .hero-shrink .hero-img { left: -120px; top: -20px; width: calc(100% + 140px); height: calc(100% + 60px); }
-    .hero-shrink .hero-cards { right: 14px; bottom: 36px; width: 190px; }
-    .hero-shrink .stat-num { font-size: 38px; }
-    .hero-shrink .stat-lbl { font-size: 19px; }
+    /* corner micro-copy */
+    .hero-corner { position: absolute; bottom: 30px; z-index: 3; font-size: 12.5px; line-height: 1.55; color: var(--tx3); max-width: 300px; }
+    .hc-left { left: var(--pad); text-align: left; display: flex; align-items: flex-start; gap: 10px; }
+    .hc-left i { width: 22px; height: 2px; background: var(--red-mid); display: inline-block; flex-shrink: 0; margin-top: 8px; }
+    .hc-right { right: var(--pad); text-align: right; letter-spacing: 1.5px; text-transform: uppercase; font-size: 10.5px; }
+    .btn-main { position: relative; background: var(--red-mid); color: #fff; padding: 17px 34px; border-radius: 100px; font-size: 15px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 9px; transition: background .25s, box-shadow .25s; box-shadow: 0 10px 40px rgba(184,51,51,0.35); will-change: transform; }
+    .btn-main:hover { background: var(--red); box-shadow: 0 14px 50px rgba(214,72,72,0.45); }
+    .btn-ghost { color: var(--tx); padding: 17px 30px; border-radius: 100px; font-size: 15px; font-weight: 600; text-decoration: none; border: 1px solid var(--line); background: rgba(255,255,255,0.03); transition: background .25s, border-color .25s; will-change: transform; }
+    .btn-ghost:hover { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.2); }
 
-    /* ════════════ SECTIONS ════════════ */
-    section { padding: var(--gap) 0; }
-    .section-head { max-width: 640px; margin-bottom: 56px; }
-    .section-label { font-size: 12px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--red); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
-    .section-label::before { content: ''; width: 28px; height: 2px; background: var(--red); display: inline-block; }
-    h2 { font-size: clamp(38px, 4vw, 58px); font-weight: 800; line-height: 1.02; letter-spacing: -2.5px; color: var(--ink); margin-bottom: 18px; }
-    .section-sub { font-size: 18px; color: var(--ink-muted); line-height: 1.6; }
+    /* browser frame (used by the screenshots section) */
+    .frame { background: #0F2033; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; box-shadow: 0 40px 90px rgba(0,0,0,0.55); will-change: transform; }
+    .frame-bar { display: flex; gap: 6px; padding: 11px 14px; border-bottom: 1px solid var(--line); background: rgba(255,255,255,0.02); }
+    .frame-bar span { width: 9px; height: 9px; border-radius: 50%; background: rgba(255,255,255,0.14); }
+    .frame img { width: 100%; height: auto; display: block; }
 
-    .reveal { opacity: 0; transform: translateY(40px); transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1); }
-    .reveal.in { opacity: 1; transform: none; }
-    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
-    .reveal-children > * { opacity: 0; transform: translateY(28px); transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
-    .reveal-children.in > * { opacity: 1; transform: none; }
-    .reveal-children.in > *:nth-child(2){transition-delay:.07s}
-    .reveal-children.in > *:nth-child(3){transition-delay:.14s}
-    .reveal-children.in > *:nth-child(4){transition-delay:.21s}
-    .reveal-children.in > *:nth-child(5){transition-delay:.28s}
-    .reveal-children.in > *:nth-child(6){transition-delay:.35s}
-    @media (prefers-reduced-motion: reduce){ .reveal-children > *{opacity:1;transform:none;transition:none} }
-    .stat-card { transition: transform .3s cubic-bezier(.16,1,.3,1), box-shadow .3s; }
-    .stat-card:hover { transform: translateY(-5px); box-shadow: 0 22px 55px rgba(13,27,42,0.20); }
-    .role-card { transition: transform .25s, box-shadow .25s; }
-    .role-card:hover { transform: translateY(-6px); box-shadow: 0 28px 64px rgba(13,27,42,0.14); }
+    .scroll-hint { position: absolute; left: 50%; bottom: 26px; transform: translateX(-50%); z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--tx3); font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; }
+    .scroll-hint::after { content: ''; width: 1px; height: 34px; background: linear-gradient(to bottom, var(--red), transparent); animation: hint 1.8s ease-in-out infinite; }
+    @keyframes hint { 0% { transform: scaleY(0); transform-origin: top; } 55% { transform: scaleY(1); transform-origin: top; } 56% { transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
+    @media (prefers-reduced-motion: reduce) { .scroll-hint::after { animation: none; } }
 
-    /* PROBLEMS */
-    .problems-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
-    .prob-card {
-      position: relative; display: flex; flex-direction: column; background: var(--white); border-radius: 24px; padding: 38px 34px 34px;
-      box-shadow: 0 2px 30px rgba(13,27,42,0.05); overflow: hidden;
-      transition: transform .25s, box-shadow .25s;
-    }
-    .prob-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(13,27,42,0.10); }
-    .prob-num { display: none; }
-    .prob-icon { width: 56px; height: 56px; border-radius: 16px; background: var(--red-light); display: flex; align-items: center; justify-content: center; margin-bottom: 26px; position: relative; z-index: 1; }
-    .prob-icon svg { stroke: var(--red); }
-    .prob-title { font-size: 19px; font-weight: 700; margin-bottom: 12px; line-height: 1.25; }
-    .prob-desc { font-size: 14px; color: var(--ink-muted); line-height: 1.65; margin-bottom: 24px; }
-    .prob-solution { margin-top: auto; font-size: 13px; font-weight: 700; color: var(--red); padding-top: 20px; border-top: 1px solid #EEF1F5; display: flex; align-items: center; gap: 8px; }
-    .prob-solution svg { width: 16px; height: 16px; stroke: var(--red); stroke-width: 2.5; fill: none; }
+    /* ── GIANT WORDS ── */
+    .giant { padding: clamp(60px, 9vh, 120px) 0; overflow: hidden; }
+    .giant .word { font-size: clamp(64px, 12.5vw, 200px); font-weight: 800; letter-spacing: -0.04em; line-height: 0.9; color: rgba(242,245,250,0.08); white-space: nowrap; will-change: transform; }
+    .giant .word b { color: var(--red); font-weight: 800; }
+
+    /* ── SECTIONS ── */
+    section { position: relative; }
+    .sec { padding: clamp(80px, 12vh, 150px) 0; }
+    .sec-label { font-size: 12px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--red); margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
+    .sec-label::before { content: ''; width: 28px; height: 2px; background: var(--red); display: inline-block; }
+    h2 { font-size: clamp(36px, 4.2vw, 64px); font-weight: 800; line-height: 1.0; letter-spacing: -0.03em; margin-bottom: 20px; }
+    .sec-sub { font-size: 17px; color: var(--tx2); line-height: 1.65; max-width: 560px; }
+    .sec-head { max-width: 720px; margin-bottom: clamp(40px, 6vh, 70px); }
+
+    /* PROBLEMA */
+    .prob-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .prob-card { position: relative; background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 40px 32px 34px; display: flex; flex-direction: column; transition: border-color .3s, background .3s, transform .3s; }
+    .prob-card:hover { border-color: rgba(214,72,72,0.4); background: var(--card2); transform: translateY(-6px); }
+    .prob-idx { font-size: 60px; font-weight: 800; line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(214,72,72,0.55); margin-bottom: 26px; }
+    .prob-title { font-size: 20px; font-weight: 700; line-height: 1.3; margin-bottom: 14px; }
+    .prob-desc { font-size: 14px; color: var(--tx2); line-height: 1.7; margin-bottom: 26px; }
+    .prob-sol { margin-top: auto; padding-top: 18px; border-top: 1px solid var(--line); font-size: 13px; font-weight: 700; color: var(--red); display: flex; align-items: center; gap: 8px; }
 
     /* FLOW */
-    .flow-wrap { background: var(--ink); border-radius: var(--radius); padding: 64px; color: var(--white); }
-    .flow-head { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: end; margin-bottom: 64px; }
-    .flow-head .section-label { color: #D98A8A; }
-    .flow-head .section-label::before { background: #D98A8A; }
-    .flow-head h2 { color: var(--white); }
-    .flow-head .section-sub { color: rgba(255,255,255,0.6); }
-    .flow-row { display: grid; position: relative; }
-    .flow-row-4 { grid-template-columns: repeat(4,1fr); }
-    .flow-row-3 { grid-template-columns: repeat(3,1fr); margin-top: 52px; }
-    .flow-row::after { content: ''; position: absolute; top: 28px; left: 11%; right: 11%; height: 2px; background: linear-gradient(90deg, rgba(255,255,255,0.12) 0%, var(--red-soft) 100%); z-index: 0; }
-    .flow-step { text-align: center; padding: 0 18px; position: relative; }
-    .flow-num { width: 58px; height: 58px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; margin: 0 auto 20px; position: relative; z-index: 1; border: 3px solid var(--ink); background: #1C2E45; color: var(--white); }
-    .flow-step:last-child .flow-num { background: var(--red-soft); color: var(--white); border-color: var(--red-soft); }
-    .flow-step-name { font-size: 14px; font-weight: 700; margin-bottom: 7px; color: var(--white); }
-    .flow-step-desc { font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.5; }
+    .flow { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(40px, 6vw, 90px); align-items: start; }
+    .flow-sticky { position: sticky; top: 120px; }
+    .flow-steps { position: relative; padding-left: 40px; }
+    .flow-rail { position: absolute; left: 10px; top: 8px; bottom: 8px; width: 2px; background: var(--line); overflow: hidden; }
+    .flow-rail i { position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: var(--red-mid); transform: scaleY(0); transform-origin: top; will-change: transform; }
+    .fstep { padding: 26px 0; border-bottom: 1px solid var(--line); opacity: .35; transition: opacity .45s; position: relative; }
+    .fstep:last-child { border-bottom: none; }
+    .fstep::before { content: ''; position: absolute; left: -36px; top: 36px; width: 10px; height: 10px; border-radius: 50%; background: var(--bg0); border: 2px solid rgba(242,245,250,0.3); transition: border-color .4s, box-shadow .4s, background .4s; }
+    .fstep.on { opacity: 1; }
+    .fstep.on::before { background: var(--red); border-color: var(--red); box-shadow: 0 0 16px rgba(214,72,72,0.8); }
+    .fstep-num { font-size: 12px; font-weight: 700; letter-spacing: 2px; color: var(--red); margin-bottom: 8px; }
+    .fstep-name { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+    .fstep-desc { font-size: 14px; color: var(--tx2); line-height: 1.65; max-width: 460px; }
 
     /* STATS */
-    .stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; background: rgba(13,27,42,0.07); border-radius: var(--radius); overflow: hidden; box-shadow: 0 2px 30px rgba(13,27,42,0.05); }
-    .stat-box { background: var(--white); padding: 48px 34px; text-align: center; }
-    .stat-big { font-size: 58px; font-weight: 800; color: var(--red); letter-spacing: -2.5px; line-height: 1; }
-    .stat-small { font-size: 14px; color: var(--ink-muted); margin-top: 14px; line-height: 1.4; }
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    .stat { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 44px 26px; text-align: center; transition: border-color .3s, transform .3s; }
+    .stat:hover { border-color: rgba(214,72,72,0.35); transform: translateY(-4px); }
+    .stat-big { font-size: clamp(44px, 4.4vw, 66px); font-weight: 800; letter-spacing: -0.03em; color: var(--red); line-height: 1; font-variant-numeric: tabular-nums; }
+    .stat-lbl { font-size: 13px; color: var(--tx2); margin-top: 12px; line-height: 1.5; }
 
-    /* MODULES - interactive master/detail explorer */
-    /* one solid block - list + panel fused, no gaps; active row just changes colour */
-    .mod-explorer { display: grid; grid-template-columns: 320px 1fr; gap: 0; align-items: stretch; border-radius: 24px; overflow: hidden; box-shadow: 0 22px 54px rgba(13,27,42,0.12); }
-    .mod-list { display: flex; flex-direction: column; gap: 0; background: var(--white); }
-    .mod-item {
-      display: flex; align-items: center; gap: 14px; width: 100%; text-align: left;
-      font-family: inherit; cursor: pointer; appearance: none;
-      flex: 1 1 auto; min-height: 62px;
-      background: var(--white); border: none; border-bottom: 1px solid rgba(13,27,42,0.06);
-      padding: 18px 22px;
-      transition: background .35s cubic-bezier(.16,1,.3,1), color .35s;
-    }
-    .mod-list .mod-item:last-child { border-bottom: none; }
-    .mod-item:not(.active):hover { background: #F3F6FA; }
-    .mod-item:focus-visible { outline: 2px solid var(--red); outline-offset: -2px; }
-    .mod-item.active { background: var(--ink); }
-    .mod-ico { width: 40px; height: 40px; border-radius: 11px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: var(--red-light); transition: background .3s; }
-    .mod-ico svg { width: 20px; height: 20px; fill: none; stroke: var(--red); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: stroke .3s; }
-    .mod-item.active .mod-ico { background: rgba(255,255,255,0.12); }
-    .mod-item.active .mod-ico svg { stroke: #fff; }
-    .mod-it-tx { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
-    .mod-it-tx b { font-size: 15px; font-weight: 700; color: var(--ink); transition: color .3s; }
-    .mod-it-tx span { font-size: 12px; color: var(--ink-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color .3s; }
-    .mod-item.active .mod-it-tx b { color: #fff; }
-    .mod-item.active .mod-it-tx span { color: rgba(255,255,255,.55); }
-    .mod-it-ar { flex-shrink: 0; color: rgba(13,27,42,.25); opacity: 0; transform: translateX(-6px); transition: opacity .3s, transform .3s, color .3s; }
-    .mod-item.active .mod-it-ar { opacity: 1; transform: none; color: #fff; }
-
-    .mod-detail { background: var(--ink); border-radius: 0; padding: 44px; color: #fff; overflow: hidden; position: relative; z-index: 1; }
-    .mod-panel { display: none; }
-    .mod-panel.active { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; height: 100%; animation: modIn .5s cubic-bezier(.16,1,.3,1); }
-    @keyframes modIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
-    @media (prefers-reduced-motion: reduce) {
-      .mod-panel.active { animation: none; }
-      .mod-item, .mod-item:hover, .mod-item.active { transition: none; transform: none; }
-    }
-    .mod-icon { width: 54px; height: 54px; border-radius: 15px; display: flex; align-items: center; justify-content: center; margin-bottom: 22px; background: rgba(255,255,255,0.1); }
-    .mod-icon svg { stroke: #fff; }
-    .mod-name { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 13px; color: #fff; }
-    .mod-desc { font-size: 15px; line-height: 1.65; color: rgba(255,255,255,.72); }
-    .mod-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
-    .mod-tag { font-size: 11px; font-weight: 600; padding: 6px 13px; border-radius: 100px; background: rgba(255,255,255,.12); color: rgba(255,255,255,.95); }
-
-    /* shared example-visual primitives (light-on-dark) */
-    .mod-visual { background: rgba(255,255,255,.06); border-radius: 18px; padding: 22px; display: flex; flex-direction: column; gap: 9px; }
-    .mv-label { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 5px; }
-    .price-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; background: rgba(255,255,255,.06); border-radius: 10px; padding: 11px 14px; font-size: 12px; }
-    .price-row .nm { color: rgba(255,255,255,.78); flex: 1; min-width: 0; }
-    .price-row .qty { color: var(--red-soft); font-weight: 700; flex-shrink: 0; }
-    .price-ok { color: rgba(255,255,255,.92); font-weight: 700; } .price-warn { color: #E59595; font-weight: 700; }
-    .badge-ok { font-size: 10px; background: rgba(255,255,255,.1); color: rgba(255,255,255,.82); padding: 3px 9px; border-radius: 100px; font-weight: 700; white-space: nowrap; }
-    .badge-warn { font-size: 10px; background: rgba(184,51,51,.26); color: #E59595; padding: 3px 9px; border-radius: 100px; font-weight: 700; white-space: nowrap; }
-    .mv-map { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,.06); border-radius: 10px; padding: 10px 13px; }
-    .mv-chip { font-size: 11px; color: rgba(255,255,255,.7); background: rgba(255,255,255,.07); border: 1px dashed rgba(255,255,255,.22); border-radius: 7px; padding: 6px 9px; white-space: nowrap; flex-shrink: 0; }
-    .mv-arrow { color: rgba(255,255,255,.35); flex-shrink: 0; }
-    .mv-to { font-size: 12px; color: #fff; font-weight: 600; flex: 1; min-width: 0; }
-    .mv-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 3px; padding: 4px 2px 0; font-size: 12px; color: rgba(255,255,255,.6); }
-    .mv-big { font-size: 40px; font-weight: 800; color: #fff; line-height: 1; letter-spacing: -1px; margin-bottom: 4px; }
-    .mv-big small { font-size: 16px; font-weight: 700; color: rgba(255,255,255,.5); margin-left: 4px; }
+    /* MODULE - master/detail explorer */
+    .mods { position: relative; padding-bottom: clamp(60px, 10vh, 110px); }
+    .mods-head { padding: clamp(80px, 12vh, 140px) 0 40px; }
+    .modx { display: grid; grid-template-columns: 340px 1fr; background: var(--card); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; }
+    .modx-list { display: flex; flex-direction: column; border-right: 1px solid var(--line); }
+    .modx-item { position: relative; display: flex; align-items: center; gap: 16px; flex: 1; padding: 21px 22px; background: transparent; border: none; border-bottom: 1px solid var(--line); cursor: pointer; text-align: left; font-family: inherit; color: var(--tx2); transition: background .25s, color .25s; }
+    .modx-item:last-child { border-bottom: none; }
+    .modx-item::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--red); transform: scaleY(0); transition: transform .25s; }
+    .modx-item:hover { background: rgba(255,255,255,0.03); color: var(--tx); }
+    .modx-item.active { background: rgba(255,255,255,0.055); color: var(--tx); }
+    .modx-item.active::before { transform: scaleY(1); }
+    .modx-item:focus-visible { outline: 2px solid var(--red); outline-offset: -2px; }
+    .modx-num { font-family: var(--f-display); font-size: 13px; font-weight: 700; color: var(--tx3); transition: color .25s; flex-shrink: 0; }
+    .modx-item.active .modx-num { color: var(--red); }
+    .modx-name { display: flex; flex-direction: column; gap: 3px; font-size: 16px; font-weight: 700; min-width: 0; }
+    .modx-name i { font-style: normal; font-size: 12.5px; font-weight: 400; color: var(--tx3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .modx-ar { margin-left: auto; color: var(--red); opacity: 0; transform: translateX(-6px); transition: opacity .25s, transform .25s; flex-shrink: 0; }
+    .modx-item.active .modx-ar { opacity: 1; transform: none; }
+    .modx-panel { padding: 42px 40px; min-height: 420px; display: flex; align-items: center; }
+    .modx-pane { display: none; width: 100%; }
+    .modx-pane.active { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: center; }
+    .mod-name { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 12px; }
+    .mod-desc { font-size: 14.5px; color: var(--tx2); line-height: 1.7; }
+    .mod-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .mod-tag { font-size: 11px; font-weight: 600; padding: 6px 12px; border-radius: 100px; background: rgba(255,255,255,0.06); color: var(--tx2); border: 1px solid var(--line); }
+    .mod-visual { background: rgba(0,0,0,0.28); border: 1px solid var(--line); border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 8px; margin-top: auto; }
+    .mv-label { font-size: 10.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--tx3); margin-bottom: 4px; }
+    .price-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; background: rgba(255,255,255,0.045); border-radius: 9px; padding: 10px 13px; font-size: 12px; }
+    .price-row .nm { color: var(--tx2); flex: 1; min-width: 0; }
+    .price-row .qty { color: var(--red); font-weight: 700; flex-shrink: 0; }
+    .price-ok { color: var(--tx); font-weight: 700; font-variant-numeric: tabular-nums; }
+    .price-warn { color: #E58989; font-weight: 700; font-variant-numeric: tabular-nums; }
+    .badge-ok { font-size: 10px; background: rgba(255,255,255,0.08); color: var(--tx2); padding: 3px 9px; border-radius: 100px; font-weight: 700; white-space: nowrap; }
+    .badge-warn { font-size: 10px; background: rgba(184,51,51,0.3); color: #E58989; padding: 3px 9px; border-radius: 100px; font-weight: 700; white-space: nowrap; }
+    .mv-big { font-size: 34px; font-weight: 800; line-height: 1; letter-spacing: -1px; font-variant-numeric: tabular-nums; }
+    .mv-big small { font-size: 14px; font-weight: 700; color: var(--tx3); margin-left: 4px; }
     .mv-barline { display: flex; align-items: center; gap: 12px; font-size: 12px; }
-    .mv-barline .nm { color: rgba(255,255,255,.72); width: 70px; flex-shrink: 0; }
-    .mv-bar { flex: 1; height: 8px; border-radius: 100px; background: rgba(255,255,255,.1); overflow: hidden; }
-    .mv-bar > i { display: block; height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--red-soft), var(--red)); }
-    .mv-pct { color: #fff; font-weight: 700; width: 38px; text-align: right; flex-shrink: 0; }
+    .mv-barline .nm { color: var(--tx2); width: 64px; flex-shrink: 0; }
+    .mv-bar { flex: 1; height: 7px; border-radius: 100px; background: rgba(255,255,255,0.09); overflow: hidden; }
+    .mv-bar > i { display: block; height: 100%; border-radius: 100px; background: var(--red-mid); }
+    .mv-pct { font-weight: 700; width: 38px; text-align: right; flex-shrink: 0; font-variant-numeric: tabular-nums; }
 
-    /* APP SCREENSHOTS */
-    .carousel { position: relative; }
-    .carousel-track { display: flex; gap: 22px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; padding: 6px 2px 4px; }
-    .carousel-track::-webkit-scrollbar { display: none; }
-    .shot { flex: 0 0 calc((100% - 44px) / 3); scroll-snap-align: start; margin: 0; }
-    .carousel-btn { position: absolute; top: 42%; transform: translateY(-50%); width: 52px; height: 52px; border-radius: 50%; border: 1px solid rgba(13,27,42,0.08); background: #fff; color: var(--ink); font-size: 20px; cursor: pointer; box-shadow: 0 10px 30px rgba(13,27,42,0.16); display: flex; align-items: center; justify-content: center; z-index: 4; transition: box-shadow .2s, transform .15s; }
-    .carousel-btn:hover { box-shadow: 0 14px 36px rgba(13,27,42,0.22); }
-    .carousel-btn:active { transform: translateY(-50%) scale(.93); }
-    .carousel-btn.prev { left: -14px; } .carousel-btn.next { right: -14px; }
-    .carousel-dots { display: none; gap: 9px; justify-content: center; margin-top: 18px; }
-    .carousel-dots button { width: 8px; height: 8px; padding: 0; border: none; border-radius: 100px; background: rgba(13,27,42,0.18); cursor: pointer; transition: width .25s, background .25s; }
-    .carousel-dots button.active { width: 24px; background: var(--red); }
-    .shot-frame { background: var(--white); border-radius: 16px; overflow: hidden; box-shadow: 0 8px 40px rgba(13,27,42,0.08); border: 1px solid rgba(13,27,42,0.05); transition: transform .25s, box-shadow .25s; }
-    .shot:hover .shot-frame { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(13,27,42,0.12); }
-    .shot-bar { display: flex; gap: 7px; align-items: center; padding: 13px 16px; background: #F4F6FA; border-bottom: 1px solid rgba(13,27,42,0.05); }
-    .shot-bar span { width: 10px; height: 10px; border-radius: 50%; background: #D5DCE6; }
-    .shot-body { aspect-ratio: 16 / 10; background: linear-gradient(135deg, #EAF0F8 0%, #F7FAFD 100%); display: flex; align-items: center; justify-content: center; }
-    .shot-body img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .shot-ph { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-    .shot-ph svg { width: 34px; height: 34px; stroke: var(--red); opacity: .55; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
-    .shot-ph b { font-size: 14px; font-weight: 700; color: var(--ink); }
-    .shot-ph em { font-style: normal; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ink-muted); opacity: .7; }
-    .shot figcaption { margin-top: 16px; font-size: 15px; font-weight: 700; color: var(--ink); text-align: center; }
-    .shot figcaption span { display: block; font-size: 13px; font-weight: 500; color: var(--ink-muted); margin-top: 3px; }
+    /* SCREENSHOTS: carousel, 3-up on desktop */
+    .shots-carousel { position: relative; }
+    .shots-track { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; padding: 4px 2px; }
+    .shots-track::-webkit-scrollbar { display: none; }
+    .shot { flex: 0 0 calc((100% - 40px) / 3); scroll-snap-align: start; margin: 0; }
+    .car-btn { position: absolute; top: 40%; transform: translateY(-50%); width: 52px; height: 52px; border-radius: 50%; border: 1px solid var(--line); background: #101E30; color: var(--tx); font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 4; transition: border-color .25s, background .25s, transform .15s; }
+    .car-btn:hover { border-color: rgba(214,72,72,0.55); background: #14243A; }
+    .car-btn:active { transform: translateY(-50%) scale(.93); }
+    .car-btn.prev { left: -16px; } .car-btn.next { right: -16px; }
+    .shot { perspective: 900px; }
+    .shot .frame { transition: transform .4s cubic-bezier(.16,1,.3,1), box-shadow .4s; }
+    .shot:hover .frame { box-shadow: 0 30px 70px rgba(0,0,0,0.6), 0 0 50px rgba(184,51,51,0.12); }
+    .shot figcaption { margin-top: 15px; font-size: 15px; font-weight: 700; text-align: center; }
+    .shot figcaption span { display: block; font-size: 12.5px; font-weight: 500; color: var(--tx3); margin-top: 3px; }
 
-    /* ROLES */
-    .roles-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
-    .role-card { border-radius: 24px; padding: 46px; position: relative; overflow: hidden; }
-    .role-card.dark { background: var(--ink); }
-    .role-card.light { background: var(--white); box-shadow: 0 2px 30px rgba(13,27,42,0.05); }
-    .role-pill { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 7px 14px; border-radius: 100px; margin-bottom: 28px; }
-    .role-card.dark .role-pill { background: rgba(255,255,255,.1); color: rgba(255,255,255,.7); }
-    .role-card.light .role-pill { background: var(--red-light); color: var(--red); }
-    .role-title { font-size: 30px; font-weight: 800; line-height: 1.1; margin-bottom: 16px; }
-    .role-card.dark .role-title { color: var(--white); }
-    .role-card.light .role-title { color: var(--ink); }
-    .role-desc { font-size: 15px; line-height: 1.65; margin-bottom: 32px; }
-    .role-card.dark .role-desc { color: rgba(255,255,255,.6); }
-    .role-card.light .role-desc { color: var(--ink-muted); }
-    .role-list { list-style: none; display: flex; flex-direction: column; gap: 13px; }
-    .role-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; line-height: 1.5; }
-    .role-card.dark .role-list li { color: rgba(255,255,255,.8); }
-    .role-card.light .role-list li { color: var(--ink); }
-    .role-list li svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px; stroke-width: 2.5; fill: none; }
-    .role-card.dark .role-list li svg { stroke: rgba(255,255,255,.85); }
-    .role-card.light .role-list li svg { stroke: var(--red); }
+    /* card spotlight: cursor-following radial highlight (Linear-style) */
+    .spot { position: relative; }
+    .spot::after { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .35s;
+      background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), rgba(214,72,72,0.10), transparent 65%); }
+    .spot:hover::after { opacity: 1; }
+
+    /* dot grid texture behind stats (MagicPattern-style, pure CSS) */
+    #cifre { position: relative; }
+    #cifre::before { content: ''; position: absolute; inset: -30px 0; pointer-events: none;
+      background-image: radial-gradient(rgba(242,245,250,0.055) 1px, transparent 1.5px); background-size: 24px 24px;
+      -webkit-mask-image: radial-gradient(62% 85% at 50% 50%, #000 25%, transparent 100%);
+      mask-image: radial-gradient(62% 85% at 50% 50%, #000 25%, transparent 100%); }
+    #cifre .inner { position: relative; }
+
+    /* TESTIMONIALE */
+    .quotes { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    /* marquee mode (desktop): infinite moving cards, pause on hover */
+    @media (min-width: 921px) {
+      .quotes.marquee { display: block; overflow: hidden;
+        -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+        mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); }
+      .marquee-track { display: flex; width: max-content; animation: mq 48s linear infinite; }
+      .marquee-track:hover { animation-play-state: paused; }
+      .mq-half { display: flex; gap: 18px; padding-right: 18px; }
+      .quotes.marquee .quote { width: 460px; flex-shrink: 0; }
+      @keyframes mq { to { transform: translateX(-50%); } }
+    }
+    @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } }
+    .quote { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 34px 32px; display: flex; flex-direction: column; transition: border-color .3s, transform .3s; }
+    .quote:hover { border-color: rgba(214,72,72,0.35); transform: translateY(-4px); }
+    .q-mark { font-size: 42px; line-height: .4; color: var(--red); font-family: Georgia, 'Times New Roman', serif; margin-bottom: 20px; }
+    .quote p { font-size: 16.5px; line-height: 1.65; font-weight: 500; margin-bottom: 24px; }
+    .quote figcaption { margin-top: auto; font-size: 13px; color: var(--tx3); }
+    .quote figcaption b { display: block; color: var(--tx); font-size: 14.5px; font-weight: 700; margin-bottom: 2px; }
+
+    /* FAQ */
+    .faq { max-width: 780px; }
+    .faq details { background: var(--card); border: 1px solid var(--line); border-radius: 16px; margin-bottom: 12px; transition: border-color .3s; }
+    .faq details[open] { border-color: rgba(214,72,72,0.35); }
+    .faq summary { cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 22px 26px; font-size: 16.5px; font-weight: 700; color: var(--tx); }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: '+'; font-family: var(--f-display); font-size: 24px; font-weight: 600; color: var(--red); flex-shrink: 0; line-height: 1; transition: transform .25s; }
+    .faq details[open] summary::after { content: '−'; }
+    .faq .faq-a { padding: 0 26px 24px; font-size: 15px; line-height: 1.7; color: var(--tx2); max-width: 640px; }
 
     /* CTA */
-    .cta-section { padding-bottom: var(--gap); }
-    .cta-card { background: linear-gradient(135deg, var(--red) 0%, #5E1212 100%); border-radius: var(--radius); padding: 96px 64px; text-align: center; position: relative; overflow: hidden; }
-    .cta-card::before { content: ''; position: absolute; top: -120px; right: -100px; width: 380px; height: 380px; background: rgba(255,255,255,0.05); border-radius: 50%; }
-    .cta-card::after { display: none; }
-    .cta-card h2 { color: var(--white); margin-bottom: 18px; position: relative; z-index: 1; }
-    .cta-card p { color: rgba(255,255,255,.75); font-size: 18px; max-width: 500px; margin: 0 auto 42px; line-height: 1.6; position: relative; z-index: 1; }
-    .cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
-    .btn-primary { background: var(--white); color: var(--ink); padding: 17px 36px; border-radius: 100px; font-size: 15px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: transform .2s, box-shadow .2s; }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 34px rgba(0,0,0,.30); }
-    .btn-secondary { background: rgba(255,255,255,.12); color: var(--white); padding: 17px 36px; border-radius: 100px; font-size: 15px; font-weight: 600; text-decoration: none; border: 1px solid rgba(255,255,255,.2); transition: background .2s; }
-    .btn-secondary:hover { background: rgba(255,255,255,.2); }
-    .cta-note { margin: 28px auto 0; font-size: 13.5px; color: rgba(255,255,255,.62); position: relative; z-index: 1; display: flex; gap: 8px 20px; justify-content: center; flex-wrap: wrap; }
-    .cta-note span { display: inline-flex; align-items: center; gap: 8px; }
-    .cta-note span::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,.45); }
+    .cta { position: relative; padding: clamp(110px, 18vh, 200px) 0; text-align: center; overflow: hidden; }
+    .cta::before { content: ''; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 80vw; height: 80vw; max-width: 900px; max-height: 900px; background: radial-gradient(circle, rgba(139,26,26,0.4) 0%, rgba(139,26,26,0) 62%); filter: blur(40px); pointer-events: none; animation: ctapulse 7s ease-in-out infinite alternate; }
+    @keyframes ctapulse { to { transform: translate(-50%, -50%) scale(1.15); opacity: .8; } }
+    @media (prefers-reduced-motion: reduce) { .cta::before { animation: none; } }
+    .cta .inner { position: relative; z-index: 2; }
+    .cta h2 { font-size: clamp(42px, 6vw, 92px); margin-bottom: 22px; }
+    .cta p { font-size: 17px; color: var(--tx2); max-width: 520px; margin: 0 auto 44px; line-height: 1.65; }
+    .cta-notes { margin-top: 30px; font-size: 13px; color: var(--tx3); display: flex; gap: 8px 22px; justify-content: center; flex-wrap: wrap; }
+    .cta-notes span { display: inline-flex; align-items: center; gap: 8px; }
+    .cta-notes span::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: var(--red-mid); }
 
-    /* TESTIMONIALS - carousel */
-    .quotes-carousel .carousel-track { gap: 22px; }
-    .quotes-carousel .quote-card { flex: 0 0 calc((100% - 22px) / 2); scroll-snap-align: start; }
-    .quotes-carousel .carousel-btn { top: 50%; }
-    .quote-card { background: var(--white); border-radius: 20px; padding: 34px 32px; box-shadow: 0 2px 30px rgba(13,27,42,0.05); display: flex; flex-direction: column; transition: transform .25s, box-shadow .25s; }
-    .quote-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(13,27,42,0.09); }
-    .q-mark { font-size: 40px; line-height: .4; color: var(--red); font-family: Georgia, 'Times New Roman', serif; margin-bottom: 18px; }
-    .quote-card p { font-size: 17px; line-height: 1.6; color: var(--ink); font-weight: 500; margin-bottom: 24px; }
-    .quote-card figcaption { margin-top: auto; font-size: 13px; color: var(--ink-muted); line-height: 1.4; }
-    .quote-card figcaption b { display: block; color: var(--ink); font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+    footer { border-top: 1px solid var(--line); padding: 42px 0; }
+    .f-in { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+    footer img { height: 26px; filter: brightness(0) invert(1); opacity: .9; }
+    footer p { font-size: 13px; color: var(--tx3); }
+    footer a { color: var(--tx2); text-decoration: none; font-size: 13.5px; }
+    footer a:hover { color: var(--tx); }
 
-    /* FOOTER */
-    footer { border-top: 1px solid rgba(13,27,42,0.08); padding: 46px 0 38px; display: flex; align-items: center; justify-content: space-between; }
-    footer .f-logo img { height: 34px; }
-    footer p { font-size: 13px; color: var(--ink-muted); }
-    footer nav ul { list-style: none; display: flex; gap: 28px; }
-    footer nav ul a { text-decoration: none; font-size: 14px; color: var(--ink-muted); font-weight: 500; }
-    footer nav ul a:hover { color: var(--ink); }
+    /* reveal base (JS animates; content stays visible without JS) */
+    .rv { will-change: transform, opacity; }
 
-    /* ════════════ MOBILE ════════════ */
-    @media (max-width: 1100px) and (min-width: 920px) {
-      .hero-cards { width: 180px; }
-      .hero-left { width: 340px; }
-      .hero-nav nav ul a { font-size: 13px; padding: 8px 11px; }
-      .nav-cta { padding: 11px 18px; font-size: 14px; }
-      .hero-img { left: -80px; width: calc(100% + 20px); }
-    }
+    /* ── MOBILE ── */
     @media (max-width: 920px) {
-      :root { --gap: 72px; }
-      /* hero body is scaled by the shrink-to-fit JS; nav stays full size and tappable */
-      .hero-nav nav ul { display: none; }
-      .hero-nav .nav-inner { padding: 14px 20px; }
-      .logo img { height: 26px; }
-      .nav-cta { padding: 12px 18px; font-size: 14px; }
-      .section-head { margin-bottom: 40px; }
-      h2 { font-size: clamp(32px, 8vw, 46px); letter-spacing: -1px; }
-      .problems-grid { display: flex; grid-template-columns: none; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; gap: 14px; margin: 0 -20px; padding: 2px 20px 12px; }
-      .problems-grid::-webkit-scrollbar { display: none; }
+      .nav nav ul { display: none; }
+      .hero { padding: 104px 0 0; }
+      h1 { font-size: clamp(25px, 7.4vw, 44px); }
+      .hero-sub { font-size: 15px; max-width: 90%; }
+      .hero-ctas { margin-top: 26px; }
+      .hero-scene { min-height: 30vh; }
+      .hero-scene img { max-width: 150vw; }
+      .hero-corner { display: none; }
+      .aurora span { filter: blur(60px); }
+      .prob-grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; gap: 14px; margin: 0 calc(var(--pad) * -1); padding: 2px var(--pad) 12px; }
+      .prob-grid::-webkit-scrollbar { display: none; }
       .prob-card { flex: 0 0 84%; scroll-snap-align: center; }
-      .flow-wrap { padding: 40px 26px; border-radius: 20px; }
-      .flow-head { grid-template-columns: 1fr; gap: 16px; margin-bottom: 44px; }
-      .flow-row-4 { grid-template-columns: repeat(2,1fr); gap: 32px; }
-      .flow-row-4::after, .flow-row-3::after { display: none; }
-      .flow-row-3 { grid-template-columns: 1fr; gap: 32px; margin-top: 32px; }
-      .stats-row { grid-template-columns: repeat(2,1fr); }
-      .stat-box { padding: 34px 18px; }
-      .stat-big { font-size: 44px; }
-      .mod-explorer { display: block; border-radius: 0; overflow: visible; box-shadow: none; }
-      .mod-list { display: none; }
-      .mod-detail { display: flex; background: transparent; border-radius: 0; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; gap: 14px; margin: 0 -20px; padding: 2px 20px 12px; }
-      .mod-detail::-webkit-scrollbar { display: none; }
-      .mod-detail .mod-panel, .mod-detail .mod-panel.active { display: flex !important; flex-direction: column; gap: 22px; height: auto; flex: 0 0 86%; scroll-snap-align: center; background: var(--ink); border-radius: 18px; padding: 30px 24px; animation: none; }
-      .mod-name { font-size: 22px; }
-      .roles-grid { display: flex; grid-template-columns: none; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; gap: 14px; margin: 0 -20px; padding: 2px 20px 12px; }
-      .roles-grid::-webkit-scrollbar { display: none; }
-      .role-card { flex: 0 0 88%; scroll-snap-align: center; }
-      .quotes-carousel .carousel-track { gap: 14px; margin: 0 -20px; padding: 2px 20px 12px; }
-      .quotes-carousel .quote-card { flex: 0 0 85%; scroll-snap-align: center; }
-      #aplicatie .carousel-track { gap: 14px; margin: 0 -20px; padding: 2px 20px 12px; }
-      .shot { flex: 0 0 88%; }
-      .carousel-btn { display: none; }
-      .carousel-dots { display: flex; }
-      .role-card { padding: 36px 28px; }
-      .cta-card { padding: 64px 28px; border-radius: 20px; }
-      .cta-btns { flex-direction: column; align-items: stretch; }
-      .btn-primary, .btn-secondary { justify-content: center; text-align: center; }
-      footer { flex-direction: column; gap: 18px; text-align: center; }
-      footer nav ul { justify-content: center; }
+      .flow { grid-template-columns: 1fr; }
+      .flow-sticky { position: static; }
+      .stats { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .stat { padding: 30px 16px; }
+      .modx { display: block; background: transparent; border: none; border-radius: 0; overflow: visible; }
+      .modx-list { flex-direction: row; overflow-x: auto; scrollbar-width: none; border-right: none; gap: 8px; margin: 0 calc(var(--pad) * -1) 14px; padding: 0 var(--pad) 4px; }
+      .modx-list::-webkit-scrollbar { display: none; }
+      .modx-item { flex: 0 0 auto; border: 1px solid var(--line); border-radius: 100px; border-bottom: 1px solid var(--line); padding: 10px 16px; background: var(--card); }
+      .modx-item.active { background: rgba(214,72,72,0.14); border-color: rgba(214,72,72,0.5); }
+      .modx-item::before { display: none; }
+      .modx-num, .modx-name i, .modx-ar { display: none; }
+      .modx-name { font-size: 13.5px; }
+      .modx-panel { padding: 26px 22px; min-height: 0; background: var(--card); border: 1px solid var(--line); border-radius: 18px; }
+      .modx-pane.active { display: flex; flex-direction: column; gap: 22px; }
+      .shots-track { gap: 14px; margin: 0 calc(var(--pad) * -1); padding: 2px var(--pad) 12px; }
+      .shot { flex: 0 0 86%; scroll-snap-align: center; }
+      .car-btn { display: none; }
+      .quotes { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; gap: 14px; margin: 0 calc(var(--pad) * -1); padding: 2px var(--pad) 12px; }
+      .quotes::-webkit-scrollbar { display: none; }
+      .quote { flex: 0 0 85%; scroll-snap-align: center; }
+      .faq summary { padding: 18px 20px; font-size: 15px; }
+      .faq .faq-a { padding: 0 20px 20px; }
+      .f-in { flex-direction: column; text-align: center; }
     }
   </style>
 </head>
@@ -445,510 +330,570 @@
 
   <a class="skip-link" href="#main">Sari la conținut</a>
 
-  <!-- ════════ HERO ════════ -->
-  <header class="hero">
-    <div class="hero-nav">
-      <div class="nav-inner">
-        <a href="#" class="logo"><img src="img/logo.png" alt="Approvisor" /></a>
-        <nav><ul>
-          <li><a href="#module">Module</a></li>
-          <li><a href="#cum-functioneaza">Cum funcționează</a></li>
-          <li><a href="#roluri">Roluri</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul></nav>
-        <a href="#contact" class="nav-cta">Cere demo ↗</a>
-      </div>
+  <div class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#" class="logo"><img src="img/logo.png" alt="Approvisor" /></a>
+      <nav><ul>
+        <li><a href="#module">Module</a></li>
+        <li><a href="#cum-functioneaza">Cum funcționează</a></li>
+        <li><a href="#aplicatie">În aplicație</a></li>
+      </ul></nav>
+      <a href="#contact" class="nav-cta magnetic">Solicită demo ↗</a>
     </div>
+  </div>
 
-    <div class="hero-body">
-      <div class="hero-left">
-        <h1>Comenzi rapide,<br>costuri clare,<br><em>totul într-un<br>singur sistem.</em></h1>
-        <p class="hero-sub"><span class="sub-full">Echipa comandă în câteva minute, conducerea vede costurile și stocul în timp real. Deja folosit de un lanț HoReCa cu 12 locații și 1000+ comenzi procesate.</span><span class="sub-short">Comenzi, facturi și stocuri într-un singur sistem. Deja folosit de un lanț cu 12 locații și 1000+ comenzi.</span></p>
-        <div class="hero-proof">
-          <div class="avatar-stack">
-            <div class="avatar av1">RM</div>
-            <div class="avatar av2">AG</div>
-            <div class="avatar av3">DP</div>
+  <main id="main">
+
+    <!-- HERO -->
+    <header class="hero">
+      <div class="inner hero-center">
+        <div class="hero-badge rv"><i></i>Aprovizionare, facturi și stoc pentru lanțuri HoReCa</div>
+        <h1 aria-label="Comenzi. Facturi. Stoc. Într-un singur sistem.">
+          <span class="h1-line" aria-hidden="true"><span>Comenzi<b>.</b> Facturi<b>.</b> Stoc<b>.</b></span></span>
+          <span class="h1-line" aria-hidden="true"><span><em>Într-un singur sistem.</em></span></span>
+        </h1>
+        <p class="hero-sub rv">Trimite comenzile către furnizori în câteva minute și urmărește costurile, stocul și costul preparatelor în timp real, pentru fiecare locație.</p>
+        <div class="hero-ctas rv">
+          <a href="#contact" class="btn-main magnetic">Solicită o demonstrație</a>
+          <a href="#module" class="btn-ghost magnetic">Vezi modulele</a>
+        </div>
+      </div>
+      <div class="hero-scene" id="heroVisual" aria-hidden="true">
+        <picture><source srcset="img/hero-cut.webp" type="image/webp" /><img src="img/hero-cut.png" alt="" width="949" height="555" fetchpriority="high" /></picture>
+      </div>
+      <div class="hero-corner hc-left rv"><i></i>Folosit într-un lanț HoReCa cu 12 locații și peste 1.000 de comenzi procesate</div>
+      <div class="hero-corner hc-right rv">Catalog · Comenzi · Validare<br>Gestiune · Statistici</div>
+    </header>
+
+    <!-- GIANT -->
+    <div class="giant" aria-hidden="true"><div class="inner"><div class="word" data-drift="-6">Comenzi<b>.</b></div></div></div>
+
+    <!-- PROBLEMA -->
+    <section class="sec" id="probleme">
+      <div class="inner">
+        <div class="sec-head">
+          <div class="sec-label rv">Problema</div>
+          <h2 class="rv">Unde apar pierderile<br>de timp și bani</h2>
+          <p class="sec-sub rv">Pe măsură ce numărul de locații crește, comenzile, facturile și stocul devin tot mai greu de urmărit manual.</p>
+        </div>
+        <div class="prob-grid">
+          <div class="prob-card rv">
+            <div class="prob-idx">01</div>
+            <div class="prob-title">Comenzi trimise pe mesaje, fără evidență centralizată</div>
+            <p class="prob-desc">Comenzile transmise prin telefon sau mesaje sunt greu de urmărit. Nu este mereu clar ce s-a comandat, de cine, către ce furnizor și la ce preț.</p>
+            <div class="prob-sol">→ Comenzi și oferte centralizate</div>
           </div>
-          <div class="proof-text">
-            <strong>Multi-locație, multi-furnizor</strong>
-            Catalog · aprobare · facturi · stoc & foodcost
+          <div class="prob-card rv">
+            <div class="prob-idx">02</div>
+            <div class="prob-title">Facturi greu de verificat manual</div>
+            <p class="prob-desc">Furnizorul poate factura la un preț diferit de cel negociat, iar abaterea este greu de observat manual. În timp, diferențele se pot aduna fără să fie detectate la timp.</p>
+            <div class="prob-sol">→ Verificare automată față de prețurile negociate</div>
           </div>
-        </div>
-      </div>
-
-      <div class="hero-stage">
-        <picture>
-          <source srcset="img/hero.webp" type="image/webp" />
-          <img src="img/hero.png" alt="Approvisor · platformă de achiziții pentru HoReCa" class="hero-img" width="2160" height="1215" fetchpriority="high" />
-        </picture>
-      </div>
-
-      <div class="hero-cards">
-        <div class="stat-card dark">
-          <div class="stat-num">1000<span style="font-size:24px">+</span></div>
-          <div class="stat-lbl">comenzi procesate</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">12</div>
-          <div class="stat-lbl">locații active<br>într-un lanț HoReCa</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num" style="font-size:30px;color:var(--red)">Live</div>
-          <div class="stat-lbl">stoc, food cost și prețuri<br>per furnizor</div>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main class="inner" id="main">
-
-    <!-- PROBLEMS -->
-    <section id="probleme" class="reveal">
-      <div class="section-head reveal">
-        <div class="section-label">Problema</div>
-        <h2>Unde pierzi bani<br>fără să vezi</h2>
-        <p class="section-sub">De la comenzi la facturi și gestiune: trei locuri unde lanțurile HoReCa pierd bani pe măsură ce cresc.</p>
-      </div>
-      <div class="problems-grid reveal-children">
-        <div class="prob-card">
-          <span class="prob-num">01</span>
-          <div class="prob-icon"><svg class="ic" viewBox="0 0 24 24"><rect width="14" height="20" x="5" y="2" rx="2"/><path d="M12 18h.01"/></svg></div>
-          <div class="prob-title">Comenzi pe mesaje,<br>fără evidență</div>
-          <p class="prob-desc">Comenzile se dau pe telefon și mesaje, fără o evidență clară a ce s-a comandat, de cine și cât. Ofertele vin separat de la fiecare furnizor, iar compararea produs cu produs cere prea mult timp, astfel că prețul ales rareori e cel mai bun, iar schimbările de preț trec neobservate.</p>
-          <div class="prob-solution"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>Comenzi și oferte, într-un loc</div>
-        </div>
-        <div class="prob-card">
-          <span class="prob-num">02</span>
-          <div class="prob-icon"><svg class="ic" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg></div>
-          <div class="prob-title">Facturi cu prețuri<br>neverificate</div>
-          <p class="prob-desc">Furnizorul livrează la alt preț decât cel negociat. Contabilitatea importă factura. Nimeni nu compară. Diferența rămâne neobservată luni de zile.</p>
-          <div class="prob-solution"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>Validare automată față de listă</div>
-        </div>
-        <div class="prob-card">
-          <span class="prob-num">03</span>
-          <div class="prob-icon"><svg class="ic" viewBox="0 0 24 24"><line x1="12" x2="12" y1="20" y2="10"/><line x1="18" x2="18" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="16"/></svg></div>
-          <div class="prob-title">Stoc și foodcost<br>în tabele, mereu în urmă</div>
-          <p class="prob-desc">Inventarul se face o dată pe lună în foi de calcul. Foodcost-ul e calculat retrospectiv. Deciziile de meniu se iau fără date reale.</p>
-          <div class="prob-solution"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>Stoc live + foodcost pe rețetă</div>
+          <div class="prob-card rv">
+            <div class="prob-idx">03</div>
+            <div class="prob-title">Stoc și costuri calculate prea târziu</div>
+            <p class="prob-desc">Inventarul și costul preparatelor sunt adesea calculate în tabele, după ce deciziile au fost deja luate. Platforma ajută echipa să vadă costurile actualizate, pentru fiecare locație.</p>
+            <div class="prob-sol">→ Stoc și costuri actualizate în timp real</div>
+          </div>
         </div>
       </div>
     </section>
 
+    <!-- GIANT -->
+    <div class="giant" aria-hidden="true"><div class="inner"><div class="word" data-drift="7">Facturi<b>.</b></div></div></div>
+
     <!-- FLOW -->
-    <section id="cum-functioneaza" class="reveal">
-      <div class="flow-wrap reveal">
-        <div class="flow-head">
-          <div>
-            <div class="section-label">Cum funcționează</div>
-            <h2>Un ciclu complet,<br>un singur sistem</h2>
-          </div>
-          <p class="section-sub">Fiecare etapă din aprovizionare e conectată. Datele din catalog ajung în comandă, din comandă în factură, din factură în stoc, automat.</p>
+    <section class="sec" id="cum-functioneaza">
+      <div class="inner flow">
+        <div class="flow-sticky">
+          <div class="sec-label rv">Cum funcționează</div>
+          <h2 class="rv">Un ciclu complet,<br>un singur sistem</h2>
+          <p class="sec-sub rv">Fiecare etapă din aprovizionare este conectată: catalogul, comanda, factura, stocul și costul preparatelor lucrează împreună.</p>
         </div>
-        <div class="flow-row flow-row-4">
-          <div class="flow-step"><div class="flow-num">1</div><div class="flow-step-name">Catalog & prețuri</div><div class="flow-step-desc">Produse, furnizori și liste de prețuri negociate, într-un singur loc.</div></div>
-          <div class="flow-step"><div class="flow-num">2</div><div class="flow-step-name">Comandă & aprobare</div><div class="flow-step-desc">Managerul comandă, responsabilul aprobă, furnizorul primește email automat.</div></div>
-          <div class="flow-step"><div class="flow-num">3</div><div class="flow-step-name">Facturi & validare</div><div class="flow-step-desc">Import factură și verificare automată față de prețurile negociate.</div></div>
-          <div class="flow-step"><div class="flow-num">4</div><div class="flow-step-name">Stoc & foodcost</div><div class="flow-step-desc">Factura intră în stoc, iar meniul și rețetele calculează costul în timp real.</div></div>
+        <div class="flow-steps">
+          <div class="flow-rail" aria-hidden="true"><i id="railFill"></i></div>
+          <div class="fstep">
+            <div class="fstep-num">PASUL 1</div>
+            <div class="fstep-name">Catalog și prețuri</div>
+            <p class="fstep-desc">Produsele, furnizorii și listele de prețuri negociate sunt păstrate într-un singur loc.</p>
+          </div>
+          <div class="fstep">
+            <div class="fstep-num">PASUL 2</div>
+            <div class="fstep-name">Comandă și aprobare</div>
+            <p class="fstep-desc">Managerul pregătește comanda, responsabilul o aprobă, iar furnizorul primește automat comanda pe e-mail.</p>
+          </div>
+          <div class="fstep">
+            <div class="fstep-num">PASUL 3</div>
+            <div class="fstep-name">Facturi și validare</div>
+            <p class="fstep-desc">Factura este comparată automat cu prețurile negociate, linie cu linie.</p>
+          </div>
+          <div class="fstep">
+            <div class="fstep-num">PASUL 4</div>
+            <div class="fstep-name">Stoc și costul preparatelor</div>
+            <p class="fstep-desc">Facturile validate actualizează stocul, iar costul rețetelor se calculează cu prețurile la zi.</p>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- STATS -->
-    <div class="stats-row reveal">
-      <div class="stat-box"><div class="stat-big">1000<span style="font-size:28px">+</span></div><div class="stat-small">comenzi procesate</div></div>
-      <div class="stat-box"><div class="stat-big">12</div><div class="stat-small">locații active<br>într-un lanț HoReCa</div></div>
-      <div class="stat-box"><div class="stat-big">700<span style="font-size:28px">+</span></div><div class="stat-small">produse<br>în catalog</div></div>
-      <div class="stat-box"><div class="stat-big" style="font-size:42px;letter-spacing:-1px">Live</div><div class="stat-small">foodcost, stoc<br>și prețuri</div></div>
-    </div>
-
-    <!-- MODULES -->
-    <section id="module" class="reveal">
-      <div class="section-head reveal">
-        <div class="section-label">Module</div>
-        <h2>Tot ce ai nevoie,<br>construit împreună</h2>
-      </div>
-      <div class="mod-explorer reveal">
-        <div class="mod-list" role="tablist" aria-label="Module Approvisor">
-          <button class="mod-item active" role="tab" id="tab-catalog" aria-controls="panel-catalog" aria-selected="true" data-mod="catalog">
-            <span class="mod-ico"><svg viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></span>
-            <span class="mod-it-tx"><b>Catalog</b><span>Compari același produs la toți furnizorii</span></span>
-            <span class="mod-it-ar" aria-hidden="true">→</span>
-          </button>
-          <button class="mod-item" role="tab" id="tab-comenzi" aria-controls="panel-comenzi" aria-selected="false" tabindex="-1" data-mod="comenzi">
-            <span class="mod-ico"><svg viewBox="0 0 24 24"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></span>
-            <span class="mod-it-tx"><b>Comenzi</b><span>Coș rapid, 1 click → toți furnizorii</span></span>
-            <span class="mod-it-ar" aria-hidden="true">→</span>
-          </button>
-          <button class="mod-item" role="tab" id="tab-validare" aria-controls="panel-validare" aria-selected="false" tabindex="-1" data-mod="validare">
-            <span class="mod-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
-            <span class="mod-it-tx"><b>Validare facturi</b><span>Preț comandat vs. preț facturat</span></span>
-            <span class="mod-it-ar" aria-hidden="true">→</span>
-          </button>
-          <button class="mod-item" role="tab" id="tab-inventar" aria-controls="panel-inventar" aria-selected="false" tabindex="-1" data-mod="inventar">
-            <span class="mod-ico"><svg viewBox="0 0 24 24"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M2 7h20"/><path d="M12 7v15"/></svg></span>
-            <span class="mod-it-tx"><b>Gestiune</b><span>Stoc, inventar și foodcost</span></span>
-            <span class="mod-it-ar" aria-hidden="true">→</span>
-          </button>
-          <button class="mod-item" role="tab" id="tab-statistici" aria-controls="panel-statistici" aria-selected="false" tabindex="-1" data-mod="statistici">
-            <span class="mod-ico"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></span>
-            <span class="mod-it-tx"><b>Statistici</b><span>Cheltuieli, comenzi și producție</span></span>
-            <span class="mod-it-ar" aria-hidden="true">→</span>
-          </button>
+    <section class="sec" id="cifre" style="padding-top: 0;">
+      <div class="inner">
+        <div class="stats">
+          <div class="stat rv"><div class="stat-big"><span data-count="1000">0</span>+</div><div class="stat-lbl">comenzi procesate</div></div>
+          <div class="stat rv"><div class="stat-big"><span data-count="12">0</span></div><div class="stat-lbl">locații active<br>într-un lanț HoReCa</div></div>
+          <div class="stat rv"><div class="stat-big"><span data-count="700">0</span>+</div><div class="stat-lbl">produse<br>în catalog</div></div>
+          <div class="stat rv"><div class="stat-big" style="font-size:clamp(26px,2.8vw,40px);line-height:1.1">În timp<br>real</div><div class="stat-lbl">costuri, stoc<br>și prețuri</div></div>
         </div>
+      </div>
+    </section>
 
-        <div class="mod-detail">
-          <div class="mod-panel active" role="tabpanel" id="panel-catalog" aria-labelledby="tab-catalog" data-mod="catalog">
-            <div>
-              <div class="mod-icon"><svg class="ic" viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></div>
-              <div class="mod-name">Catalog</div>
-              <p class="mod-desc">Toate produsele de la toți furnizorii, într-un singur loc. Vezi același produs la mai mulți furnizori, cu prețurile lor unul lângă altul. Alegi în cunoștință de cauză, fără să contactezi fiecare furnizor separat.</p>
-              <div class="mod-tags"><span class="mod-tag">Toți furnizorii la un loc</span><span class="mod-tag">Compari prețuri</span><span class="mod-tag">Liste negociate</span></div>
-            </div>
-            <div class="mod-visual">
-              <div class="mv-label">Piept de pui 1kg · de la 3 furnizori</div>
-              <div class="price-row"><span class="nm">Metro</span><span class="price-ok">18,90 lei</span></div>
-              <div class="price-row"><span class="nm">Selgros</span><span class="price-ok">17,40 lei</span><span class="badge-ok">cel mai bun</span></div>
-              <div class="price-row"><span class="nm">Local Farm</span><span class="price-ok">19,20 lei</span></div>
-              <div class="mv-foot"><span>Compari și alegi instant, fără să suni pe fiecare</span></div>
-            </div>
+    <!-- GIANT -->
+    <div class="giant" aria-hidden="true"><div class="inner"><div class="word" data-drift="-7">Stoc<b>.</b></div></div></div>
+
+    <!-- MODULE: master/detail explorer -->
+    <section class="mods" id="module">
+      <div class="inner mods-head">
+        <div class="sec-label rv">Module</div>
+        <h2 class="rv">Modulele principale<br>ale platformei</h2>
+      </div>
+      <div class="inner">
+        <div class="modx rv">
+          <div class="modx-list" role="tablist" aria-label="Module Approvisor">
+            <button class="modx-item active" role="tab" id="mtab-catalog" aria-controls="mpan-catalog" aria-selected="true" data-mod="catalog">
+              <span class="modx-num">01</span>
+              <span class="modx-name">Catalog<i>Prețurile furnizorilor, unul lângă altul</i></span>
+              <span class="modx-ar" aria-hidden="true">&#8594;</span>
+            </button>
+            <button class="modx-item" role="tab" id="mtab-comenzi" aria-controls="mpan-comenzi" aria-selected="false" tabindex="-1" data-mod="comenzi">
+              <span class="modx-num">02</span>
+              <span class="modx-name">Comenzi<i>Un coș, toți furnizorii</i></span>
+              <span class="modx-ar" aria-hidden="true">&#8594;</span>
+            </button>
+            <button class="modx-item" role="tab" id="mtab-validare" aria-controls="mpan-validare" aria-selected="false" tabindex="-1" data-mod="validare">
+              <span class="modx-num">03</span>
+              <span class="modx-name">Validare facturi<i>Preț negociat față de preț facturat</i></span>
+              <span class="modx-ar" aria-hidden="true">&#8594;</span>
+            </button>
+            <button class="modx-item" role="tab" id="mtab-gestiune" aria-controls="mpan-gestiune" aria-selected="false" tabindex="-1" data-mod="gestiune">
+              <span class="modx-num">04</span>
+              <span class="modx-name">Gestiune și costuri<i>Stoc și cost pe rețetă</i></span>
+              <span class="modx-ar" aria-hidden="true">&#8594;</span>
+            </button>
+            <button class="modx-item" role="tab" id="mtab-statistici" aria-controls="mpan-statistici" aria-selected="false" tabindex="-1" data-mod="statistici">
+              <span class="modx-num">05</span>
+              <span class="modx-name">Statistici<i>Cheltuieli pe furnizor și locație</i></span>
+              <span class="modx-ar" aria-hidden="true">&#8594;</span>
+            </button>
           </div>
-
-          <div class="mod-panel" role="tabpanel" id="panel-comenzi" aria-labelledby="tab-comenzi" data-mod="comenzi" hidden>
-            <div>
-              <div class="mod-icon"><svg class="ic" viewBox="0 0 24 24"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></div>
-              <div class="mod-name">Comenzi</div>
-              <p class="mod-desc">Construiești coșul o dată, din catalog, și trimiți comanda către toți furnizorii dintr-un singur click, fără apeluri separate sau liste întocmite manual. Aprobarea se face în aplicație, înainte de trimitere.</p>
-              <div class="mod-tags"><span class="mod-tag">Coș rapid</span><span class="mod-tag">1 click → toți furnizorii</span><span class="mod-tag">Aprobare</span></div>
+          <div class="modx-panel">
+            <div class="modx-pane active" role="tabpanel" id="mpan-catalog" aria-labelledby="mtab-catalog" data-mod="catalog">
+              <div>
+                <div class="mod-name">Catalog</div>
+                <p class="mod-desc">Toate produsele și prețurile furnizorilor sunt centralizate. Poți compara același produs de la mai mulți furnizori și poți lua decizii pe baza prețurilor negociate.</p>
+                <div class="mod-tags"><span class="mod-tag">Toți furnizorii la un loc</span><span class="mod-tag">Compari prețuri</span><span class="mod-tag">Liste negociate</span></div>
+              </div>
+              <div class="mod-visual">
+                <div class="mv-label">Piept de pui 1kg · de la 3 furnizori</div>
+                <div class="price-row"><span class="nm">Metro</span><span class="price-ok">18,90 lei</span></div>
+                <div class="price-row"><span class="nm">Selgros</span><span class="price-ok">17,40 lei</span><span class="badge-ok">cel mai bun</span></div>
+                <div class="price-row"><span class="nm">Local Farm</span><span class="price-ok">19,20 lei</span></div>
+              </div>
             </div>
-            <div class="mod-visual">
-              <div class="mv-label">Coșul tău · 3 furnizori</div>
-              <div class="price-row"><span class="qty">12 ×</span><span class="nm">Piept de pui · Selgros</span></div>
-              <div class="price-row"><span class="qty">8 ×</span><span class="nm">Ulei floarea soarelui · Metro</span></div>
-              <div class="price-row"><span class="qty">20 ×</span><span class="nm">Roșii · Local Farm</span></div>
-              <div class="mv-foot"><span>✓ Un click și comenzile pleacă la toți furnizorii deodată</span></div>
+            <div class="modx-pane" role="tabpanel" id="mpan-comenzi" aria-labelledby="mtab-comenzi" data-mod="comenzi" hidden>
+              <div>
+                <div class="mod-name">Comenzi</div>
+                <p class="mod-desc">Construiești comanda din catalog și o trimiți către toți furnizorii dintr-un singur click. Aprobarea se poate face în platformă, înainte de trimitere.</p>
+                <div class="mod-tags"><span class="mod-tag">Coș rapid</span><span class="mod-tag">1 click → toți furnizorii</span><span class="mod-tag">Aprobare</span></div>
+              </div>
+              <div class="mod-visual">
+                <div class="mv-label">Coșul tău · 3 furnizori</div>
+                <div class="price-row"><span class="qty">12 ×</span><span class="nm">Piept de pui · Selgros</span></div>
+                <div class="price-row"><span class="qty">8 ×</span><span class="nm">Ulei floarea soarelui · Metro</span></div>
+                <div class="price-row"><span class="qty">20 ×</span><span class="nm">Roșii · Local Farm</span></div>
+              </div>
             </div>
-          </div>
-
-          <div class="mod-panel" role="tabpanel" id="panel-validare" aria-labelledby="tab-validare" data-mod="validare" hidden>
-            <div>
-              <div class="mod-icon"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
-              <div class="mod-name">Validare facturi</div>
-              <p class="mod-desc">Prețul pe care l-ai negociat față de prețul de pe factură, verificat automat, linie cu linie. Vezi imediat orice diferență, înainte de plată.</p>
-              <div class="mod-tags"><span class="mod-tag">Negociat vs. facturat</span><span class="mod-tag">Verificare automată</span><span class="mod-tag">Alertă la diferențe</span></div>
+            <div class="modx-pane" role="tabpanel" id="mpan-validare" aria-labelledby="mtab-validare" data-mod="validare" hidden>
+              <div>
+                <div class="mod-name">Validare facturi</div>
+                <p class="mod-desc">Platforma compară prețul facturat cu prețul negociat și semnalează automat diferențele, înainte ca factura să fie plătită.</p>
+                <div class="mod-tags"><span class="mod-tag">Negociat față de facturat</span><span class="mod-tag">Verificare automată</span><span class="mod-tag">Alertă la diferențe</span></div>
+              </div>
+              <div class="mod-visual">
+                <div class="mv-label">Rezultat validare</div>
+                <div class="price-row"><span class="nm">Ulei floarea soarelui 5L</span><span class="price-ok">38,50 lei</span><span class="badge-ok">OK</span></div>
+                <div class="price-row"><span class="nm">Făină albă tip 550</span><span class="price-warn">4,20 lei</span><span class="badge-warn">+6%</span></div>
+                <div class="price-row"><span class="nm">Zahăr cristal 1kg</span><span class="price-ok">6,80 lei</span><span class="badge-ok">OK</span></div>
+              </div>
             </div>
-            <div class="mod-visual">
-              <div class="mv-label">Rezultat validare</div>
-              <div class="price-row"><span class="nm">Ulei floarea soarelui 5L</span><span class="price-ok">38,50 lei</span><span class="badge-ok">OK</span></div>
-              <div class="price-row"><span class="nm">Făină albă tip 550</span><span class="price-warn">4,20 lei</span><span class="badge-warn">+6%</span></div>
-              <div class="price-row"><span class="nm">Zahăr cristal 1kg</span><span class="price-ok">6,80 lei</span><span class="badge-ok">OK</span></div>
+            <div class="modx-pane" role="tabpanel" id="mpan-gestiune" aria-labelledby="mtab-gestiune" data-mod="gestiune" hidden>
+              <div>
+                <div class="mod-name">Gestiune și costul preparatelor</div>
+                <p class="mod-desc">Stocul se actualizează pe baza facturilor validate, pentru fiecare locație. Costul rețetelor poate fi urmărit cu prețurile actualizate.</p>
+                <div class="mod-tags"><span class="mod-tag">Stoc în timp real</span><span class="mod-tag">Cost pe rețetă</span><span class="mod-tag">Pe locație</span></div>
+              </div>
+              <div class="mod-visual">
+                <div class="mv-label">Rețetă · Burger clasic</div>
+                <div class="price-row"><span class="nm">Chiflă brioche</span><span class="price-ok">1,20 lei</span></div>
+                <div class="price-row"><span class="nm">Carne vită 180g</span><span class="price-ok">4,60 lei</span></div>
+                <div class="mv-barline"><span class="nm">Cost rețetă</span><span class="mv-bar"><i style="width:31%"></i></span><span class="mv-pct">31%</span></div>
+              </div>
             </div>
-          </div>
-
-          <div class="mod-panel" role="tabpanel" id="panel-inventar" aria-labelledby="tab-inventar" data-mod="inventar" hidden>
-            <div>
-              <div class="mod-icon"><svg class="ic" viewBox="0 0 24 24"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M2 7h20"/><path d="M12 7v15"/></svg></div>
-              <div class="mod-name">Gestiune &amp; foodcost</div>
-              <p class="mod-desc">Stocul se actualizează din facturile validate, pe fiecare locație. Vezi costul real al fiecărei rețete și al meniului, în timp real. Știi exact cât te costă fiecare preparat și ce marjă rămâne.</p>
-              <div class="mod-tags"><span class="mod-tag">Stoc live</span><span class="mod-tag">Cost pe rețetă</span><span class="mod-tag">Per locație</span></div>
-            </div>
-            <div class="mod-visual">
-              <div class="mv-label">Rețetă · Burger clasic</div>
-              <div class="price-row"><span class="nm">Chiflă brioche</span><span class="price-ok">1,20 lei</span></div>
-              <div class="price-row"><span class="nm">Carne vită 180g</span><span class="price-ok">4,60 lei</span></div>
-              <div class="price-row"><span class="nm">Cheddar + sosuri</span><span class="price-ok">1,90 lei</span></div>
-              <div class="mv-barline"><span class="nm">Food cost</span><span class="mv-bar"><i style="width:31%"></i></span><span class="mv-pct">31%</span></div>
-            </div>
-          </div>
-
-          <div class="mod-panel" role="tabpanel" id="panel-statistici" aria-labelledby="tab-statistici" data-mod="statistici" hidden>
-            <div>
-              <div class="mod-icon"><svg class="ic" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></div>
-              <div class="mod-name">Statistici</div>
-              <p class="mod-desc">Vezi unde se duc banii: pe furnizor, locație și categorie, și ce comanzi cel mai des. Plus ce ai în stoc și cum evoluează producția. Poți ajunge până la linia de factură, ca să negociezi pe baza datelor reale.</p>
-              <div class="mod-tags"><span class="mod-tag">Cheltuieli & comenzi</span><span class="mod-tag">Stoc & producție</span><span class="mod-tag">Drill-down</span></div>
-            </div>
-            <div class="mod-visual">
-              <div class="mv-label">Cheltuieli · Iunie</div>
-              <div class="mv-big">84.320<small>lei</small></div>
-              <div class="mv-barline"><span class="nm">Metro</span><span class="mv-bar"><i style="width:38%"></i></span><span class="mv-pct">38%</span></div>
-              <div class="mv-barline"><span class="nm">Selgros</span><span class="mv-bar"><i style="width:27%"></i></span><span class="mv-pct">27%</span></div>
-              <div class="mv-barline"><span class="nm">Local</span><span class="mv-bar"><i style="width:21%"></i></span><span class="mv-pct">21%</span></div>
+            <div class="modx-pane" role="tabpanel" id="mpan-statistici" aria-labelledby="mtab-statistici" data-mod="statistici" hidden>
+              <div>
+                <div class="mod-name">Statistici</div>
+                <p class="mod-desc">Vezi cheltuielile pe furnizor, locație și categorie. Poți analiza datele până la nivel de produs sau linie de factură.</p>
+                <div class="mod-tags"><span class="mod-tag">Cheltuieli și comenzi</span><span class="mod-tag">Stoc și producție</span><span class="mod-tag">Detaliere pe factură</span></div>
+              </div>
+              <div class="mod-visual">
+                <div class="mv-label">Cheltuieli · Iunie</div>
+                <div class="mv-big">84.320<small>lei</small></div>
+                <div class="mv-barline"><span class="nm">Metro</span><span class="mv-bar"><i style="width:38%"></i></span><span class="mv-pct">38%</span></div>
+                <div class="mv-barline"><span class="nm">Selgros</span><span class="mv-bar"><i style="width:27%"></i></span><span class="mv-pct">27%</span></div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-
-    <!-- ROLES -->
-    <section id="roluri" class="reveal">
-      <div class="section-head reveal">
-        <div class="section-label">Roluri</div>
-        <h2>Fiecare om vede<br>exact ce are nevoie</h2>
-        <p class="section-sub">Două roluri, drepturi clare, zero suprapuneri. Admin guvernează, Manager operează.</p>
-      </div>
-      <div class="roles-grid reveal-children">
-        <div class="role-card dark">
-          <div class="role-pill">Administrator</div>
-          <div class="role-title">Vizibilitate totală<br>din spate</div>
-          <p class="role-desc">Imagine completă pe toate locațiile, toți furnizorii, toate documentele. Setează regulile, validează, analizează.</p>
-          <ul class="role-list">
-            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Catalog și liste de prețuri centralizate</li>
-            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Politici de aprobare per locație și furnizor</li>
-            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Verificare automată a prețurilor de pe facturi</li>
-            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Vezi tot ce se comandă, din toate locațiile, live</li>
-            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Statistici pe comenzi, global și per locație</li>
-            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Status zilnic pe gestiune: consum, transferuri, venituri</li>
-          </ul>
+    <!-- SCREENSHOTS -->
+    <section class="sec" id="aplicatie">
+      <div class="inner">
+        <div class="sec-head">
+          <div class="sec-label rv">În aplicație</div>
+          <h2 class="rv">Cum arată<br>în Approvisor</h2>
         </div>
-        <div class="role-card light">
-          <div class="role-pill">Manager</div>
-          <div class="role-title">Operațiuni rapide<br>la locație</div>
-          <p class="role-desc">Vede doar locația lui. Comandă din catalog, urmărește stocul și foodcost-ul, fără acces la datele altor locații.</p>
-          <ul class="role-list">
-            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Vezi produsul de la toți furnizorii și compari ușor prețul</li>
-            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Comanda zilei o dată, pleacă singură la fiecare furnizor</li>
-            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Comenzi repetitive, fără să le scrii de fiecare dată</li>
-            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Stoc pe unitate, în timp real</li>
-            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Foodcost calculat automat, cu prețuri la zi</li>
-            <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Vezi consumul și costul zilnic al locației</li>
-          </ul>
+        <div class="shots-carousel">
+          <div class="shots-track">
+          <figure class="shot rv">
+            <div class="frame">
+              <div class="frame-bar"><span></span><span></span><span></span></div>
+              <picture><source srcset="img/screen-catalog.webp" type="image/webp" /><img src="img/screen-catalog.png" alt="Catalog în Approvisor" loading="lazy" /></picture>
+            </div>
+            <figcaption>Catalog<span>Produse și prețuri centralizate</span></figcaption>
+          </figure>
+          <figure class="shot rv">
+            <div class="frame">
+              <div class="frame-bar"><span></span><span></span><span></span></div>
+              <picture><source srcset="img/screen-comenzi.webp" type="image/webp" /><img src="img/screen-comenzi.png" alt="Comenzi în Approvisor" loading="lazy" /></picture>
+            </div>
+            <figcaption>Comenzi<span>Comenzi trimise către furnizori</span></figcaption>
+          </figure>
+          <figure class="shot rv">
+            <div class="frame">
+              <div class="frame-bar"><span></span><span></span><span></span></div>
+              <picture><source srcset="img/screen-statistici.webp" type="image/webp" /><img src="img/screen-statistici.png" alt="Statistici în Approvisor" loading="lazy" /></picture>
+            </div>
+            <figcaption>Statistici<span>Rapoarte despre cheltuieli și comenzi</span></figcaption>
+          </figure>
+          <figure class="shot rv">
+            <div class="frame">
+              <div class="frame-bar"><span></span><span></span><span></span></div>
+              <picture><source srcset="img/screen-validare.webp" type="image/webp" /><img src="img/screen-validare.png" alt="Validare facturi în Approvisor" loading="lazy" /></picture>
+            </div>
+            <figcaption>Validare facturi<span>Preț negociat comparat cu prețul facturat</span></figcaption>
+          </figure>
+          <figure class="shot rv">
+            <div class="frame">
+              <div class="frame-bar"><span></span><span></span><span></span></div>
+              <picture><source srcset="img/screen-gestiune.webp" type="image/webp" /><img src="img/screen-gestiune.png" alt="Gestiune și costuri în Approvisor" loading="lazy" /></picture>
+            </div>
+            <figcaption>Gestiune<span>Stoc și costul preparatelor pe locație</span></figcaption>
+          </figure>
+          </div>
+          <button class="car-btn prev" aria-label="Categoria anterioară">&#8592;</button>
+          <button class="car-btn next" aria-label="Categoria următoare">&#8594;</button>
         </div>
       </div>
     </section>
 
-    <!-- APP SCREENSHOTS -->
-    <section id="aplicatie" class="reveal">
-      <div class="section-head reveal">
-        <div class="section-label">În aplicație</div>
-        <h2>Cum arată<br>în Approvisor</h2>
-        <p class="section-sub">O privire prin platformă, pe cele 5 zone.</p>
-      </div>
-      <div class="carousel reveal">
-        <div class="carousel-track">
-          <figure class="shot">
-            <div class="shot-frame">
-              <div class="shot-bar"><span></span><span></span><span></span></div>
-              <div class="shot-body"><picture><source srcset="img/screen-catalog.webp" type="image/webp" /><img src="img/screen-catalog.png" alt="Catalog în Approvisor" loading="lazy" /></picture></div>
-            </div>
-            <figcaption>Catalog<span>Produse și prețuri, de la toți furnizorii</span></figcaption>
-          </figure>
-          <figure class="shot">
-            <div class="shot-frame">
-              <div class="shot-bar"><span></span><span></span><span></span></div>
-              <div class="shot-body"><picture><source srcset="img/screen-comenzi.webp" type="image/webp" /><img src="img/screen-comenzi.png" alt="Comenzi în Approvisor" loading="lazy" /></picture></div>
-            </div>
-            <figcaption>Comenzi<span>Coș și trimitere către furnizori</span></figcaption>
-          </figure>
-          <figure class="shot">
-            <div class="shot-frame">
-              <div class="shot-bar"><span></span><span></span><span></span></div>
-              <div class="shot-body"><picture><source srcset="img/screen-statistici.webp" type="image/webp" /><img src="img/screen-statistici.png" alt="Statistici în Approvisor" loading="lazy" /></picture></div>
-            </div>
-            <figcaption>Statistici<span>Cheltuieli, comenzi și producție</span></figcaption>
-          </figure>
-          <figure class="shot">
-            <div class="shot-frame">
-              <div class="shot-bar"><span></span><span></span><span></span></div>
-              <div class="shot-body"><picture><source srcset="img/screen-validare.webp" type="image/webp" /><img src="img/screen-validare.png" alt="Validare facturi în Approvisor" loading="lazy" /></picture></div>
-            </div>
-            <figcaption>Validare facturi<span>Preț comandat vs. preț facturat</span></figcaption>
-          </figure>
-          <figure class="shot">
-            <div class="shot-frame">
-              <div class="shot-bar"><span></span><span></span><span></span></div>
-              <div class="shot-body"><picture><source srcset="img/screen-gestiune.webp" type="image/webp" /><img src="img/screen-gestiune.png" alt="Gestiune și foodcost în Approvisor" loading="lazy" /></picture></div>
-            </div>
-            <figcaption>Gestiune<span>Stoc și foodcost pe locație</span></figcaption>
-          </figure>
+    <!-- TESTIMONIALE -->
+    <section class="sec" id="testimoniale" style="padding-top: 0;">
+      <div class="inner">
+        <div class="sec-head">
+          <div class="sec-label rv">Testimoniale</div>
+          <h2 class="rv">Ce spun utilizatorii<br>platformei</h2>
         </div>
-        <button class="carousel-btn prev" aria-label="Categoria anterioară">&#8592;</button>
-        <button class="carousel-btn next" aria-label="Categoria următoare">&#8594;</button>
-      </div>
-    </section>
-
-    <!-- TESTIMONIALS -->
-    <section id="testimonial" class="reveal">
-      <div class="section-head reveal">
-        <div class="section-label">Testimoniale</div>
-        <h2>Ce spun cei care<br>îl folosesc zilnic</h2>
-      </div>
-      <div class="carousel quotes-carousel reveal">
-        <div class="carousel-track">
-          <figure class="quote-card">
+        <div class="quotes">
+          <figure class="quote rv">
             <div class="q-mark">&#8220;</div>
             <p>Ca să știu cât cheltuiesc pe toate locațiile, îmi lua o zi de adunat facturi. Acum văd totul într-un loc, în timp real, și nu mai iau decizii pe estimări.</p>
             <figcaption><b>Patron</b>Lanț HoReCa · 12 locații</figcaption>
           </figure>
-          <figure class="quote-card">
+          <figure class="quote rv">
             <div class="q-mark">&#8220;</div>
             <p>Văd același produs la toți furnizorii, cu prețul lor, unul lângă altul. Negociez cu cifre, nu din memorie, iar diferențele de pe facturi nu mai trec neobservate.</p>
             <figcaption><b>Director de achiziții</b>Lanț HoReCa</figcaption>
           </figure>
-          <figure class="quote-card">
+          <figure class="quote rv">
             <div class="q-mark">&#8220;</div>
             <p>Comanda zilnică o făceam pe telefon, cu fiecare furnizor pe rând. Acum o închei în câteva minute și pleacă singură la toți. Am recâștigat prima oră din zi.</p>
             <figcaption><b>Manager de locație</b>Lanț HoReCa</figcaption>
           </figure>
-          <figure class="quote-card">
+          <figure class="quote rv">
             <div class="q-mark">&#8220;</div>
-            <p>Văd food cost-ul pe fiecare rețetă, cu prețurile la zi. Când se scumpește un ingredient, știu imediat ce preparat mă costă mai mult și ajustez meniul.</p>
+            <p>Văd costul fiecărei rețete, cu prețurile la zi. Când se scumpește un ingredient, știu imediat ce preparat mă costă mai mult și ajustez meniul.</p>
             <figcaption><b>Șef-bucătar</b>Lanț HoReCa</figcaption>
           </figure>
         </div>
-        <button class="carousel-btn prev" aria-label="Testimonialul anterior">&#8592;</button>
-        <button class="carousel-btn next" aria-label="Testimonialul următor">&#8594;</button>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="sec" id="faq" style="padding-top: 0;">
+      <div class="inner">
+        <div class="sec-head">
+          <div class="sec-label rv">Întrebări frecvente</div>
+          <h2 class="rv">Ce ne întreabă<br>lanțurile la început</h2>
+        </div>
+        <div class="faq rv">
+          <details>
+            <summary>Ce presupune implementarea?</summary>
+            <div class="faq-a">Implementarea se face treptat. Începem cu locațiile și furnizorii principali, importăm catalogul de produse și listele de prețuri, apoi configurăm rolurile pentru utilizatori. Echipa noastră te ajută cu transferul datelor.</div>
+          </details>
+          <details>
+            <summary>Se poate începe cu un număr redus de locații?</summary>
+            <div class="faq-a">Da. Recomandăm validarea fluxului pe câteva locații: catalog, comenzi, aprobări. Extinderea la nivelul întregului lanț se face după această etapă.</div>
+          </details>
+          <details>
+            <summary>Cum se stabilește prețul?</summary>
+            <div class="faq-a">Prețul se stabilește în funcție de numărul de locații. După o demonstrație a platformei cu datele lanțului, trimitem o ofertă personalizată.</div>
+          </details>
+          <details>
+            <summary>Furnizorii trebuie să instaleze ceva?</summary>
+            <div class="faq-a">Nu. Furnizorii primesc comenzile automat, pe e-mail, fără cont și fără nicio aplicație de instalat. În platformă rămâne evidența completă: ce s-a trimis, către cine și când.</div>
+          </details>
+          <details>
+            <summary>Ce vede fiecare rol în aplicație?</summary>
+            <div class="faq-a">Accesul este configurat pe roluri. Managerul de locație vede comenzile, stocul și costurile locației sale. Administratorul are acces la catalog, furnizori, prețuri, aprobări, comenzi și statistici pentru toate locațiile.</div>
+          </details>
+          <details>
+            <summary>Comenzile pot fi aprobate înainte de trimitere?</summary>
+            <div class="faq-a">Da. Aprobarea se face în aplicație, înainte de trimitere, pe baza unor reguli configurate pe locație și pe furnizor.</div>
+          </details>
+          <details>
+            <summary>Se păstrează istoricul comenzilor?</summary>
+            <div class="faq-a">Da. Fiecare comandă se păstrează în istoric, cu locația, furnizorul, produsele, persoana care a plasat-o și data trimiterii. Istoricul susține controlul intern și comparațiile între locații.</div>
+          </details>
+          <details>
+            <summary>Cum se actualizează prețurile?</summary>
+            <div class="faq-a">Listele de prețuri negociate sunt păstrate în catalog și gestionate centralizat de administrator. Orice diferență dintre prețul negociat și prețul facturat este semnalată automat, linie cu linie.</div>
+          </details>
+        </div>
       </div>
     </section>
 
     <!-- CTA -->
-    <section class="cta-section reveal" id="contact">
-      <div class="cta-card">
-        <div class="section-label" style="color:rgba(255,255,255,.5);justify-content:center">Începe acum</div>
-        <h2>Gata să renunți<br>la mesaje și tabele?</h2>
-        <p>Arată-ne operațiunea ta și îți demonstrăm cum arată Approvisor cu datele tale reale.</p>
-        <div class="cta-btns">
-          <a href="mailto:contact@approvisor.com" class="btn-primary">Cere o demonstrație ↗</a>
-          <a href="mailto:contact@approvisor.com" class="btn-secondary">Contactează-ne</a>
+    <section class="cta" id="contact">
+      <div class="inner">
+        <div class="sec-label rv" style="justify-content:center">Începe acum</div>
+        <h2 class="rv">Înlocuiește mesajele și tabelele<br>cu un singur sistem</h2>
+        <p class="rv">Arată-ne cum funcționează operațiunea ta, iar noi îți demonstrăm cum poate fi configurat Approvisor pentru datele și locațiile tale.</p>
+        <div class="hero-ctas rv" style="justify-content:center">
+          <a href="mailto:contact@approvisor.com" class="btn-main magnetic">Solicită o demonstrație ↗</a>
+          <a href="mailto:contact@approvisor.com" class="btn-ghost magnetic">Contactează-ne</a>
         </div>
-        <div class="cta-note"><span>Preț în funcție de numărul de locații</span><span>Te ajutăm la configurare, cu datele tale</span></div>
+        <div class="cta-notes rv"><span>Preț stabilit în funcție de numărul de locații</span><span>Asistență la configurare și importul datelor</span></div>
       </div>
     </section>
 
     <footer>
-      <a href="#" class="f-logo"><img src="img/logo.png" alt="Approvisor" /></a>
-      <p>© 2026 Approvisor · Platformă de achiziții pentru HoReCa</p>
-      <nav><ul>
-        <li><a href="#module">Module</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li><a href="mailto:contact@approvisor.com">contact@approvisor.com</a></li>
-      </ul></nav>
+      <div class="inner f-in">
+        <img src="img/logo.png" alt="Approvisor" />
+        <p>© 2026 Approvisor · Platformă de achiziții pentru HoReCa</p>
+        <a href="mailto:contact@approvisor.com">contact@approvisor.com</a>
+      </div>
     </footer>
 
   </main>
 
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script>
     (function(){
-      var els = document.querySelectorAll('.reveal, .reveal-children');
-      // Fallback: no IntersectionObserver support → reveal everything immediately
-      if (!('IntersectionObserver' in window)) {
-        els.forEach(function(el){ el.classList.add('in'); });
-        return;
-      }
-      var io = new IntersectionObserver(function(entries){
-        entries.forEach(function(e){
-          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-        });
-      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-      els.forEach(function(el){ io.observe(el); });
-    })();
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var hasGsap = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
 
-    /* Module explorer - master/detail tabs */
-    (function(){
-      var tabs = Array.prototype.slice.call(document.querySelectorAll('.mod-item'));
-      var panels = document.querySelectorAll('.mod-panel');
-      if (!tabs.length) return;
-      function activate(id, focusTab){
-        tabs.forEach(function(t){
-          var on = t.dataset.mod === id;
-          t.classList.toggle('active', on);
-          t.setAttribute('aria-selected', on ? 'true' : 'false');
-          t.tabIndex = on ? 0 : -1;
-          if (on && focusTab) t.focus();
-        });
-        panels.forEach(function(p){
-          var on = p.dataset.mod === id;
-          p.classList.toggle('active', on);
-          p.hidden = !on;
-        });
-      }
-      tabs.forEach(function(t, i){
-        t.addEventListener('click', function(){ activate(t.dataset.mod, false); });
-        t.addEventListener('keydown', function(e){
-          var n = null;
-          if (e.key === 'ArrowDown' || e.key === 'ArrowRight') n = (i + 1) % tabs.length;
-          else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') n = (i - 1 + tabs.length) % tabs.length;
-          else if (e.key === 'Home') n = 0;
-          else if (e.key === 'End') n = tabs.length - 1;
-          if (n !== null) { e.preventDefault(); activate(tabs[n].dataset.mod, true); }
-        });
-      });
-    })();
+      /* nav background on scroll */
+      var nav = document.getElementById('nav');
+      function navState(){ nav.classList.toggle('scrolled', (window.scrollY || 0) > 40); }
+      window.addEventListener('scroll', navState, { passive: true });
+      navState();
 
-    /* Carousels - app screenshots + testimonials (arrow nav on desktop, swipe on mobile) */
-    Array.prototype.forEach.call(document.querySelectorAll('.carousel'), function(car){
-      var track = car.querySelector('.carousel-track');
-      if (!track) return;
-      var slides = Array.prototype.slice.call(track.children);
-      if (!slides.length) return;
-      function current(){
-        var edge = track.scrollLeft, best = 0, bd = Infinity;
-        slides.forEach(function(s, i){ var d = Math.abs((s.offsetLeft - slides[0].offsetLeft) - edge); if (d < bd) { bd = d; best = i; } });
-        return best;
+      /* screenshots carousel arrows (works without GSAP) */
+      var shTrack = document.querySelector('.shots-track');
+      if (shTrack) {
+        var shSlides = Array.prototype.slice.call(shTrack.children);
+        var shCur = function(){
+          var e = shTrack.scrollLeft, best = 0, bd = Infinity;
+          shSlides.forEach(function(s, i){ var d = Math.abs((s.offsetLeft - shSlides[0].offsetLeft) - e); if (d < bd) { bd = d; best = i; } });
+          return best;
+        };
+        var shGo = function(i){
+          i = Math.max(0, Math.min(shSlides.length - 1, i));
+          shTrack.scrollTo({ left: shSlides[i].offsetLeft - shSlides[0].offsetLeft, behavior: 'smooth' });
+        };
+        var shPrev = document.querySelector('.car-btn.prev'), shNext = document.querySelector('.car-btn.next');
+        if (shPrev) shPrev.addEventListener('click', function(){ shGo(shCur() - 1); });
+        if (shNext) shNext.addEventListener('click', function(){ shGo(shCur() + 1); });
       }
-      function go(i){
-        i = Math.max(0, Math.min(slides.length - 1, i));
-        track.scrollTo({ left: slides[i].offsetLeft - slides[0].offsetLeft, behavior: 'smooth' });
-      }
-      var prev = car.querySelector('.carousel-btn.prev'), next = car.querySelector('.carousel-btn.next');
-      if (prev) prev.addEventListener('click', function(){ go(current() - 1); });
-      if (next) next.addEventListener('click', function(){ go(current() + 1); });
-    });
 
-    /* HERO shrink-to-fit: on narrow screens, scale the desktop hero composition to the phone width (nav stays full size) */
-    (function(){
-      var hero = document.querySelector('.hero');
-      var hb = hero && hero.querySelector('.hero-body');
-      if (!hero || !hb) return;
-      var DESIGN = 720, CROSS = 920;
-      function fit(){
-        var w = document.documentElement.clientWidth;
-        if (w < CROSS) {
-          hero.classList.add('hero-shrink');
-          hb.style.zoom = (w / DESIGN).toFixed(4);
-        } else {
-          hero.classList.remove('hero-shrink');
-          hb.style.zoom = '';
-        }
-      }
-      fit();
-      window.addEventListener('resize', fit);
-    })();
-
-    /* Swipe dots for the horizontal carousels (visible on mobile) */
-    (function(){
-      var tracks = [
-        document.querySelector('.problems-grid'),
-        document.querySelector('.mod-detail'),
-        document.querySelector('.roles-grid'),
-        document.querySelector('.quotes-carousel .carousel-track'),
-        document.querySelector('#aplicatie .carousel-track')
-      ];
-      tracks.forEach(function(track){
-        if (!track || track.children.length < 2) return;
-        var slides = Array.prototype.slice.call(track.children);
-        var dots = document.createElement('div');
-        dots.className = 'carousel-dots';
-        slides.forEach(function(s, i){
-          var b = document.createElement('button');
-          b.type = 'button';
-          b.setAttribute('aria-label', 'Slide ' + (i + 1));
-          b.addEventListener('click', function(){
-            track.scrollTo({ left: slides[i].offsetLeft - slides[0].offsetLeft, behavior: 'smooth' });
+      /* module explorer: master/detail tabs (works without GSAP; animated when available) */
+      var mtabs = Array.prototype.slice.call(document.querySelectorAll('.modx-item'));
+      var mpanes = document.querySelectorAll('.modx-pane');
+      if (mtabs.length) {
+        var mActivate = function(id, focusTab){
+          mtabs.forEach(function(t){
+            var on = t.dataset.mod === id;
+            t.classList.toggle('active', on);
+            t.setAttribute('aria-selected', on ? 'true' : 'false');
+            t.tabIndex = on ? 0 : -1;
+            if (on && focusTab) t.focus();
           });
-          dots.appendChild(b);
+          mpanes.forEach(function(p){
+            var on = p.dataset.mod === id;
+            p.classList.toggle('active', on);
+            p.hidden = !on;
+            if (on && window.gsap && !reduced) {
+              gsap.fromTo(p.children, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.45, stagger: 0.07, ease: 'power3.out', overwrite: 'auto' });
+            }
+          });
+        };
+        mtabs.forEach(function(t, i){
+          t.addEventListener('click', function(){ mActivate(t.dataset.mod, false); });
+          t.addEventListener('keydown', function(e){
+            var n = null;
+            if (e.key === 'ArrowDown' || e.key === 'ArrowRight') n = (i + 1) % mtabs.length;
+            else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') n = (i - 1 + mtabs.length) % mtabs.length;
+            else if (e.key === 'Home') n = 0;
+            else if (e.key === 'End') n = mtabs.length - 1;
+            if (n !== null) { e.preventDefault(); mActivate(mtabs[n].dataset.mod, true); }
+          });
         });
-        track.parentNode.insertBefore(dots, track.nextSibling);
-        function update(){
-          var edge = track.scrollLeft, best = 0, bd = Infinity;
-          slides.forEach(function(s, i){ var d = Math.abs((s.offsetLeft - slides[0].offsetLeft) - edge); if (d < bd) { bd = d; best = i; } });
-          Array.prototype.forEach.call(dots.children, function(b, k){ b.classList.toggle('active', k === best); });
-        }
-        var raf;
-        track.addEventListener('scroll', function(){ cancelAnimationFrame(raf); raf = requestAnimationFrame(update); }, { passive: true });
-        update();
+      }
+
+      if (!hasGsap || reduced) return; /* content is fully visible without motion */
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      /* hero intro */
+      gsap.set('.h1-line > span', { yPercent: 110 });
+      gsap.set('.hero .rv', { autoAlpha: 0, y: 26 });
+      gsap.set('.hero-scene', { autoAlpha: 0, y: 130 });
+      var intro = gsap.timeline({ defaults: { ease: 'power4.out' } });
+      intro
+        .to('.h1-line > span', { yPercent: 0, duration: 1.1, stagger: 0.11 }, 0.15)
+        .to('.hero .rv', { autoAlpha: 1, y: 0, duration: 0.9, stagger: 0.08 }, 0.5)
+        .to('.hero-scene', { autoAlpha: 1, y: 0, duration: 1.4 }, 0.45);
+
+      /* hero scene: barely-there parallax so it never detaches from the hero bottom */
+      gsap.to('#heroVisual', {
+        y: -18, ease: 'none',
+        scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
       });
+
+
+      /* testimonials marquee (desktop): duplicate the cards into two halves for a seamless loop */
+      if (window.matchMedia('(min-width: 921px)').matches) {
+        var qWrap = document.querySelector('.quotes');
+        if (qWrap) {
+          var cards = Array.prototype.slice.call(qWrap.children);
+          cards.forEach(function(c){ c.classList.remove('rv'); });
+          var track = document.createElement('div');
+          track.className = 'marquee-track';
+          var half1 = document.createElement('div'); half1.className = 'mq-half';
+          var half2 = document.createElement('div'); half2.className = 'mq-half';
+          half2.setAttribute('aria-hidden', 'true');
+          cards.forEach(function(c){ half1.appendChild(c); half2.appendChild(c.cloneNode(true)); });
+          track.appendChild(half1); track.appendChild(half2);
+          qWrap.innerHTML = '';
+          qWrap.appendChild(track);
+          qWrap.classList.add('marquee', 'rv');
+        }
+      }
+
+      /* generic reveals */
+      gsap.utils.toArray('main .rv').forEach(function(el){
+        if (el.closest('.hero')) return;
+        gsap.fromTo(el, { autoAlpha: 0, y: 34 }, {
+          autoAlpha: 1, y: 0, duration: 0.9, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+        });
+      });
+
+      /* giant words drift */
+      gsap.utils.toArray('.giant .word').forEach(function(w){
+        var d = parseFloat(w.dataset.drift || 6);
+        gsap.fromTo(w, { xPercent: d, autoAlpha: 0.5 }, {
+          xPercent: -d, autoAlpha: 1, ease: 'none',
+          scrollTrigger: { trigger: w.closest('.giant'), start: 'top bottom', end: 'bottom top', scrub: true }
+        });
+      });
+
+      /* flow: rail fill + step activation */
+      var steps = gsap.utils.toArray('.fstep');
+      gsap.to('#railFill', {
+        scaleY: 1, ease: 'none',
+        scrollTrigger: {
+          trigger: '.flow-steps', start: 'top 62%', end: 'bottom 55%', scrub: true,
+          onUpdate: function(self){
+            steps.forEach(function(s, i){ s.classList.toggle('on', self.progress > (i + 0.15) / steps.length); });
+          }
+        }
+      });
+
+      /* stats counters */
+      gsap.utils.toArray('[data-count]').forEach(function(el){
+        var target = parseInt(el.dataset.count, 10);
+        var obj = { v: 0 };
+        gsap.to(obj, {
+          v: target, duration: 1.6, ease: 'power2.out',
+          snap: { v: 1 },
+          onUpdate: function(){ el.textContent = Math.round(obj.v).toLocaleString('ro-RO'); },
+          scrollTrigger: { trigger: el, start: 'top 90%', once: true }
+        });
+      });
+
+      /* card spotlight: radial highlight follows the cursor (fine pointers only) */
+      if (window.matchMedia('(pointer: fine)').matches) {
+        document.querySelectorAll('.prob-card, .modx-panel, .quote, .stat').forEach(function(card){
+          card.classList.add('spot');
+          card.addEventListener('mousemove', function(e){
+            var r = card.getBoundingClientRect();
+            card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+            card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+          });
+        });
+      }
+
+      /* magnetic buttons (fine pointers only) */
+      if (window.matchMedia('(pointer: fine)').matches) {
+        document.querySelectorAll('.magnetic').forEach(function(btn){
+          var qx = gsap.quickTo(btn, 'x', { duration: 0.35, ease: 'power3.out' });
+          var qy = gsap.quickTo(btn, 'y', { duration: 0.35, ease: 'power3.out' });
+          btn.addEventListener('mousemove', function(e){
+            var r = btn.getBoundingClientRect();
+            qx((e.clientX - r.left - r.width / 2) * 0.25);
+            qy((e.clientY - r.top - r.height / 2) * 0.25);
+          });
+          btn.addEventListener('mouseleave', function(){ qx(0); qy(0); });
+        });
+      }
+
+      /* screenshot tilt toward cursor */
+      if (window.matchMedia('(pointer: fine)').matches) {
+        document.querySelectorAll('.shot .frame').forEach(function(fr){
+          var rx = gsap.quickTo(fr, 'rotationX', { duration: 0.5, ease: 'power3.out' });
+          var ry = gsap.quickTo(fr, 'rotationY', { duration: 0.5, ease: 'power3.out' });
+          fr.parentElement.addEventListener('mousemove', function(e){
+            var r = fr.getBoundingClientRect();
+            ry(((e.clientX - r.left) / r.width - 0.5) * 10);
+            rx(-((e.clientY - r.top) / r.height - 0.5) * 8);
+          });
+          fr.parentElement.addEventListener('mouseleave', function(){ rx(0); ry(0); });
+        });
+      }
     })();
   </script>
 
