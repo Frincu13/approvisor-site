@@ -156,16 +156,28 @@
     .stat-big { font-size: clamp(44px, 4.4vw, 66px); font-weight: 800; letter-spacing: -0.03em; color: var(--red); line-height: 1; font-variant-numeric: tabular-nums; }
     .stat-lbl { font-size: 13px; color: var(--tx2); margin-top: 12px; line-height: 1.5; }
 
-    /* MODULE - pinned horizontal gallery on desktop */
-    .mods { position: relative; }
+    /* MODULE - master/detail explorer */
+    .mods { position: relative; padding-bottom: clamp(60px, 10vh, 110px); }
     .mods-head { padding: clamp(80px, 12vh, 140px) 0 40px; }
-    .mods-view { overflow: hidden; }
-    .mods-track { display: flex; gap: 20px; padding: 10px var(--pad) 60px; width: max-content; }
-    .mod-card { width: min(500px, 84vw); flex-shrink: 0; background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 38px 34px; display: flex; flex-direction: column; gap: 20px; transition: border-color .3s; }
-    .mod-card:hover { border-color: rgba(214,72,72,0.4); }
-    .mod-top { display: flex; align-items: center; gap: 14px; }
-    .mod-num { font-size: 13px; font-weight: 700; color: var(--red); letter-spacing: 1.5px; }
-    .mod-name { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; }
+    .modx { display: grid; grid-template-columns: 340px 1fr; background: var(--card); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; }
+    .modx-list { display: flex; flex-direction: column; border-right: 1px solid var(--line); }
+    .modx-item { position: relative; display: flex; align-items: center; gap: 16px; flex: 1; padding: 21px 22px; background: transparent; border: none; border-bottom: 1px solid var(--line); cursor: pointer; text-align: left; font-family: inherit; color: var(--tx2); transition: background .25s, color .25s; }
+    .modx-item:last-child { border-bottom: none; }
+    .modx-item::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--red); transform: scaleY(0); transition: transform .25s; }
+    .modx-item:hover { background: rgba(255,255,255,0.03); color: var(--tx); }
+    .modx-item.active { background: rgba(255,255,255,0.055); color: var(--tx); }
+    .modx-item.active::before { transform: scaleY(1); }
+    .modx-item:focus-visible { outline: 2px solid var(--red); outline-offset: -2px; }
+    .modx-num { font-family: var(--f-display); font-size: 13px; font-weight: 700; color: var(--tx3); transition: color .25s; flex-shrink: 0; }
+    .modx-item.active .modx-num { color: var(--red); }
+    .modx-name { display: flex; flex-direction: column; gap: 3px; font-size: 16px; font-weight: 700; min-width: 0; }
+    .modx-name i { font-style: normal; font-size: 12.5px; font-weight: 400; color: var(--tx3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .modx-ar { margin-left: auto; color: var(--red); opacity: 0; transform: translateX(-6px); transition: opacity .25s, transform .25s; flex-shrink: 0; }
+    .modx-item.active .modx-ar { opacity: 1; transform: none; }
+    .modx-panel { padding: 42px 40px; min-height: 420px; display: flex; align-items: center; }
+    .modx-pane { display: none; width: 100%; }
+    .modx-pane.active { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: center; }
+    .mod-name { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 12px; }
     .mod-desc { font-size: 14.5px; color: var(--tx2); line-height: 1.7; }
     .mod-tags { display: flex; flex-wrap: wrap; gap: 8px; }
     .mod-tag { font-size: 11px; font-weight: 600; padding: 6px 12px; border-radius: 100px; background: rgba(255,255,255,0.06); color: var(--tx2); border: 1px solid var(--line); }
@@ -286,10 +298,16 @@
       .flow-sticky { position: static; }
       .stats { grid-template-columns: 1fr 1fr; gap: 12px; }
       .stat { padding: 30px 16px; }
-      .mods-view { overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
-      .mods-view::-webkit-scrollbar { display: none; }
-      .mods-track { padding: 4px var(--pad) 30px; }
-      .mod-card { scroll-snap-align: center; }
+      .modx { display: block; background: transparent; border: none; border-radius: 0; overflow: visible; }
+      .modx-list { flex-direction: row; overflow-x: auto; scrollbar-width: none; border-right: none; gap: 8px; margin: 0 calc(var(--pad) * -1) 14px; padding: 0 var(--pad) 4px; }
+      .modx-list::-webkit-scrollbar { display: none; }
+      .modx-item { flex: 0 0 auto; border: 1px solid var(--line); border-radius: 100px; border-bottom: 1px solid var(--line); padding: 10px 16px; background: var(--card); }
+      .modx-item.active { background: rgba(214,72,72,0.14); border-color: rgba(214,72,72,0.5); }
+      .modx-item::before { display: none; }
+      .modx-num, .modx-name i, .modx-ar { display: none; }
+      .modx-name { font-size: 13.5px; }
+      .modx-panel { padding: 26px 22px; min-height: 0; background: var(--card); border: 1px solid var(--line); border-radius: 18px; }
+      .modx-pane.active { display: flex; flex-direction: column; gap: 22px; }
       .shots-track { gap: 14px; margin: 0 calc(var(--pad) * -1); padding: 2px var(--pad) 12px; }
       .shot { flex: 0 0 86%; scroll-snap-align: center; }
       .car-btn { display: none; }
@@ -427,67 +445,106 @@
     <!-- GIANT -->
     <div class="giant" aria-hidden="true"><div class="inner"><div class="word" data-drift="-7">Stoc <b>&amp;</b> foodcost<b>.</b></div></div></div>
 
-    <!-- MODULE: pinned horizontal -->
+    <!-- MODULE: master/detail explorer -->
     <section class="mods" id="module">
       <div class="inner mods-head">
         <div class="sec-label rv">Module</div>
         <h2 class="rv">Tot ce ai nevoie,<br>construit împreună</h2>
       </div>
-      <div class="mods-view" id="modsView">
-        <div class="mods-track" id="modsTrack">
-          <div class="mod-card">
-            <div class="mod-top"><span class="mod-num">01</span><span class="mod-name">Catalog</span></div>
-            <p class="mod-desc">Toate produsele de la toți furnizorii, într-un singur loc. Vezi același produs la mai mulți furnizori, cu prețurile lor unul lângă altul. Alegi în cunoștință de cauză.</p>
-            <div class="mod-tags"><span class="mod-tag">Toți furnizorii la un loc</span><span class="mod-tag">Compari prețuri</span><span class="mod-tag">Liste negociate</span></div>
-            <div class="mod-visual">
-              <div class="mv-label">Piept de pui 1kg · de la 3 furnizori</div>
-              <div class="price-row"><span class="nm">Metro</span><span class="price-ok">18,90 lei</span></div>
-              <div class="price-row"><span class="nm">Selgros</span><span class="price-ok">17,40 lei</span><span class="badge-ok">cel mai bun</span></div>
-              <div class="price-row"><span class="nm">Local Farm</span><span class="price-ok">19,20 lei</span></div>
-            </div>
+      <div class="inner">
+        <div class="modx rv">
+          <div class="modx-list" role="tablist" aria-label="Module Approvisor">
+            <button class="modx-item active" role="tab" id="mtab-catalog" aria-controls="mpan-catalog" aria-selected="true" data-mod="catalog">
+              <span class="modx-num">01</span>
+              <span class="modx-name">Catalog<i>Prețurile furnizorilor, unul lângă altul</i></span>
+              <span class="modx-ar" aria-hidden="true">&#8594;</span>
+            </button>
+            <button class="modx-item" role="tab" id="mtab-comenzi" aria-controls="mpan-comenzi" aria-selected="false" tabindex="-1" data-mod="comenzi">
+              <span class="modx-num">02</span>
+              <span class="modx-name">Comenzi<i>Un coș, toți furnizorii</i></span>
+              <span class="modx-ar" aria-hidden="true">&#8594;</span>
+            </button>
+            <button class="modx-item" role="tab" id="mtab-validare" aria-controls="mpan-validare" aria-selected="false" tabindex="-1" data-mod="validare">
+              <span class="modx-num">03</span>
+              <span class="modx-name">Validare facturi<i>Preț negociat vs. preț facturat</i></span>
+              <span class="modx-ar" aria-hidden="true">&#8594;</span>
+            </button>
+            <button class="modx-item" role="tab" id="mtab-gestiune" aria-controls="mpan-gestiune" aria-selected="false" tabindex="-1" data-mod="gestiune">
+              <span class="modx-num">04</span>
+              <span class="modx-name">Gestiune & foodcost<i>Stoc și cost pe rețetă</i></span>
+              <span class="modx-ar" aria-hidden="true">&#8594;</span>
+            </button>
+            <button class="modx-item" role="tab" id="mtab-statistici" aria-controls="mpan-statistici" aria-selected="false" tabindex="-1" data-mod="statistici">
+              <span class="modx-num">05</span>
+              <span class="modx-name">Statistici<i>Cheltuieli pe furnizor și locație</i></span>
+              <span class="modx-ar" aria-hidden="true">&#8594;</span>
+            </button>
           </div>
-          <div class="mod-card">
-            <div class="mod-top"><span class="mod-num">02</span><span class="mod-name">Comenzi</span></div>
-            <p class="mod-desc">Construiești coșul o dată, din catalog, și trimiți comanda către toți furnizorii dintr-un singur click. Aprobarea se face în aplicație, înainte de trimitere.</p>
-            <div class="mod-tags"><span class="mod-tag">Coș rapid</span><span class="mod-tag">1 click → toți furnizorii</span><span class="mod-tag">Aprobare</span></div>
-            <div class="mod-visual">
-              <div class="mv-label">Coșul tău · 3 furnizori</div>
-              <div class="price-row"><span class="qty">12 ×</span><span class="nm">Piept de pui · Selgros</span></div>
-              <div class="price-row"><span class="qty">8 ×</span><span class="nm">Ulei floarea soarelui · Metro</span></div>
-              <div class="price-row"><span class="qty">20 ×</span><span class="nm">Roșii · Local Farm</span></div>
+          <div class="modx-panel">
+            <div class="modx-pane active" role="tabpanel" id="mpan-catalog" aria-labelledby="mtab-catalog" data-mod="catalog">
+              <div>
+                <div class="mod-name">Catalog</div>
+                <p class="mod-desc">Toate produsele de la toți furnizorii, într-un singur loc. Vezi același produs la mai mulți furnizori, cu prețurile lor unul lângă altul. Alegi în cunoștință de cauză.</p>
+                <div class="mod-tags"><span class="mod-tag">Toți furnizorii la un loc</span><span class="mod-tag">Compari prețuri</span><span class="mod-tag">Liste negociate</span></div>
+              </div>
+              <div class="mod-visual">
+                <div class="mv-label">Piept de pui 1kg · de la 3 furnizori</div>
+                <div class="price-row"><span class="nm">Metro</span><span class="price-ok">18,90 lei</span></div>
+                <div class="price-row"><span class="nm">Selgros</span><span class="price-ok">17,40 lei</span><span class="badge-ok">cel mai bun</span></div>
+                <div class="price-row"><span class="nm">Local Farm</span><span class="price-ok">19,20 lei</span></div>
+              </div>
             </div>
-          </div>
-          <div class="mod-card">
-            <div class="mod-top"><span class="mod-num">03</span><span class="mod-name">Validare facturi</span></div>
-            <p class="mod-desc">Prețul pe care l-ai negociat față de prețul de pe factură, verificat automat, linie cu linie. Vezi imediat orice diferență, înainte de plată.</p>
-            <div class="mod-tags"><span class="mod-tag">Negociat vs. facturat</span><span class="mod-tag">Verificare automată</span><span class="mod-tag">Alertă la diferențe</span></div>
-            <div class="mod-visual">
-              <div class="mv-label">Rezultat validare</div>
-              <div class="price-row"><span class="nm">Ulei floarea soarelui 5L</span><span class="price-ok">38,50 lei</span><span class="badge-ok">OK</span></div>
-              <div class="price-row"><span class="nm">Făină albă tip 550</span><span class="price-warn">4,20 lei</span><span class="badge-warn">+6%</span></div>
-              <div class="price-row"><span class="nm">Zahăr cristal 1kg</span><span class="price-ok">6,80 lei</span><span class="badge-ok">OK</span></div>
+            <div class="modx-pane" role="tabpanel" id="mpan-comenzi" aria-labelledby="mtab-comenzi" data-mod="comenzi" hidden>
+              <div>
+                <div class="mod-name">Comenzi</div>
+                <p class="mod-desc">Construiești coșul o dată, din catalog, și trimiți comanda către toți furnizorii dintr-un singur click. Aprobarea se face în aplicație, înainte de trimitere.</p>
+                <div class="mod-tags"><span class="mod-tag">Coș rapid</span><span class="mod-tag">1 click → toți furnizorii</span><span class="mod-tag">Aprobare</span></div>
+              </div>
+              <div class="mod-visual">
+                <div class="mv-label">Coșul tău · 3 furnizori</div>
+                <div class="price-row"><span class="qty">12 ×</span><span class="nm">Piept de pui · Selgros</span></div>
+                <div class="price-row"><span class="qty">8 ×</span><span class="nm">Ulei floarea soarelui · Metro</span></div>
+                <div class="price-row"><span class="qty">20 ×</span><span class="nm">Roșii · Local Farm</span></div>
+              </div>
             </div>
-          </div>
-          <div class="mod-card">
-            <div class="mod-top"><span class="mod-num">04</span><span class="mod-name">Gestiune & foodcost</span></div>
-            <p class="mod-desc">Stocul se actualizează din facturile validate, pe fiecare locație. Vezi costul real al fiecărei rețete și al meniului, în timp real.</p>
-            <div class="mod-tags"><span class="mod-tag">Stoc live</span><span class="mod-tag">Cost pe rețetă</span><span class="mod-tag">Per locație</span></div>
-            <div class="mod-visual">
-              <div class="mv-label">Rețetă · Burger clasic</div>
-              <div class="price-row"><span class="nm">Chiflă brioche</span><span class="price-ok">1,20 lei</span></div>
-              <div class="price-row"><span class="nm">Carne vită 180g</span><span class="price-ok">4,60 lei</span></div>
-              <div class="mv-barline"><span class="nm">Food cost</span><span class="mv-bar"><i style="width:31%"></i></span><span class="mv-pct">31%</span></div>
+            <div class="modx-pane" role="tabpanel" id="mpan-validare" aria-labelledby="mtab-validare" data-mod="validare" hidden>
+              <div>
+                <div class="mod-name">Validare facturi</div>
+                <p class="mod-desc">Prețul pe care l-ai negociat față de prețul de pe factură, verificat automat, linie cu linie. Vezi imediat orice diferență, înainte de plată.</p>
+                <div class="mod-tags"><span class="mod-tag">Negociat vs. facturat</span><span class="mod-tag">Verificare automată</span><span class="mod-tag">Alertă la diferențe</span></div>
+              </div>
+              <div class="mod-visual">
+                <div class="mv-label">Rezultat validare</div>
+                <div class="price-row"><span class="nm">Ulei floarea soarelui 5L</span><span class="price-ok">38,50 lei</span><span class="badge-ok">OK</span></div>
+                <div class="price-row"><span class="nm">Făină albă tip 550</span><span class="price-warn">4,20 lei</span><span class="badge-warn">+6%</span></div>
+                <div class="price-row"><span class="nm">Zahăr cristal 1kg</span><span class="price-ok">6,80 lei</span><span class="badge-ok">OK</span></div>
+              </div>
             </div>
-          </div>
-          <div class="mod-card">
-            <div class="mod-top"><span class="mod-num">05</span><span class="mod-name">Statistici</span></div>
-            <p class="mod-desc">Vezi unde se duc banii: pe furnizor, locație și categorie. Poți ajunge până la linia de factură, ca să negociezi pe baza datelor reale.</p>
-            <div class="mod-tags"><span class="mod-tag">Cheltuieli & comenzi</span><span class="mod-tag">Stoc & producție</span><span class="mod-tag">Drill-down</span></div>
-            <div class="mod-visual">
-              <div class="mv-label">Cheltuieli · Iunie</div>
-              <div class="mv-big">84.320<small>lei</small></div>
-              <div class="mv-barline"><span class="nm">Metro</span><span class="mv-bar"><i style="width:38%"></i></span><span class="mv-pct">38%</span></div>
-              <div class="mv-barline"><span class="nm">Selgros</span><span class="mv-bar"><i style="width:27%"></i></span><span class="mv-pct">27%</span></div>
+            <div class="modx-pane" role="tabpanel" id="mpan-gestiune" aria-labelledby="mtab-gestiune" data-mod="gestiune" hidden>
+              <div>
+                <div class="mod-name">Gestiune & foodcost</div>
+                <p class="mod-desc">Stocul se actualizează din facturile validate, pe fiecare locație. Vezi costul real al fiecărei rețete și al meniului, în timp real.</p>
+                <div class="mod-tags"><span class="mod-tag">Stoc live</span><span class="mod-tag">Cost pe rețetă</span><span class="mod-tag">Per locație</span></div>
+              </div>
+              <div class="mod-visual">
+                <div class="mv-label">Rețetă · Burger clasic</div>
+                <div class="price-row"><span class="nm">Chiflă brioche</span><span class="price-ok">1,20 lei</span></div>
+                <div class="price-row"><span class="nm">Carne vită 180g</span><span class="price-ok">4,60 lei</span></div>
+                <div class="mv-barline"><span class="nm">Food cost</span><span class="mv-bar"><i style="width:31%"></i></span><span class="mv-pct">31%</span></div>
+              </div>
+            </div>
+            <div class="modx-pane" role="tabpanel" id="mpan-statistici" aria-labelledby="mtab-statistici" data-mod="statistici" hidden>
+              <div>
+                <div class="mod-name">Statistici</div>
+                <p class="mod-desc">Vezi unde se duc banii: pe furnizor, locație și categorie. Poți ajunge până la linia de factură, ca să negociezi pe baza datelor reale.</p>
+                <div class="mod-tags"><span class="mod-tag">Cheltuieli & comenzi</span><span class="mod-tag">Stoc & producție</span><span class="mod-tag">Drill-down</span></div>
+              </div>
+              <div class="mod-visual">
+                <div class="mv-label">Cheltuieli · Iunie</div>
+                <div class="mv-big">84.320<small>lei</small></div>
+                <div class="mv-barline"><span class="nm">Metro</span><span class="mv-bar"><i style="width:38%"></i></span><span class="mv-pct">38%</span></div>
+                <div class="mv-barline"><span class="nm">Selgros</span><span class="mv-bar"><i style="width:27%"></i></span><span class="mv-pct">27%</span></div>
+              </div>
             </div>
           </div>
         </div>
@@ -676,6 +733,40 @@
         if (shNext) shNext.addEventListener('click', function(){ shGo(shCur() + 1); });
       }
 
+      /* module explorer: master/detail tabs (works without GSAP; animated when available) */
+      var mtabs = Array.prototype.slice.call(document.querySelectorAll('.modx-item'));
+      var mpanes = document.querySelectorAll('.modx-pane');
+      if (mtabs.length) {
+        var mActivate = function(id, focusTab){
+          mtabs.forEach(function(t){
+            var on = t.dataset.mod === id;
+            t.classList.toggle('active', on);
+            t.setAttribute('aria-selected', on ? 'true' : 'false');
+            t.tabIndex = on ? 0 : -1;
+            if (on && focusTab) t.focus();
+          });
+          mpanes.forEach(function(p){
+            var on = p.dataset.mod === id;
+            p.classList.toggle('active', on);
+            p.hidden = !on;
+            if (on && window.gsap && !reduced) {
+              gsap.fromTo(p.children, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.45, stagger: 0.07, ease: 'power3.out', overwrite: 'auto' });
+            }
+          });
+        };
+        mtabs.forEach(function(t, i){
+          t.addEventListener('click', function(){ mActivate(t.dataset.mod, false); });
+          t.addEventListener('keydown', function(e){
+            var n = null;
+            if (e.key === 'ArrowDown' || e.key === 'ArrowRight') n = (i + 1) % mtabs.length;
+            else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') n = (i - 1 + mtabs.length) % mtabs.length;
+            else if (e.key === 'Home') n = 0;
+            else if (e.key === 'End') n = mtabs.length - 1;
+            if (n !== null) { e.preventDefault(); mActivate(mtabs[n].dataset.mod, true); }
+          });
+        });
+      }
+
       if (!hasGsap || reduced) return; /* content is fully visible without motion */
 
       gsap.registerPlugin(ScrollTrigger);
@@ -758,26 +849,9 @@
         });
       });
 
-      /* modules: pinned horizontal gallery (desktop only) */
-      ScrollTrigger.matchMedia({
-        '(min-width: 921px)': function(){
-          var track = document.getElementById('modsTrack');
-          var view = document.getElementById('modsView');
-          function amount(){ return Math.max(0, track.scrollWidth - view.clientWidth); }
-          gsap.to(track, {
-            x: function(){ return -amount(); },
-            ease: 'none',
-            scrollTrigger: {
-              trigger: '.mods', start: 'top top', end: function(){ return '+=' + (amount() + 200); },
-              scrub: true, pin: true, invalidateOnRefresh: true
-            }
-          });
-        }
-      });
-
       /* card spotlight: radial highlight follows the cursor (fine pointers only) */
       if (window.matchMedia('(pointer: fine)').matches) {
-        document.querySelectorAll('.prob-card, .mod-card, .quote, .stat').forEach(function(card){
+        document.querySelectorAll('.prob-card, .modx-panel, .quote, .stat').forEach(function(card){
           card.classList.add('spot');
           card.addEventListener('mousemove', function(e){
             var r = card.getBoundingClientRect();
