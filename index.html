@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Approvisor · Aprovizionare, facturi și stoc pentru HoReCa</title>
-  <meta name="description" content="Platformă de aprovizionare pentru lanțuri HoReCa: comenzi, validare facturi, stoc și costul preparatelor într-un singur sistem." />
+  <meta name="description" content="Platformă de aprovizionare pentru lanțuri HoReCa: comenzi, validare facturi, stoc și food cost într-un singur sistem." />
   <meta name="theme-color" content="#070D16" />
   <link rel="apple-touch-icon" href="favicon.png" />
   <meta property="og:type" content="website" />
@@ -360,7 +360,7 @@
           <span class="h1-line" aria-hidden="true"><span>Comenzi<b>.</b> Facturi<b>.</b> Stoc<b>.</b></span></span>
           <span class="h1-line" aria-hidden="true"><span><em>Într-un singur sistem.</em></span></span>
         </h1>
-        <p class="hero-sub rv">Trimite comenzile către furnizori în câteva minute și urmărește stocul, prețurile și costul preparatelor în timp real, pentru fiecare locație.</p>
+        <p class="hero-sub rv">Trimite comenzile către furnizori în câteva minute și urmărește stocul, prețurile și food cost-ul în timp real, pentru fiecare locație.</p>
         <div class="hero-ctas rv">
           <a href="#contact" class="btn-main magnetic">Solicită o demonstrație</a>
           <a href="#module" class="btn-ghost magnetic">Vezi modulele</a>
@@ -400,7 +400,7 @@
           <div class="prob-card rv">
             <div class="prob-idx">03</div>
             <div class="prob-title">Stoc și costuri calculate prea târziu</div>
-            <p class="prob-desc">Inventarul și costul preparatelor sunt adesea calculate în tabele, după ce deciziile au fost deja luate. Platforma ajută echipa să vadă costurile actualizate, pentru fiecare locație.</p>
+            <p class="prob-desc">Inventarul și food cost-ul sunt adesea calculate în tabele, după ce deciziile au fost deja luate. Platforma ajută echipa să vadă costurile actualizate, pentru fiecare locație.</p>
             <div class="prob-sol">→ Stoc și costuri actualizate în timp real</div>
           </div>
         </div>
@@ -416,7 +416,7 @@
         <div class="flow-sticky">
           <div class="sec-label rv">Cum funcționează</div>
           <h2 class="rv">Un ciclu complet,<br>un singur sistem</h2>
-          <p class="sec-sub rv">Fiecare etapă din aprovizionare este conectată: catalogul, comanda, factura, stocul și costul preparatelor lucrează împreună.</p>
+          <p class="sec-sub rv">Fiecare etapă din aprovizionare este conectată: catalogul, comanda, factura, stocul și food cost-ul lucrează împreună.</p>
         </div>
         <div class="flow-steps">
           <div class="flow-rail" aria-hidden="true"><i id="railFill"></i></div>
@@ -437,8 +437,8 @@
           </div>
           <div class="fstep">
             <div class="fstep-num">PASUL 4</div>
-            <div class="fstep-name">Stoc și costul preparatelor</div>
-            <p class="fstep-desc">Facturile validate actualizează stocul, iar costul rețetelor se calculează cu prețurile la zi.</p>
+            <div class="fstep-name">Stoc și food cost</div>
+            <p class="fstep-desc">Facturile validate actualizează stocul, iar food cost-ul se calculează cu prețurile la zi.</p>
           </div>
         </div>
       </div>
@@ -485,7 +485,7 @@
             </button>
             <button class="modx-item" role="tab" id="mtab-gestiune" aria-controls="mpan-gestiune" aria-selected="false" tabindex="-1" data-mod="gestiune">
               <span class="modx-num">04</span>
-              <span class="modx-name">Stoc și costuri<i>Cost pe rețetă, pe fiecare locație</i></span>
+              <span class="modx-name">Stoc și food cost<i>Food cost pe fiecare locație</i></span>
               <span class="modx-ar" aria-hidden="true">&#8594;</span>
             </button>
             <button class="modx-item" role="tab" id="mtab-statistici" aria-controls="mpan-statistici" aria-selected="false" tabindex="-1" data-mod="statistici">
@@ -536,15 +536,15 @@
             </div>
             <div class="modx-pane" role="tabpanel" id="mpan-gestiune" aria-labelledby="mtab-gestiune" data-mod="gestiune" hidden>
               <div>
-                <div class="mod-name">Stoc și costul preparatelor</div>
-                <p class="mod-desc">Stocul se actualizează pe baza facturilor validate, pentru fiecare locație. Costul rețetelor poate fi urmărit cu prețurile actualizate.</p>
-                <div class="mod-tags"><span class="mod-tag">Stoc în timp real</span><span class="mod-tag">Cost pe rețetă</span><span class="mod-tag">Pe locație</span></div>
+                <div class="mod-name">Stoc și food cost</div>
+                <p class="mod-desc">Stocul se actualizează pe baza facturilor validate, pentru fiecare locație. Food cost-ul poate fi urmărit cu prețurile actualizate.</p>
+                <div class="mod-tags"><span class="mod-tag">Stoc în timp real</span><span class="mod-tag">Food cost pe rețetă</span><span class="mod-tag">Pe locație</span></div>
               </div>
               <div class="mod-visual">
                 <div class="mv-label">Rețetă · Burger clasic</div>
                 <div class="price-row"><span class="nm">Chiflă brioche</span><span class="price-ok">1,20 lei</span></div>
                 <div class="price-row"><span class="nm">Carne vită 180g</span><span class="price-ok">4,60 lei</span></div>
-                <div class="mv-barline"><span class="nm">Cost rețetă</span><span class="mv-bar"><i style="width:31%"></i></span><span class="mv-pct">31%</span></div>
+                <div class="mv-barline"><span class="nm">Food cost</span><span class="mv-bar"><i style="width:31%"></i></span><span class="mv-pct">31%</span></div>
               </div>
             </div>
             <div class="modx-pane" role="tabpanel" id="mpan-statistici" aria-labelledby="mtab-statistici" data-mod="statistici" hidden>
@@ -607,7 +607,7 @@
               <div class="frame-bar"><span></span><span></span><span></span></div>
               <picture><source srcset="img/screen-gestiune.webp" type="image/webp" /><img src="img/screen-gestiune.png" alt="Gestiune și costuri în Approvisor" loading="lazy" /></picture>
             </div>
-            <figcaption>Stoc și costuri<span>Stoc și costul preparatelor pe locație</span></figcaption>
+            <figcaption>Stoc și food cost<span>Stoc și food cost pe locație</span></figcaption>
           </figure>
           </div>
           <button class="car-btn prev" aria-label="Categoria anterioară">&#8592;</button>
@@ -641,7 +641,7 @@
           </figure>
           <figure class="quote rv">
             <div class="q-mark">&#8220;</div>
-            <p>Văd costul fiecărei rețete, cu prețurile la zi. Când se scumpește un ingredient, știu imediat ce preparat mă costă mai mult și ajustez meniul.</p>
+            <p>Văd food cost-ul pe fiecare rețetă, cu prețurile la zi. Când se scumpește un ingredient, știu imediat ce preparat mă costă mai mult și ajustez meniul.</p>
             <figcaption><b>Șef-bucătar</b>Lanț HoReCa</figcaption>
           </figure>
         </div>
