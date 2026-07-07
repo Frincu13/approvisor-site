@@ -67,6 +67,7 @@
     .nav nav ul a { text-decoration: none; color: var(--tx2); font-size: 14px; font-weight: 600; padding: 9px 15px; border-radius: 100px; transition: color .2s, background .2s; white-space: nowrap; }
     .nav nav ul a:hover { color: var(--tx); background: rgba(255,255,255,0.06); }
     .nav-cta { background: var(--tx); color: var(--bg1); padding: 12px 22px; border-radius: 100px; font-size: 14px; font-weight: 700; text-decoration: none; white-space: nowrap; transition: background .25s, color .25s, transform .25s; }
+    .nav-cta .cta-mini { display: none; }
     .nav-cta:hover { background: var(--red); color: #fff; }
 
     /* ── HERO: centered display headline, scene rising from the bottom ── */
@@ -324,6 +325,13 @@
       .faq .faq-a { padding: 0 20px 20px; }
       .f-in { flex-direction: column; text-align: center; }
     }
+    @media (max-width: 600px) {
+      .logo img { height: 20px; }
+      .nav-inner { padding-left: 18px; padding-right: 18px; }
+      .nav-cta { padding: 9px 14px; font-size: 13px; }
+      .nav-cta .cta-full { display: none; }
+      .nav-cta .cta-mini { display: inline; }
+    }
   </style>
 </head>
 <body>
@@ -338,7 +346,7 @@
         <li><a href="#cum-functioneaza">Cum funcționează</a></li>
         <li><a href="#aplicatie">În aplicație</a></li>
       </ul></nav>
-      <a href="#contact" class="nav-cta magnetic">Solicită demo ↗</a>
+      <a href="#contact" class="nav-cta magnetic"><span class="cta-full">Solicită o demonstrație ↗</span><span class="cta-mini">Solicită demo ↗</span></a>
     </div>
   </div>
 
@@ -352,7 +360,7 @@
           <span class="h1-line" aria-hidden="true"><span>Comenzi<b>.</b> Facturi<b>.</b> Stoc<b>.</b></span></span>
           <span class="h1-line" aria-hidden="true"><span><em>Într-un singur sistem.</em></span></span>
         </h1>
-        <p class="hero-sub rv">Trimite comenzile către furnizori în câteva minute și urmărește costurile, stocul și costul preparatelor în timp real, pentru fiecare locație.</p>
+        <p class="hero-sub rv">Trimite comenzile către furnizori în câteva minute și urmărește stocul, prețurile și costul preparatelor în timp real, pentru fiecare locație.</p>
         <div class="hero-ctas rv">
           <a href="#contact" class="btn-main magnetic">Solicită o demonstrație</a>
           <a href="#module" class="btn-ghost magnetic">Vezi modulele</a>
@@ -379,7 +387,7 @@
         <div class="prob-grid">
           <div class="prob-card rv">
             <div class="prob-idx">01</div>
-            <div class="prob-title">Comenzi trimise pe mesaje, fără evidență centralizată</div>
+            <div class="prob-title">Comenzi trimise prin mesaje, fără evidență centralizată</div>
             <p class="prob-desc">Comenzile transmise prin telefon sau mesaje sunt greu de urmărit. Nu este mereu clar ce s-a comandat, de cine, către ce furnizor și la ce preț.</p>
             <div class="prob-sol">→ Comenzi și oferte centralizate</div>
           </div>
@@ -443,7 +451,7 @@
           <div class="stat rv"><div class="stat-big"><span data-count="1000">0</span>+</div><div class="stat-lbl">comenzi procesate</div></div>
           <div class="stat rv"><div class="stat-big"><span data-count="12">0</span></div><div class="stat-lbl">locații active<br>într-un lanț HoReCa</div></div>
           <div class="stat rv"><div class="stat-big"><span data-count="700">0</span>+</div><div class="stat-lbl">produse gestionate<br>în catalogul propriu</div></div>
-          <div class="stat rv"><div class="stat-big" style="font-size:clamp(26px,2.8vw,40px);line-height:1.1">În timp<br>real</div><div class="stat-lbl">costuri, stoc<br>și prețuri</div></div>
+          <div class="stat rv"><div class="stat-big" style="font-size:clamp(26px,2.8vw,40px);line-height:1.1">În timp<br>real</div><div class="stat-lbl">stoc, prețuri<br>și costuri</div></div>
         </div>
       </div>
     </section>
@@ -467,7 +475,7 @@
             </button>
             <button class="modx-item" role="tab" id="mtab-comenzi" aria-controls="mpan-comenzi" aria-selected="false" tabindex="-1" data-mod="comenzi">
               <span class="modx-num">02</span>
-              <span class="modx-name">Comenzi<i>Un coș, toți furnizorii</i></span>
+              <span class="modx-name">Comenzi<i>Comandă centralizată către furnizori</i></span>
               <span class="modx-ar" aria-hidden="true">&#8594;</span>
             </button>
             <button class="modx-item" role="tab" id="mtab-validare" aria-controls="mpan-validare" aria-selected="false" tabindex="-1" data-mod="validare">
@@ -477,7 +485,7 @@
             </button>
             <button class="modx-item" role="tab" id="mtab-gestiune" aria-controls="mpan-gestiune" aria-selected="false" tabindex="-1" data-mod="gestiune">
               <span class="modx-num">04</span>
-              <span class="modx-name">Gestiune și costuri<i>Stoc și cost pe rețetă</i></span>
+              <span class="modx-name">Stoc și costuri<i>Cost pe rețetă, pe fiecare locație</i></span>
               <span class="modx-ar" aria-hidden="true">&#8594;</span>
             </button>
             <button class="modx-item" role="tab" id="mtab-statistici" aria-controls="mpan-statistici" aria-selected="false" tabindex="-1" data-mod="statistici">
@@ -503,8 +511,8 @@
             <div class="modx-pane" role="tabpanel" id="mpan-comenzi" aria-labelledby="mtab-comenzi" data-mod="comenzi" hidden>
               <div>
                 <div class="mod-name">Comenzi</div>
-                <p class="mod-desc">Construiești comanda din catalog și o trimiți către toți furnizorii dintr-un singur click. Aprobarea se poate face în platformă, înainte de trimitere.</p>
-                <div class="mod-tags"><span class="mod-tag">Coș rapid</span><span class="mod-tag">1 click → toți furnizorii</span><span class="mod-tag">Aprobare</span></div>
+                <p class="mod-desc">Construiești comanda din catalog și o trimiți către toți furnizorii dintr-o singură acțiune. Aprobarea se poate face în platformă, înainte de trimitere.</p>
+                <div class="mod-tags"><span class="mod-tag">Coș rapid</span><span class="mod-tag">O singură acțiune pentru toți furnizorii</span><span class="mod-tag">Aprobare</span></div>
               </div>
               <div class="mod-visual">
                 <div class="mv-label">Coșul tău · 3 furnizori</div>
@@ -528,7 +536,7 @@
             </div>
             <div class="modx-pane" role="tabpanel" id="mpan-gestiune" aria-labelledby="mtab-gestiune" data-mod="gestiune" hidden>
               <div>
-                <div class="mod-name">Gestiune și costul preparatelor</div>
+                <div class="mod-name">Stoc și costul preparatelor</div>
                 <p class="mod-desc">Stocul se actualizează pe baza facturilor validate, pentru fiecare locație. Costul rețetelor poate fi urmărit cu prețurile actualizate.</p>
                 <div class="mod-tags"><span class="mod-tag">Stoc în timp real</span><span class="mod-tag">Cost pe rețetă</span><span class="mod-tag">Pe locație</span></div>
               </div>
@@ -599,7 +607,7 @@
               <div class="frame-bar"><span></span><span></span><span></span></div>
               <picture><source srcset="img/screen-gestiune.webp" type="image/webp" /><img src="img/screen-gestiune.png" alt="Gestiune și costuri în Approvisor" loading="lazy" /></picture>
             </div>
-            <figcaption>Gestiune<span>Stoc și costul preparatelor pe locație</span></figcaption>
+            <figcaption>Stoc și costuri<span>Stoc și costul preparatelor pe locație</span></figcaption>
           </figure>
           </div>
           <button class="car-btn prev" aria-label="Categoria anterioară">&#8592;</button>
@@ -689,7 +697,7 @@
       <div class="inner">
         <div class="sec-label rv" style="justify-content:center">Începe acum</div>
         <h2 class="rv">Înlocuiește mesajele și tabelele<br>cu un singur sistem</h2>
-        <p class="rv">Arată-ne cum funcționează operațiunea ta, iar noi îți demonstrăm cum poate fi configurat Approvisor pentru datele și locațiile tale.</p>
+        <p class="rv">Spune-ne cum funcționează lanțul tău, iar noi îți demonstrăm cum poate fi configurat Approvisor pentru locațiile, furnizorii și datele tale.</p>
         <div class="hero-ctas rv" style="justify-content:center">
           <a href="mailto:contact@approvisor.com" class="btn-main magnetic">Solicită o demonstrație ↗</a>
           <a href="mailto:contact@approvisor.com" class="btn-ghost magnetic">Contactează-ne</a>
