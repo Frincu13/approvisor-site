@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <title>Approvisor · v3 light preview</title>
+  <meta name="description" content="Platformă de aprovizionare pentru lanțuri HoReCa: comenzi, validare facturi, stoc și food cost într-un singur sistem." />
+  <meta name="theme-color" content="#F4F6FA" />
+  <link rel="apple-touch-icon" href="../favicon.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Approvisor · aprovizionare, facturi și stoc pentru HoReCa" />
+  <meta property="og:description" content="Comenzi, facturi și stocuri într-un singur sistem. Folosit într-un lanț HoReCa cu 12 locații, 2.000+ comenzi și 3.000+ facturi." />
+  <meta property="og:url" content="https://frincu13.github.io/approvisor-site/" />
+  <meta property="og:image" content="https://frincu13.github.io/approvisor-site/img/hero-cut.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" href="../favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg0: #F4F6FA;
+      --bg1: #FFFFFF;
+      --navy: #0D1B2A;
+      --card: #FFFFFF;
+      --card2: #F7F9FC;
+      --line: #E5E9F0;
+      --tx: #0D1B2A;
+      --tx2: #56637A;
+      --tx3: #8A94A6;
+      --red: #C42B2B;
+      --red-mid: #B02626;
+      --red-deep: #8B1A1A;
+      --red-soft: #E24949;
+      --maxw: 1360px;
+      --pad: clamp(20px, 5vw, 64px);
+      --f-display: 'Inter Tight', sans-serif;
+      --f-body: 'Satoshi', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--f-body); background: var(--bg0); color: var(--tx); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    h1, h2, .stat-big, .mv-big, .mod-name, .prob-idx, .fstep-name { font-family: var(--f-display); }
+    ::selection { background: var(--red); color: #fff; }
+    a { text-decoration: none; }
+    .inner { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--pad); }
+    :focus-visible { outline: 2px solid var(--red); outline-offset: 3px; border-radius: 6px; }
+    .skip-link { position: absolute; left: 12px; top: -52px; z-index: 300; background: var(--red); color: #fff; padding: 10px 16px; border-radius: 0 0 10px 10px; font-size: 14px; font-weight: 600; text-decoration: none; transition: top .2s; }
+    .skip-link:focus { top: 0; }
+
+    /* floating pill NAV */
+    .nav { position: fixed; top: 16px; left: 0; right: 0; z-index: 100; display: flex; justify-content: center; padding: 0 16px; }
+    .nav-inner { width: 100%; max-width: var(--maxw); display: flex; align-items: center; justify-content: space-between; gap: 20px;
+      background: rgba(13,27,42,0.94); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.08); border-radius: 100px; padding: 10px 12px 10px 22px; box-shadow: 0 12px 36px rgba(13,27,42,0.16); }
+    .logo img { height: 26px; width: auto; filter: brightness(0) invert(1); display: block; }
+    .nav nav ul { list-style: none; display: flex; gap: 4px; }
+    .nav nav ul a { color: rgba(255,255,255,0.72); font-size: 14px; font-weight: 600; padding: 9px 15px; border-radius: 100px; transition: color .2s, background .2s; white-space: nowrap; }
+    .nav nav ul a:hover { color: #fff; background: rgba(255,255,255,0.08); }
+    .nav-cta { background: var(--red); color: #fff; padding: 11px 20px; border-radius: 100px; font-size: 14px; font-weight: 700; white-space: nowrap; transition: background .2s, transform .2s; }
+    .nav-cta .cta-mini { display: none; }
+    .nav-cta:hover { background: var(--red-soft); transform: translateY(-1px); }
+
+    /* light asymmetric HERO */
+    .hero { min-height: 100svh; display: flex; align-items: center; padding: 128px 0 60px; position: relative; }
+    .hero::before { content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(58% 55% at 84% 34%, rgba(196,43,43,0.06) 0%, rgba(196,43,43,0) 60%); }
+    .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 0.86fr 1.14fr; gap: clamp(30px, 4vw, 64px); align-items: center; width: 100%; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 9px; font-size: 12px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: var(--red); background: rgba(196,43,43,0.08); border: 1px solid rgba(196,43,43,0.16); padding: 8px 15px; border-radius: 100px; margin-bottom: 24px; }
+    .eyebrow i { width: 6px; height: 6px; border-radius: 50%; background: var(--red); display: inline-block; }
+    h1 { font-size: clamp(38px, 4.6vw, 66px); font-weight: 800; line-height: 0.98; letter-spacing: -0.03em; color: var(--tx); }
+    h1 em, h1 b { font-style: normal; color: var(--red); font-weight: 800; }
+    .hero-sub { font-size: clamp(16px, 1.25vw, 18px); line-height: 1.65; color: var(--tx2); max-width: 470px; margin: 22px 0 24px; }
+    .benefits { list-style: none; display: flex; flex-direction: column; gap: 11px; margin-bottom: 32px; }
+    .benefits li { display: flex; align-items: flex-start; gap: 11px; font-size: 15px; color: var(--tx); font-weight: 500; }
+    .benefits svg { width: 20px; height: 20px; flex-shrink: 0; margin-top: 1px; }
+    .benefits svg circle { fill: rgba(196,43,43,0.12); }
+    .benefits svg path { stroke: var(--red); stroke-width: 2.4; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .hero-ctas { display: flex; gap: 13px; flex-wrap: wrap; }
+
+    .btn-main { background: var(--red); color: #fff; font-size: 15px; font-weight: 700; padding: 15px 28px; border-radius: 100px; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 10px 30px rgba(196,43,43,0.22); transition: background .2s, transform .2s, box-shadow .2s; will-change: transform; }
+    .btn-main:hover { background: var(--red-soft); transform: translateY(-2px); box-shadow: 0 14px 38px rgba(196,43,43,0.3); }
+    .btn-ghost { background: #fff; color: var(--tx); font-size: 15px; font-weight: 600; padding: 15px 26px; border-radius: 100px; border: 1px solid var(--line); display: inline-flex; align-items: center; gap: 8px; transition: border-color .2s, transform .2s; will-change: transform; }
+    .btn-ghost:hover { border-color: #C6CDD8; transform: translateY(-2px); }
+
+    /* hero visual: photo + floating app card + micro card */
+    .hero-visual { position: relative; }
+    .hero-photo { border-radius: 22px; overflow: hidden; box-shadow: 0 30px 70px rgba(13,27,42,0.16); border: 1px solid rgba(13,27,42,0.05); aspect-ratio: 16 / 10.2; }
+    .hero-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .app-card { position: absolute; left: -34px; bottom: -34px; width: min(360px, 62%); background: #fff; border-radius: 14px; box-shadow: 0 24px 56px rgba(13,27,42,0.22); border: 1px solid rgba(13,27,42,0.06); overflow: hidden; }
+    .app-bar { display: flex; gap: 6px; padding: 10px 13px; border-bottom: 1px solid var(--line); background: #FAFBFD; }
+    .app-bar span { width: 9px; height: 9px; border-radius: 50%; background: #D5DCE6; }
+    .app-card img { width: 100%; display: block; }
+    .micro-card { position: absolute; left: 40%; top: 24px; width: 236px; background: #fff; border-radius: 12px; padding: 14px 15px; box-shadow: 0 18px 44px rgba(13,27,42,0.18); border: 1px solid rgba(13,27,42,0.06); }
+    .mc-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 4px; }
+    .mc-nm { font-size: 13px; font-weight: 700; color: var(--tx); }
+    .mc-warn { font-family: var(--f-display); font-size: 13px; font-weight: 700; color: var(--red); background: rgba(196,43,43,0.1); padding: 2px 8px; border-radius: 100px; }
+    .mc-label { font-size: 12px; color: var(--tx2); line-height: 1.4; }
+    .mc-foot { display: flex; align-items: center; gap: 7px; margin-top: 9px; padding-top: 9px; border-top: 1px solid var(--line); font-size: 11.5px; font-weight: 700; color: var(--red); }
+    .mc-foot span { width: 6px; height: 6px; border-radius: 50%; background: var(--red); display: inline-block; }
+
+    /* browser frame (screenshots) */
+    .frame { background: #fff; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; box-shadow: 0 20px 50px rgba(13,27,42,0.10); will-change: transform; }
+    .frame-bar { display: flex; gap: 6px; padding: 11px 14px; border-bottom: 1px solid var(--line); background: #FAFBFD; }
+    .frame-bar span { width: 9px; height: 9px; border-radius: 50%; background: #D5DCE6; }
+    .frame img { width: 100%; height: auto; display: block; }
+
+    /* SECTIONS */
+    section { position: relative; }
+    .sec { padding: clamp(72px, 11vh, 130px) 0; }
+    .sec-label { font-size: 12px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--red); margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
+    .sec-label::before { content: ''; width: 28px; height: 2px; background: var(--red); display: inline-block; }
+    h2 { font-size: clamp(34px, 4vw, 56px); font-weight: 800; line-height: 1.02; letter-spacing: -0.03em; margin-bottom: 20px; color: var(--tx); }
+    .sec-sub { font-size: 17px; color: var(--tx2); line-height: 1.65; max-width: 560px; }
+    .sec-head { max-width: 720px; margin-bottom: clamp(40px, 6vh, 64px); }
+
+    /* PROBLEMA */
+    .prob-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .prob-card { position: relative; background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 38px 30px 32px; display: flex; flex-direction: column; box-shadow: 0 2px 20px rgba(13,27,42,0.04); transition: border-color .3s, box-shadow .3s, transform .3s; }
+    .prob-card:hover { border-color: rgba(196,43,43,0.3); box-shadow: 0 18px 44px rgba(13,27,42,0.10); transform: translateY(-6px); }
+    .prob-idx { font-size: 56px; font-weight: 800; line-height: 1; color: transparent; -webkit-text-stroke: 1.5px rgba(196,43,43,0.45); margin-bottom: 24px; }
+    .prob-title { font-size: 20px; font-weight: 700; line-height: 1.3; margin-bottom: 14px; color: var(--tx); }
+    .prob-desc { font-size: 14px; color: var(--tx2); line-height: 1.7; margin-bottom: 26px; }
+    .prob-sol { margin-top: auto; padding-top: 18px; border-top: 1px solid var(--line); font-size: 13px; font-weight: 700; color: var(--red); display: flex; align-items: center; gap: 8px; }
+
+    /* FLOW */
+    .flow { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(40px, 6vw, 90px); align-items: start; }
+    .flow-sticky { position: sticky; top: 120px; }
+    .flow-steps { position: relative; padding-left: 40px; }
+    .flow-rail { position: absolute; left: 10px; top: 8px; bottom: 8px; width: 2px; background: var(--line); overflow: hidden; }
+    .flow-rail i { position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: var(--red); transform: scaleY(0); transform-origin: top; will-change: transform; }
+    .fstep { padding: 26px 0; border-bottom: 1px solid var(--line); opacity: .4; transition: opacity .45s; position: relative; }
+    .fstep:last-child { border-bottom: none; }
+    .fstep::before { content: ''; position: absolute; left: -36px; top: 36px; width: 10px; height: 10px; border-radius: 50%; background: var(--bg0); border: 2px solid #C6CDD8; transition: border-color .4s, box-shadow .4s, background .4s; }
+    .fstep.on { opacity: 1; }
+    .fstep.on::before { background: var(--red); border-color: var(--red); box-shadow: 0 0 0 4px rgba(196,43,43,0.14); }
+    .fstep-num { font-size: 12px; font-weight: 700; letter-spacing: 2px; color: var(--red); margin-bottom: 8px; }
+    .fstep-name { font-size: 22px; font-weight: 700; margin-bottom: 8px; color: var(--tx); }
+    .fstep-desc { font-size: 14px; color: var(--tx2); line-height: 1.65; max-width: 460px; }
+
+    /* STATS */
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    .stat { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 42px 24px; text-align: center; box-shadow: 0 2px 20px rgba(13,27,42,0.04); transition: border-color .3s, transform .3s; }
+    .stat:hover { border-color: rgba(196,43,43,0.28); transform: translateY(-4px); }
+    .stat-big { font-size: clamp(42px, 4.2vw, 62px); font-weight: 800; letter-spacing: -0.03em; color: var(--red); line-height: 1; font-variant-numeric: tabular-nums; }
+    .stat-lbl { font-size: 13px; color: var(--tx2); margin-top: 12px; line-height: 1.5; }
+
+    /* MODULE explorer */
+    .mods { position: relative; padding-bottom: clamp(60px, 10vh, 110px); }
+    .mods-head { padding: clamp(72px, 11vh, 130px) 0 40px; }
+    .modx { display: grid; grid-template-columns: 340px 1fr; background: var(--card); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; box-shadow: 0 12px 40px rgba(13,27,42,0.07); }
+    .modx-list { display: flex; flex-direction: column; border-right: 1px solid var(--line); background: #FBFCFE; }
+    .modx-item { position: relative; display: flex; align-items: center; gap: 16px; flex: 1; padding: 21px 22px; background: transparent; border: none; border-bottom: 1px solid var(--line); cursor: pointer; text-align: left; font-family: inherit; color: var(--tx2); transition: background .25s, color .25s; }
+    .modx-item:last-child { border-bottom: none; }
+    .modx-item::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--red); transform: scaleY(0); transition: transform .25s; }
+    .modx-item:hover { background: #F3F6FB; color: var(--tx); }
+    .modx-item.active { background: #fff; color: var(--tx); }
+    .modx-item.active::before { transform: scaleY(1); }
+    .modx-item:focus-visible { outline: 2px solid var(--red); outline-offset: -2px; }
+    .modx-num { font-family: var(--f-display); font-size: 13px; font-weight: 700; color: var(--tx3); transition: color .25s; flex-shrink: 0; }
+    .modx-item.active .modx-num { color: var(--red); }
+    .modx-name { display: flex; flex-direction: column; gap: 3px; font-size: 16px; font-weight: 700; min-width: 0; color: var(--tx); }
+    .modx-name i { font-style: normal; font-size: 12.5px; font-weight: 400; color: var(--tx3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .modx-ar { margin-left: auto; color: var(--red); opacity: 0; transform: translateX(-6px); transition: opacity .25s, transform .25s; flex-shrink: 0; }
+    .modx-item.active .modx-ar { opacity: 1; transform: none; }
+    .modx-panel { padding: 42px 40px; min-height: 420px; display: flex; align-items: center; }
+    .modx-pane { display: none; width: 100%; }
+    .modx-pane.active { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: center; }
+    .mod-name { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 12px; color: var(--tx); }
+    .mod-desc { font-size: 14.5px; color: var(--tx2); line-height: 1.7; }
+    .mod-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .mod-tag { font-size: 11px; font-weight: 600; padding: 6px 12px; border-radius: 100px; background: #F0F3F8; color: var(--tx2); border: 1px solid var(--line); }
+    .mod-visual { background: #FBFCFE; border: 1px solid var(--line); border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 8px; margin-top: auto; }
+    .mv-label { font-size: 10.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--tx3); margin-bottom: 4px; }
+    .price-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #fff; border: 1px solid var(--line); border-radius: 9px; padding: 10px 13px; font-size: 12px; }
+    .price-row .nm { color: var(--tx2); flex: 1; min-width: 0; }
+    .price-row .qty { color: var(--red); font-weight: 700; flex-shrink: 0; }
+    .price-ok { color: var(--tx); font-weight: 700; font-variant-numeric: tabular-nums; }
+    .price-warn { color: var(--red); font-weight: 700; font-variant-numeric: tabular-nums; }
+    .badge-ok { font-size: 10px; background: #E7F1E9; color: #3E7A46; padding: 3px 9px; border-radius: 100px; font-weight: 700; white-space: nowrap; }
+    .badge-warn { font-size: 10px; background: rgba(196,43,43,0.1); color: var(--red); padding: 3px 9px; border-radius: 100px; font-weight: 700; white-space: nowrap; }
+    .mv-big { font-size: 34px; font-weight: 800; line-height: 1; letter-spacing: -1px; font-variant-numeric: tabular-nums; color: var(--tx); }
+    .mv-big small { font-size: 14px; font-weight: 700; color: var(--tx3); margin-left: 4px; }
+    .mv-barline { display: flex; align-items: center; gap: 12px; font-size: 12px; }
+    .mv-barline .nm { color: var(--tx2); width: 64px; flex-shrink: 0; }
+    .mv-bar { flex: 1; height: 7px; border-radius: 100px; background: #E9EDF4; overflow: hidden; }
+    .mv-bar > i { display: block; height: 100%; border-radius: 100px; background: var(--red); }
+    .mv-pct { font-weight: 700; width: 38px; text-align: right; flex-shrink: 0; font-variant-numeric: tabular-nums; color: var(--tx); }
+
+    /* SCREENSHOTS carousel */
+    .shots-carousel { position: relative; }
+    .shots-track { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; padding: 4px 2px; }
+    .shots-track::-webkit-scrollbar { display: none; }
+    .shot { flex: 0 0 calc((100% - 40px) / 3); scroll-snap-align: start; margin: 0; perspective: 900px; }
+    .car-btn { position: absolute; top: 40%; transform: translateY(-50%); width: 52px; height: 52px; border-radius: 50%; border: 1px solid var(--line); background: #fff; color: var(--tx); font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 4; box-shadow: 0 8px 24px rgba(13,27,42,0.10); transition: border-color .25s, transform .15s; }
+    .car-btn:hover { border-color: rgba(196,43,43,0.5); }
+    .car-btn:active { transform: translateY(-50%) scale(.93); }
+    .car-btn.prev { left: -16px; } .car-btn.next { right: -16px; }
+    .shot .frame { transition: transform .4s cubic-bezier(.16,1,.3,1), box-shadow .4s; }
+    .shot:hover .frame { box-shadow: 0 30px 64px rgba(13,27,42,0.16); }
+    .shot figcaption { margin-top: 15px; font-size: 15px; font-weight: 700; text-align: center; color: var(--tx); }
+    .shot figcaption span { display: block; font-size: 12.5px; font-weight: 500; color: var(--tx3); margin-top: 3px; }
+
+    /* card spotlight */
+    .spot { position: relative; }
+    .spot::after { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .35s; background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), rgba(196,43,43,0.06), transparent 65%); }
+    .spot:hover::after { opacity: 1; }
+
+    /* dot grid behind stats */
+    #cifre { position: relative; }
+    #cifre::before { content: ''; position: absolute; inset: -30px 0; pointer-events: none; background-image: radial-gradient(rgba(13,27,42,0.06) 1px, transparent 1.5px); background-size: 24px 24px; -webkit-mask-image: radial-gradient(62% 85% at 50% 50%, #000 25%, transparent 100%); mask-image: radial-gradient(62% 85% at 50% 50%, #000 25%, transparent 100%); }
+    #cifre .inner { position: relative; }
+
+    /* TESTIMONIALE */
+    .quotes { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    @media (min-width: 921px) {
+      .quotes.marquee { display: block; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); }
+      .marquee-track { display: flex; width: max-content; animation: mq 48s linear infinite; }
+      .marquee-track:hover { animation-play-state: paused; }
+      .mq-half { display: flex; gap: 18px; padding-right: 18px; }
+      .quotes.marquee .quote { width: 460px; flex-shrink: 0; }
+      @keyframes mq { to { transform: translateX(-50%); } }
+    }
+    @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } }
+    .quote { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 34px 32px; display: flex; flex-direction: column; box-shadow: 0 2px 20px rgba(13,27,42,0.04); transition: border-color .3s, box-shadow .3s, transform .3s; }
+    .quote:hover { border-color: rgba(196,43,43,0.28); box-shadow: 0 16px 40px rgba(13,27,42,0.08); transform: translateY(-4px); }
+    .q-mark { font-size: 42px; line-height: .4; color: var(--red); font-family: Georgia, 'Times New Roman', serif; margin-bottom: 20px; }
+    .quote p { font-size: 16.5px; line-height: 1.65; font-weight: 500; margin-bottom: 24px; color: var(--tx); }
+    .quote figcaption { margin-top: auto; font-size: 13px; color: var(--tx3); }
+    .quote figcaption b { display: block; color: var(--tx); font-size: 14.5px; font-weight: 700; margin-bottom: 2px; }
+
+    /* FAQ */
+    .faq { max-width: 780px; }
+    .faq details { background: var(--card); border: 1px solid var(--line); border-radius: 16px; margin-bottom: 12px; box-shadow: 0 2px 16px rgba(13,27,42,0.03); transition: border-color .3s; }
+    .faq details[open] { border-color: rgba(196,43,43,0.3); }
+    .faq summary { cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 22px 26px; font-size: 16.5px; font-weight: 700; color: var(--tx); }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: '+'; font-family: var(--f-display); font-size: 24px; font-weight: 600; color: var(--red); flex-shrink: 0; line-height: 1; }
+    .faq details[open] summary::after { content: '−'; }
+    .faq .faq-a { padding: 0 26px 24px; font-size: 15px; line-height: 1.7; color: var(--tx2); max-width: 640px; }
+
+    /* CTA — dark card on light page */
+    .cta { position: relative; padding: clamp(90px, 14vh, 160px) 0; }
+    .cta .inner { position: relative; z-index: 2; }
+    .cta-card { background: var(--navy); border-radius: 28px; padding: clamp(56px, 8vw, 92px) var(--pad); text-align: center; position: relative; overflow: hidden; }
+    .cta-card::before { content: ''; position: absolute; left: 50%; top: 42%; transform: translate(-50%, -50%); width: 72%; height: 130%; background: radial-gradient(circle, rgba(196,43,43,0.34) 0%, rgba(196,43,43,0) 62%); filter: blur(50px); pointer-events: none; }
+    .cta-card > * { position: relative; z-index: 1; }
+    .cta-card .sec-label { justify-content: center; color: #EA8A8A; }
+    .cta-card .sec-label::before { background: #EA8A8A; }
+    .cta-card h2 { font-size: clamp(38px, 5vw, 72px); margin-bottom: 20px; color: #fff; }
+    .cta-card p { font-size: 17px; color: rgba(255,255,255,0.72); max-width: 520px; margin: 0 auto 40px; line-height: 1.65; }
+    .cta-card .btn-ghost { background: rgba(255,255,255,0.08); color: #fff; border-color: rgba(255,255,255,0.18); }
+    .cta-card .btn-ghost:hover { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.32); }
+    .cta-notes { margin-top: 28px; font-size: 13px; color: rgba(255,255,255,0.55); display: flex; gap: 8px 22px; justify-content: center; flex-wrap: wrap; }
+    .cta-notes span { display: inline-flex; align-items: center; gap: 8px; }
+    .cta-notes span::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: var(--red-soft); }
+
+    footer { border-top: 1px solid var(--line); padding: 42px 0; }
+    .f-in { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+    footer img { height: 26px; display: block; }
+    footer p { font-size: 13px; color: var(--tx3); }
+    footer a { color: var(--tx2); font-size: 13.5px; }
+    footer a:hover { color: var(--tx); }
+
+    .rv { will-change: transform, opacity; }
+
+    /* MOBILE */
+    @media (max-width: 980px) {
+      .nav nav ul { display: none; }
+      .hero { padding: 106px 0 54px; min-height: 0; }
+      .hero-grid { grid-template-columns: 1fr; gap: 44px; }
+      h1 { font-size: clamp(32px, 8.4vw, 46px); }
+      .hero-photo { aspect-ratio: 16 / 11; }
+      .app-card { left: 10px; bottom: -26px; width: 250px; }
+      .micro-card { left: auto; right: 10px; top: 14px; width: 200px; }
+    }
+    @media (max-width: 920px) {
+      .prob-grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; gap: 14px; margin: 0 calc(var(--pad) * -1); padding: 2px var(--pad) 12px; }
+      .prob-grid::-webkit-scrollbar { display: none; }
+      .prob-card { flex: 0 0 84%; scroll-snap-align: center; }
+      .flow { grid-template-columns: 1fr; }
+      .flow-sticky { position: static; }
+      .stats { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .stat { padding: 30px 16px; }
+      .modx { display: block; background: transparent; border: none; border-radius: 0; overflow: visible; box-shadow: none; }
+      .modx-list { flex-direction: row; overflow-x: auto; scrollbar-width: none; border-right: none; gap: 8px; margin: 0 calc(var(--pad) * -1) 14px; padding: 0 var(--pad) 4px; background: transparent; }
+      .modx-list::-webkit-scrollbar { display: none; }
+      .modx-item { flex: 0 0 auto; border: 1px solid var(--line); border-radius: 100px; padding: 10px 16px; background: #fff; }
+      .modx-item.active { background: rgba(196,43,43,0.1); border-color: rgba(196,43,43,0.45); }
+      .modx-item::before { display: none; }
+      .modx-num, .modx-name i, .modx-ar { display: none; }
+      .modx-name { font-size: 13.5px; }
+      .modx-panel { padding: 26px 22px; min-height: 0; background: var(--card); border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 8px 30px rgba(13,27,42,0.06); }
+      .modx-pane.active { display: flex; flex-direction: column; gap: 22px; }
+      .shots-track { gap: 14px; margin: 0 calc(var(--pad) * -1); padding: 2px var(--pad) 12px; }
+      .shot { flex: 0 0 86%; scroll-snap-align: center; }
+      .car-btn { display: none; }
+      .quotes { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; gap: 14px; margin: 0 calc(var(--pad) * -1); padding: 2px var(--pad) 12px; }
+      .quotes::-webkit-scrollbar { display: none; }
+      .quote { flex: 0 0 85%; scroll-snap-align: center; }
+      .faq summary { padding: 18px 20px; font-size: 15px; }
+      .faq .faq-a { padding: 0 20px 20px; }
+      .f-in { flex-direction: column; text-align: center; }
+    }
+    @media (max-width: 600px) {
+      .logo img { height: 22px; }
+      .nav-inner { padding-left: 18px; padding-right: 14px; }
+      .nav-cta { padding: 9px 14px; font-size: 13px; }
+      .nav-cta .cta-full { display: none; }
+      .nav-cta .cta-mini { display: inline; }
+      .app-card { width: 60%; left: 8px; bottom: -20px; }
+      .micro-card { width: 172px; right: 8px; padding: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <a class="skip-link" href="#main">Sari la conținut</a>
+
+  <div class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#" class="logo"><img src="../img/logo.png" alt="Approvisor" /></a>
+      <nav><ul>
+        <li><a href="#module">Module</a></li>
+        <li><a href="#cum-functioneaza">Cum funcționează</a></li>
+        <li><a href="#aplicatie">În aplicație</a></li>
+      </ul></nav>
+      <a href="#contact" class="nav-cta magnetic"><span class="cta-full">Solicită o demonstrație ↗</span><span class="cta-mini">Solicită demo ↗</span></a>
+    </div>
+  </div>
+
+  <main id="main">
+
+    <!-- HERO (light, asymmetric) -->
+    <header class="hero">
+      <div class="inner hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow rv"><i></i>Aprovizionare, facturi și stoc pentru HoReCa</div>
+          <h1 class="rv">Comenzi. Facturi. Stoc.<br><em>Într-un singur sistem.</em></h1>
+          <p class="hero-sub rv">Trimite comenzile către furnizori în câteva minute și urmărește stocul, prețurile și food cost-ul în timp real, pentru fiecare locație.</p>
+          <ul class="benefits rv">
+            <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M7 12.5l3.2 3.2L17 9"/></svg>Comenzi către toți furnizorii dintr-o singură acțiune</li>
+            <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M7 12.5l3.2 3.2L17 9"/></svg>Facturi verificate automat față de prețul negociat</li>
+          </ul>
+          <div class="hero-ctas rv">
+            <a href="#contact" class="btn-main magnetic">Solicită o demonstrație</a>
+            <a href="#module" class="btn-ghost magnetic">Vezi modulele</a>
+          </div>
+        </div>
+        <div class="hero-visual rv">
+          <div class="hero-photo">
+            <picture><source srcset="../img/hero-light.webp" type="image/webp" /><img src="../img/hero-light.jpg" alt="Manager verificând o livrare cu Approvisor" width="1672" height="941" fetchpriority="high" /></picture>
+          </div>
+          <div class="app-card">
+            <div class="app-bar"><span></span><span></span><span></span></div>
+            <picture><source srcset="../img/screen-statistici.webp" type="image/webp" /><img src="../img/screen-statistici.png" alt="Statistici în Approvisor" loading="lazy" /></picture>
+          </div>
+          <div class="micro-card">
+            <div class="mc-top"><span class="mc-nm">Făină albă tip 550</span><span class="mc-warn">+6%</span></div>
+            <div class="mc-label">peste prețul negociat, pe factura de azi</div>
+            <div class="mc-foot"><span></span>Diferență semnalată automat</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- PROBLEMA -->
+    <section class="sec" id="probleme">
+      <div class="inner">
+        <div class="sec-head">
+          <div class="sec-label rv">Problema</div>
+          <h2 class="rv">Unde apar pierderile<br>de timp și bani</h2>
+          <p class="sec-sub rv">Pe măsură ce numărul de locații crește, comenzile, facturile și stocul devin tot mai greu de urmărit manual.</p>
+        </div>
+        <div class="prob-grid">
+          <div class="prob-card rv">
+            <div class="prob-idx">01</div>
+            <div class="prob-title">Comenzi trimise prin mesaje, fără evidență centralizată</div>
+            <p class="prob-desc">Comenzile transmise prin telefon sau mesaje sunt greu de urmărit. Nu este mereu clar ce s-a comandat, de cine, către ce furnizor și la ce preț.</p>
+            <div class="prob-sol">→ Comenzi și oferte centralizate</div>
+          </div>
+          <div class="prob-card rv">
+            <div class="prob-idx">02</div>
+            <div class="prob-title">Facturi greu de verificat manual</div>
+            <p class="prob-desc">Furnizorul poate factura la un preț diferit de cel negociat, iar abaterea este greu de observat manual. În timp, diferențele se pot aduna fără să fie detectate la timp.</p>
+            <div class="prob-sol">→ Verificare automată față de prețurile negociate</div>
+          </div>
+          <div class="prob-card rv">
+            <div class="prob-idx">03</div>
+            <div class="prob-title">Stoc și costuri calculate prea târziu</div>
+            <p class="prob-desc">Inventarul și food cost-ul sunt adesea calculate în tabele, după ce deciziile au fost deja luate. Platforma ajută echipa să vadă costurile actualizate, pentru fiecare locație.</p>
+            <div class="prob-sol">→ Stoc și costuri actualizate în timp real</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- FLOW -->
+    <section class="sec" id="cum-functioneaza">
+      <div class="inner flow">
+        <div class="flow-sticky">
+          <div class="sec-label rv">Cum funcționează</div>
+          <h2 class="rv">Un ciclu complet,<br>un singur sistem</h2>
+          <p class="sec-sub rv">Fiecare etapă din aprovizionare este conectată: catalogul, comanda, factura, stocul și food cost-ul lucrează împreună.</p>
+        </div>
+        <div class="flow-steps">
+          <div class="flow-rail" aria-hidden="true"><i id="railFill"></i></div>
+          <div class="fstep">
+            <div class="fstep-num">PASUL 1</div>
+            <div class="fstep-name">Catalog și prețuri</div>
+            <p class="fstep-desc">Produsele, furnizorii și listele de prețuri negociate sunt păstrate într-un singur loc.</p>
+          </div>
+          <div class="fstep">
+            <div class="fstep-num">PASUL 2</div>
+            <div class="fstep-name">Comandă și aprobare</div>
+            <p class="fstep-desc">Managerul pregătește comanda, responsabilul o aprobă, iar furnizorul primește automat comanda pe e-mail.</p>
+          </div>
+          <div class="fstep">
+            <div class="fstep-num">PASUL 3</div>
+            <div class="fstep-name">Facturi și validare</div>
+            <p class="fstep-desc">Factura este comparată automat cu prețurile negociate, linie cu linie.</p>
+          </div>
+          <div class="fstep">
+            <div class="fstep-num">PASUL 4</div>
+            <div class="fstep-name">Stoc și food cost</div>
+            <p class="fstep-desc">Facturile validate actualizează stocul, iar food cost-ul se calculează cu prețurile la zi.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="sec" id="cifre" style="padding-top: 0;">
+      <div class="inner">
+        <div class="stats">
+          <div class="stat rv"><div class="stat-big"><span data-count="2000">0</span>+</div><div class="stat-lbl">comenzi procesate</div></div>
+          <div class="stat rv"><div class="stat-big"><span data-count="3000">0</span>+</div><div class="stat-lbl">facturi verificate</div></div>
+          <div class="stat rv"><div class="stat-big"><span data-count="700">0</span>+</div><div class="stat-lbl">produse adăugate<br>în catalog</div></div>
+          <div class="stat rv"><div class="stat-big"><span data-count="12">0</span></div><div class="stat-lbl">locații active<br>într-un lanț HoReCa</div></div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- MODULE: master/detail explorer -->
+    <section class="mods" id="module">
+      <div class="inner mods-head">
+        <div class="sec-label rv">Module</div>
+        <h2 class="rv">Modulele principale<br>ale platformei</h2>
+      </div>
+      <div class="inner">
+        <div class="modx rv">
+          <div class="modx-list" role="tablist" aria-label="Module Approvisor">
+            <button class="modx-item active" role="tab" id="mtab-catalog" aria-controls="mpan-catalog" aria-selected="true" data-mod="catalog">
+              <span class="modx-num">01</span>
+              <span class="modx-name">Catalog<i>Prețurile furnizorilor, unul lângă altul</i></span>
+              <span class="modx-ar" aria-hidden="true">&#8594;</span>
+            </button>
+            <button class="modx-item" role="tab" id="mtab-comenzi" aria-controls="mpan-comenzi" aria-selected="false" tabindex="-1" data-mod="comenzi">
+              <span class="modx-num">02</span>
+              <span class="modx-name">Comenzi<i>Comandă centralizată către furnizori</i></span>
+              <span class="modx-ar" aria-hidden="true">&#8594;</span>
+            </button>
+            <button class="modx-item" role="tab" id="mtab-validare" aria-controls="mpan-validare" aria-selected="false" tabindex="-1" data-mod="validare">
+              <span class="modx-num">03</span>
+              <span class="modx-name">Validare facturi<i>Preț negociat față de preț facturat</i></span>
+              <span class="modx-ar" aria-hidden="true">&#8594;</span>
+            </button>
+            <button class="modx-item" role="tab" id="mtab-gestiune" aria-controls="mpan-gestiune" aria-selected="false" tabindex="-1" data-mod="gestiune">
+              <span class="modx-num">04</span>
+              <span class="modx-name">Stoc și food cost<i>Food cost pe fiecare locație</i></span>
+              <span class="modx-ar" aria-hidden="true">&#8594;</span>
+            </button>
+            <button class="modx-item" role="tab" id="mtab-statistici" aria-controls="mpan-statistici" aria-selected="false" tabindex="-1" data-mod="statistici">
+              <span class="modx-num">05</span>
+              <span class="modx-name">Statistici<i>Cheltuieli pe furnizor și locație</i></span>
+              <span class="modx-ar" aria-hidden="true">&#8594;</span>
+            </button>
+          </div>
+          <div class="modx-panel">
+            <div class="modx-pane active" role="tabpanel" id="mpan-catalog" aria-labelledby="mtab-catalog" data-mod="catalog">
+              <div>
+                <div class="mod-name">Catalog</div>
+                <p class="mod-desc">Produsele, furnizorii și listele tale de prețuri sunt organizate într-un catalog propriu. Vezi același produs la mai mulți furnizori și alegi pe baza prețurilor negociate.</p>
+                <div class="mod-tags"><span class="mod-tag">Toți furnizorii la un loc</span><span class="mod-tag">Compari prețuri</span><span class="mod-tag">Liste negociate</span></div>
+              </div>
+              <div class="mod-visual">
+                <div class="mv-label">Piept de pui 1kg · de la 3 furnizori</div>
+                <div class="price-row"><span class="nm">Metro</span><span class="price-ok">18,90 lei</span></div>
+                <div class="price-row"><span class="nm">Selgros</span><span class="price-ok">17,40 lei</span><span class="badge-ok">cel mai bun</span></div>
+                <div class="price-row"><span class="nm">Local Farm</span><span class="price-ok">19,20 lei</span></div>
+              </div>
+            </div>
+            <div class="modx-pane" role="tabpanel" id="mpan-comenzi" aria-labelledby="mtab-comenzi" data-mod="comenzi" hidden>
+              <div>
+                <div class="mod-name">Comenzi</div>
+                <p class="mod-desc">Construiești comanda din catalog și o trimiți către toți furnizorii dintr-o singură acțiune. Aprobarea se poate face în platformă, înainte de trimitere.</p>
+                <div class="mod-tags"><span class="mod-tag">Coș rapid</span><span class="mod-tag">O singură acțiune pentru toți furnizorii</span><span class="mod-tag">Aprobare</span></div>
+              </div>
+              <div class="mod-visual">
+                <div class="mv-label">Coșul tău · 3 furnizori</div>
+                <div class="price-row"><span class="qty">12 ×</span><span class="nm">Piept de pui · Selgros</span></div>
+                <div class="price-row"><span class="qty">8 ×</span><span class="nm">Ulei floarea soarelui · Metro</span></div>
+                <div class="price-row"><span class="qty">20 ×</span><span class="nm">Roșii · Local Farm</span></div>
+              </div>
+            </div>
+            <div class="modx-pane" role="tabpanel" id="mpan-validare" aria-labelledby="mtab-validare" data-mod="validare" hidden>
+              <div>
+                <div class="mod-name">Validare facturi</div>
+                <p class="mod-desc">Platforma compară prețul facturat cu prețul negociat și semnalează automat diferențele, înainte ca factura să fie plătită.</p>
+                <div class="mod-tags"><span class="mod-tag">Negociat față de facturat</span><span class="mod-tag">Verificare automată</span><span class="mod-tag">Alertă la diferențe</span></div>
+              </div>
+              <div class="mod-visual">
+                <div class="mv-label">Rezultat validare</div>
+                <div class="price-row"><span class="nm">Ulei floarea soarelui 5L</span><span class="price-ok">38,50 lei</span><span class="badge-ok">OK</span></div>
+                <div class="price-row"><span class="nm">Făină albă tip 550</span><span class="price-warn">4,20 lei</span><span class="badge-warn">+6%</span></div>
+                <div class="price-row"><span class="nm">Zahăr cristal 1kg</span><span class="price-ok">6,80 lei</span><span class="badge-ok">OK</span></div>
+              </div>
+            </div>
+            <div class="modx-pane" role="tabpanel" id="mpan-gestiune" aria-labelledby="mtab-gestiune" data-mod="gestiune" hidden>
+              <div>
+                <div class="mod-name">Stoc și food cost</div>
+                <p class="mod-desc">Stocul se actualizează pe baza facturilor validate, pentru fiecare locație. Food cost-ul poate fi urmărit cu prețurile actualizate.</p>
+                <div class="mod-tags"><span class="mod-tag">Stoc în timp real</span><span class="mod-tag">Food cost pe rețetă</span><span class="mod-tag">Pe locație</span></div>
+              </div>
+              <div class="mod-visual">
+                <div class="mv-label">Rețetă · Burger clasic</div>
+                <div class="price-row"><span class="nm">Chiflă brioche</span><span class="price-ok">1,20 lei</span></div>
+                <div class="price-row"><span class="nm">Carne vită 180g</span><span class="price-ok">4,60 lei</span></div>
+                <div class="mv-barline"><span class="nm">Food cost</span><span class="mv-bar"><i style="width:31%"></i></span><span class="mv-pct">31%</span></div>
+              </div>
+            </div>
+            <div class="modx-pane" role="tabpanel" id="mpan-statistici" aria-labelledby="mtab-statistici" data-mod="statistici" hidden>
+              <div>
+                <div class="mod-name">Statistici</div>
+                <p class="mod-desc">Vezi cheltuielile pe furnizor, locație și categorie. Poți analiza datele până la nivel de produs sau linie de factură.</p>
+                <div class="mod-tags"><span class="mod-tag">Cheltuieli și comenzi</span><span class="mod-tag">Stoc și producție</span><span class="mod-tag">Detaliere pe factură</span></div>
+              </div>
+              <div class="mod-visual">
+                <div class="mv-label">Cheltuieli · Iunie</div>
+                <div class="mv-big">84.320<small>lei</small></div>
+                <div class="mv-barline"><span class="nm">Metro</span><span class="mv-bar"><i style="width:38%"></i></span><span class="mv-pct">38%</span></div>
+                <div class="mv-barline"><span class="nm">Selgros</span><span class="mv-bar"><i style="width:27%"></i></span><span class="mv-pct">27%</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREENSHOTS -->
+    <section class="sec" id="aplicatie">
+      <div class="inner">
+        <div class="sec-head">
+          <div class="sec-label rv">În aplicație</div>
+          <h2 class="rv">Cum arată<br>în Approvisor</h2>
+        </div>
+        <div class="shots-carousel">
+          <div class="shots-track">
+          <figure class="shot rv">
+            <div class="frame">
+              <div class="frame-bar"><span></span><span></span><span></span></div>
+              <picture><source srcset="../img/screen-catalog.webp" type="image/webp" /><img src="../img/screen-catalog.png" alt="Catalog în Approvisor" loading="lazy" /></picture>
+            </div>
+            <figcaption>Catalog<span>Produse și prețuri centralizate</span></figcaption>
+          </figure>
+          <figure class="shot rv">
+            <div class="frame">
+              <div class="frame-bar"><span></span><span></span><span></span></div>
+              <picture><source srcset="../img/screen-comenzi.webp" type="image/webp" /><img src="../img/screen-comenzi.png" alt="Comenzi în Approvisor" loading="lazy" /></picture>
+            </div>
+            <figcaption>Comenzi<span>Comenzi trimise către furnizori</span></figcaption>
+          </figure>
+          <figure class="shot rv">
+            <div class="frame">
+              <div class="frame-bar"><span></span><span></span><span></span></div>
+              <picture><source srcset="../img/screen-statistici.webp" type="image/webp" /><img src="../img/screen-statistici.png" alt="Statistici în Approvisor" loading="lazy" /></picture>
+            </div>
+            <figcaption>Statistici<span>Rapoarte despre cheltuieli și comenzi</span></figcaption>
+          </figure>
+          <figure class="shot rv">
+            <div class="frame">
+              <div class="frame-bar"><span></span><span></span><span></span></div>
+              <picture><source srcset="../img/screen-validare.webp" type="image/webp" /><img src="../img/screen-validare.png" alt="Validare facturi în Approvisor" loading="lazy" /></picture>
+            </div>
+            <figcaption>Validare facturi<span>Preț negociat comparat cu prețul facturat</span></figcaption>
+          </figure>
+          <figure class="shot rv">
+            <div class="frame">
+              <div class="frame-bar"><span></span><span></span><span></span></div>
+              <picture><source srcset="../img/screen-gestiune.webp" type="image/webp" /><img src="../img/screen-gestiune.png" alt="Gestiune și costuri în Approvisor" loading="lazy" /></picture>
+            </div>
+            <figcaption>Stoc și food cost<span>Stoc și food cost pe locație</span></figcaption>
+          </figure>
+          </div>
+          <button class="car-btn prev" aria-label="Categoria anterioară">&#8592;</button>
+          <button class="car-btn next" aria-label="Categoria următoare">&#8594;</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALE -->
+    <section class="sec" id="testimoniale" style="padding-top: 0;">
+      <div class="inner">
+        <div class="sec-head">
+          <div class="sec-label rv">Testimoniale</div>
+          <h2 class="rv">Ce spun utilizatorii<br>platformei</h2>
+        </div>
+        <div class="quotes">
+          <figure class="quote rv">
+            <div class="q-mark">&#8220;</div>
+            <p>Ca să știu cât cheltuiesc pe toate locațiile, îmi lua o zi de adunat facturi. Acum văd totul într-un loc, în timp real, și nu mai iau decizii pe estimări.</p>
+            <figcaption><b>Patron</b>Lanț HoReCa · 12 locații</figcaption>
+          </figure>
+          <figure class="quote rv">
+            <div class="q-mark">&#8220;</div>
+            <p>Văd același produs la toți furnizorii, cu prețul lor, unul lângă altul. Negociez cu cifre, nu din memorie, iar diferențele de pe facturi nu mai trec neobservate.</p>
+            <figcaption><b>Director de achiziții</b>Lanț HoReCa</figcaption>
+          </figure>
+          <figure class="quote rv">
+            <div class="q-mark">&#8220;</div>
+            <p>Comanda zilnică o făceam pe telefon, cu fiecare furnizor pe rând. Acum o închei în câteva minute și pleacă singură la toți. Am recâștigat prima oră din zi.</p>
+            <figcaption><b>Manager de locație</b>Lanț HoReCa</figcaption>
+          </figure>
+          <figure class="quote rv">
+            <div class="q-mark">&#8220;</div>
+            <p>Văd food cost-ul pe fiecare rețetă, cu prețurile la zi. Când se scumpește un ingredient, știu imediat ce preparat mă costă mai mult și ajustez meniul.</p>
+            <figcaption><b>Șef-bucătar</b>Lanț HoReCa</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="sec" id="faq" style="padding-top: 0;">
+      <div class="inner">
+        <div class="sec-head">
+          <div class="sec-label rv">Întrebări frecvente</div>
+          <h2 class="rv">Ce ne întreabă<br>lanțurile la început</h2>
+        </div>
+        <div class="faq rv">
+          <details>
+            <summary>Ce presupune implementarea?</summary>
+            <div class="faq-a">Implementarea se face treptat. Începem cu locațiile și furnizorii principali, importăm catalogul de produse și listele de prețuri, apoi configurăm rolurile pentru utilizatori. Echipa noastră te ajută cu transferul datelor.</div>
+          </details>
+          <details>
+            <summary>Se poate începe cu un număr redus de locații?</summary>
+            <div class="faq-a">Da. Recomandăm validarea fluxului pe câteva locații: catalog, comenzi, aprobări. Extinderea la nivelul întregului lanț se face după această etapă.</div>
+          </details>
+          <details>
+            <summary>Cum se stabilește prețul?</summary>
+            <div class="faq-a">Prețul se stabilește în funcție de numărul de locații. După o demonstrație a platformei cu datele lanțului, trimitem o ofertă personalizată.</div>
+          </details>
+          <details>
+            <summary>Furnizorii trebuie să instaleze ceva?</summary>
+            <div class="faq-a">Nu. Furnizorii primesc comenzile automat, pe e-mail, fără cont și fără nicio aplicație de instalat. În platformă rămâne evidența completă: ce s-a trimis, către cine și când.</div>
+          </details>
+          <details>
+            <summary>Ce vede fiecare rol în aplicație?</summary>
+            <div class="faq-a">Accesul este configurat pe roluri. Managerul de locație vede comenzile, stocul și costurile locației sale. Administratorul are acces la catalog, furnizori, prețuri, aprobări, comenzi și statistici pentru toate locațiile.</div>
+          </details>
+          <details>
+            <summary>Comenzile pot fi aprobate înainte de trimitere?</summary>
+            <div class="faq-a">Da. Aprobarea se face în aplicație, înainte de trimitere, pe baza unor reguli configurate pe locație și pe furnizor.</div>
+          </details>
+          <details>
+            <summary>Se păstrează istoricul comenzilor?</summary>
+            <div class="faq-a">Da. Fiecare comandă se păstrează în istoric, cu locația, furnizorul, produsele, persoana care a plasat-o și data trimiterii. Istoricul susține controlul intern și comparațiile între locații.</div>
+          </details>
+          <details>
+            <summary>Cum se actualizează prețurile?</summary>
+            <div class="faq-a">Listele de prețuri negociate sunt păstrate în catalog și gestionate centralizat de administrator. Orice diferență dintre prețul negociat și prețul facturat este semnalată automat, linie cu linie.</div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta" id="contact">
+      <div class="inner">
+        <div class="cta-card rv">
+          <div class="sec-label" style="justify-content:center">Începe acum</div>
+          <h2>Înlocuiește mesajele și tabelele<br>cu un singur sistem</h2>
+          <p>Spune-ne cum funcționează lanțul tău, iar noi îți demonstrăm cum poate fi configurat Approvisor pentru locațiile, furnizorii și datele tale.</p>
+          <div class="hero-ctas" style="justify-content:center">
+            <a href="mailto:contact@approvisor.com" class="btn-main magnetic">Solicită o demonstrație ↗</a>
+            <a href="mailto:contact@approvisor.com" class="btn-ghost magnetic">Contactează-ne</a>
+          </div>
+          <div class="cta-notes"><span>Preț stabilit în funcție de numărul de locații</span><span>Asistență la configurare și importul datelor</span></div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="inner f-in">
+        <img src="../img/logo.png" alt="Approvisor" />
+        <p>© 2026 Approvisor · Platformă de achiziții pentru HoReCa</p>
+        <a href="mailto:contact@approvisor.com">contact@approvisor.com</a>
+      </div>
+    </footer>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script>
+    (function(){
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var hasGsap = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
+
+      /* nav background on scroll */
+      var nav = document.getElementById('nav');
+      function navState(){ nav.classList.toggle('scrolled', (window.scrollY || 0) > 40); }
+      window.addEventListener('scroll', navState, { passive: true });
+      navState();
+
+      /* screenshots carousel arrows (works without GSAP) */
+      var shTrack = document.querySelector('.shots-track');
+      if (shTrack) {
+        var shSlides = Array.prototype.slice.call(shTrack.children);
+        var shCur = function(){
+          var e = shTrack.scrollLeft, best = 0, bd = Infinity;
+          shSlides.forEach(function(s, i){ var d = Math.abs((s.offsetLeft - shSlides[0].offsetLeft) - e); if (d < bd) { bd = d; best = i; } });
+          return best;
+        };
+        var shGo = function(i){
+          i = Math.max(0, Math.min(shSlides.length - 1, i));
+          shTrack.scrollTo({ left: shSlides[i].offsetLeft - shSlides[0].offsetLeft, behavior: 'smooth' });
+        };
+        var shPrev = document.querySelector('.car-btn.prev'), shNext = document.querySelector('.car-btn.next');
+        if (shPrev) shPrev.addEventListener('click', function(){ shGo(shCur() - 1); });
+        if (shNext) shNext.addEventListener('click', function(){ shGo(shCur() + 1); });
+      }
+
+      /* module explorer: master/detail tabs (works without GSAP; animated when available) */
+      var mtabs = Array.prototype.slice.call(document.querySelectorAll('.modx-item'));
+      var mpanes = document.querySelectorAll('.modx-pane');
+      if (mtabs.length) {
+        var mActivate = function(id, focusTab){
+          mtabs.forEach(function(t){
+            var on = t.dataset.mod === id;
+            t.classList.toggle('active', on);
+            t.setAttribute('aria-selected', on ? 'true' : 'false');
+            t.tabIndex = on ? 0 : -1;
+            if (on && focusTab) t.focus();
+          });
+          mpanes.forEach(function(p){
+            var on = p.dataset.mod === id;
+            p.classList.toggle('active', on);
+            p.hidden = !on;
+            if (on && window.gsap && !reduced) {
+              gsap.fromTo(p.children, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.45, stagger: 0.07, ease: 'power3.out', overwrite: 'auto' });
+            }
+          });
+        };
+        mtabs.forEach(function(t, i){
+          t.addEventListener('click', function(){ mActivate(t.dataset.mod, false); });
+          t.addEventListener('keydown', function(e){
+            var n = null;
+            if (e.key === 'ArrowDown' || e.key === 'ArrowRight') n = (i + 1) % mtabs.length;
+            else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') n = (i - 1 + mtabs.length) % mtabs.length;
+            else if (e.key === 'Home') n = 0;
+            else if (e.key === 'End') n = mtabs.length - 1;
+            if (n !== null) { e.preventDefault(); mActivate(mtabs[n].dataset.mod, true); }
+          });
+        });
+      }
+
+      if (!hasGsap || reduced) return; /* content is fully visible without motion */
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      /* hero intro (light asymmetric) */
+      gsap.set('.hero .rv', { autoAlpha: 0, y: 24 });
+      gsap.to('.hero .rv', { autoAlpha: 1, y: 0, duration: 0.9, stagger: 0.09, ease: 'power3.out', delay: 0.08 });
+
+
+      /* testimonials marquee (desktop): duplicate the cards into two halves for a seamless loop */
+      if (window.matchMedia('(min-width: 921px)').matches) {
+        var qWrap = document.querySelector('.quotes');
+        if (qWrap) {
+          var cards = Array.prototype.slice.call(qWrap.children);
+          cards.forEach(function(c){ c.classList.remove('rv'); });
+          var track = document.createElement('div');
+          track.className = 'marquee-track';
+          var half1 = document.createElement('div'); half1.className = 'mq-half';
+          var half2 = document.createElement('div'); half2.className = 'mq-half';
+          half2.setAttribute('aria-hidden', 'true');
+          cards.forEach(function(c){ half1.appendChild(c); half2.appendChild(c.cloneNode(true)); });
+          track.appendChild(half1); track.appendChild(half2);
+          qWrap.innerHTML = '';
+          qWrap.appendChild(track);
+          qWrap.classList.add('marquee', 'rv');
+        }
+      }
+
+      /* generic reveals */
+      gsap.utils.toArray('main .rv').forEach(function(el){
+        if (el.closest('.hero')) return;
+        gsap.fromTo(el, { autoAlpha: 0, y: 34 }, {
+          autoAlpha: 1, y: 0, duration: 0.9, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+        });
+      });
+
+      /* flow: rail fill + step activation */
+      var steps = gsap.utils.toArray('.fstep');
+      gsap.to('#railFill', {
+        scaleY: 1, ease: 'none',
+        scrollTrigger: {
+          trigger: '.flow-steps', start: 'top 62%', end: 'bottom 55%', scrub: true,
+          onUpdate: function(self){
+            steps.forEach(function(s, i){ s.classList.toggle('on', self.progress > (i + 0.15) / steps.length); });
+          }
+        }
+      });
+
+      /* stats counters */
+      gsap.utils.toArray('[data-count]').forEach(function(el){
+        var target = parseInt(el.dataset.count, 10);
+        var obj = { v: 0 };
+        gsap.to(obj, {
+          v: target, duration: 1.6, ease: 'power2.out',
+          snap: { v: 1 },
+          onUpdate: function(){ el.textContent = Math.round(obj.v).toLocaleString('ro-RO'); },
+          scrollTrigger: { trigger: el, start: 'top 90%', once: true }
+        });
+      });
+
+      /* card spotlight: radial highlight follows the cursor (fine pointers only) */
+      if (window.matchMedia('(pointer: fine)').matches) {
+        document.querySelectorAll('.prob-card, .modx-panel, .quote, .stat').forEach(function(card){
+          card.classList.add('spot');
+          card.addEventListener('mousemove', function(e){
+            var r = card.getBoundingClientRect();
+            card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+            card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+          });
+        });
+      }
+
+      /* magnetic buttons (fine pointers only) */
+      if (window.matchMedia('(pointer: fine)').matches) {
+        document.querySelectorAll('.magnetic').forEach(function(btn){
+          var qx = gsap.quickTo(btn, 'x', { duration: 0.35, ease: 'power3.out' });
+          var qy = gsap.quickTo(btn, 'y', { duration: 0.35, ease: 'power3.out' });
+          btn.addEventListener('mousemove', function(e){
+            var r = btn.getBoundingClientRect();
+            qx((e.clientX - r.left - r.width / 2) * 0.25);
+            qy((e.clientY - r.top - r.height / 2) * 0.25);
+          });
+          btn.addEventListener('mouseleave', function(){ qx(0); qy(0); });
+        });
+      }
+
+      /* screenshot tilt toward cursor */
+      if (window.matchMedia('(pointer: fine)').matches) {
+        document.querySelectorAll('.shot .frame').forEach(function(fr){
+          var rx = gsap.quickTo(fr, 'rotationX', { duration: 0.5, ease: 'power3.out' });
+          var ry = gsap.quickTo(fr, 'rotationY', { duration: 0.5, ease: 'power3.out' });
+          fr.parentElement.addEventListener('mousemove', function(e){
+            var r = fr.getBoundingClientRect();
+            ry(((e.clientX - r.left) / r.width - 0.5) * 10);
+            rx(-((e.clientY - r.top) / r.height - 0.5) * 8);
+          });
+          fr.parentElement.addEventListener('mouseleave', function(){ rx(0); ry(0); });
+        });
+      }
+    })();
+  </script>
+
+</body>
+</html>
