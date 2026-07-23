@@ -4,15 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex" />
-  <title>Approvisor · v3 light preview</title>
+  <title>Approvisor | Comenzi, facturi și stoc pentru lanțuri HoReCa</title>
   <meta name="description" content="Platformă de aprovizionare pentru lanțuri HoReCa: comenzi, validare facturi, stoc și food cost într-un singur sistem." />
   <meta name="theme-color" content="#F4F6FA" />
   <link rel="apple-touch-icon" href="../favicon.png" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Approvisor · aprovizionare, facturi și stoc pentru HoReCa" />
+  <meta property="og:title" content="Approvisor | Comenzi, facturi și stoc pentru lanțuri HoReCa" />
   <meta property="og:description" content="Comenzi, facturi și stocuri într-un singur sistem. Folosit într-un lanț HoReCa cu 12 locații, 2.000+ comenzi și 3.000+ facturi." />
-  <meta property="og:url" content="https://frincu13.github.io/approvisor-site/" />
-  <meta property="og:image" content="https://frincu13.github.io/approvisor-site/img/hero-cut.png" />
+  <meta property="og:url" content="https://frincu13.github.io/approvisor-site/v3/" />
+  <meta property="og:image" content="https://frincu13.github.io/approvisor-site/img/hero-app.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" type="image/png" href="../favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -345,7 +345,7 @@
         <div class="hero-scrim" aria-hidden="true"></div>
         <div class="hero-overlay">
           <h1 class="rv">Comenzi. Facturi. Stoc.<br><em>Într-un singur sistem.</em></h1>
-          <p class="hero-sub rv">Trimite comenzile către furnizori în câteva minute și urmărește stocul, prețurile și food cost-ul în timp real, pentru fiecare locație.</p>
+          <p class="hero-sub rv">Trimite comenzile către furnizori în câteva minute și urmărește stocul, prețurile și food cost-ul la zi, pentru fiecare locație.</p>
           <div class="hero-ctas rv">
             <a href="#contact" class="btn-main magnetic">Solicită o demonstrație</a>
             <a href="#module" class="btn-ghost magnetic">Vezi modulele</a>
@@ -372,14 +372,14 @@
           <div class="prob-card rv">
             <div class="prob-idx">02</div>
             <div class="prob-title">Facturi greu de verificat manual</div>
-            <p class="prob-desc">Furnizorul poate factura la un preț diferit de cel negociat, iar abaterea este greu de observat manual. În timp, diferențele se pot aduna fără să fie detectate la timp.</p>
+            <p class="prob-desc">Pot apărea diferențe între prețul negociat și cel facturat, iar abaterea este greu de observat manual. În timp, diferențele se pot aduna fără să fie detectate la timp.</p>
             <div class="prob-sol">→ Verificare automată față de prețurile negociate</div>
           </div>
           <div class="prob-card rv">
             <div class="prob-idx">03</div>
             <div class="prob-title">Stoc și costuri calculate prea târziu</div>
             <p class="prob-desc">Inventarul și food cost-ul sunt adesea calculate în tabele, după ce deciziile au fost deja luate. Platforma ajută echipa să vadă costurile actualizate, pentru fiecare locație.</p>
-            <div class="prob-sol">→ Stoc și costuri actualizate în timp real</div>
+            <div class="prob-sol">→ Stoc și costuri actualizate automat</div>
           </div>
         </div>
       </div>
@@ -477,9 +477,9 @@
               </div>
               <div class="mod-visual">
                 <div class="mv-label">Piept de pui 1kg · de la 3 furnizori</div>
-                <div class="price-row"><span class="nm">Metro</span><span class="price-ok">18,90 lei</span></div>
-                <div class="price-row"><span class="nm">Selgros</span><span class="price-ok">17,40 lei</span><span class="badge-ok">cel mai bun</span></div>
-                <div class="price-row"><span class="nm">Local Farm</span><span class="price-ok">19,20 lei</span></div>
+                <div class="price-row"><span class="nm">Furnizor Demo A</span><span class="price-ok">18,90 lei</span></div>
+                <div class="price-row"><span class="nm">Furnizor Demo B</span><span class="price-ok">17,40 lei</span><span class="badge-ok">cel mai bun</span></div>
+                <div class="price-row"><span class="nm">Furnizor Demo C</span><span class="price-ok">19,20 lei</span></div>
               </div>
             </div>
             <div class="modx-pane" role="tabpanel" id="mpan-comenzi" aria-labelledby="mtab-comenzi" data-mod="comenzi" hidden>
@@ -490,9 +490,9 @@
               </div>
               <div class="mod-visual">
                 <div class="mv-label">Coșul tău · 3 furnizori</div>
-                <div class="price-row"><span class="qty">12 ×</span><span class="nm">Piept de pui · Selgros</span></div>
-                <div class="price-row"><span class="qty">8 ×</span><span class="nm">Ulei floarea soarelui · Metro</span></div>
-                <div class="price-row"><span class="qty">20 ×</span><span class="nm">Roșii · Local Farm</span></div>
+                <div class="price-row"><span class="qty">12 ×</span><span class="nm">Piept de pui · Furnizor Demo B</span></div>
+                <div class="price-row"><span class="qty">8 ×</span><span class="nm">Ulei floarea soarelui · Furnizor Demo A</span></div>
+                <div class="price-row"><span class="qty">20 ×</span><span class="nm">Roșii · Furnizor Demo C</span></div>
               </div>
             </div>
             <div class="modx-pane" role="tabpanel" id="mpan-validare" aria-labelledby="mtab-validare" data-mod="validare" hidden>
@@ -512,7 +512,7 @@
               <div>
                 <div class="mod-name">Stoc și food cost</div>
                 <p class="mod-desc">Stocul se actualizează pe baza facturilor validate, pentru fiecare locație. Food cost-ul poate fi urmărit cu prețurile actualizate.</p>
-                <div class="mod-tags"><span class="mod-tag">Stoc în timp real</span><span class="mod-tag">Food cost pe rețetă</span><span class="mod-tag">Pe locație</span></div>
+                <div class="mod-tags"><span class="mod-tag">Stoc la zi</span><span class="mod-tag">Food cost pe rețetă</span><span class="mod-tag">Pe locație</span></div>
               </div>
               <div class="mod-visual">
                 <div class="mv-label">Rețetă · Burger clasic</div>
@@ -530,8 +530,8 @@
               <div class="mod-visual">
                 <div class="mv-label">Cheltuieli · Iunie</div>
                 <div class="mv-big">84.320<small>lei</small></div>
-                <div class="mv-barline"><span class="nm">Metro</span><span class="mv-bar"><i style="width:38%"></i></span><span class="mv-pct">38%</span></div>
-                <div class="mv-barline"><span class="nm">Selgros</span><span class="mv-bar"><i style="width:27%"></i></span><span class="mv-pct">27%</span></div>
+                <div class="mv-barline"><span class="nm">Furnizor Demo A</span><span class="mv-bar"><i style="width:38%"></i></span><span class="mv-pct">38%</span></div>
+                <div class="mv-barline"><span class="nm">Furnizor Demo B</span><span class="mv-bar"><i style="width:27%"></i></span><span class="mv-pct">27%</span></div>
               </div>
             </div>
           </div>
