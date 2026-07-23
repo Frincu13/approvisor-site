@@ -65,19 +65,19 @@
     .nav-cta .cta-mini { display: none; }
     .nav-cta:hover { background: var(--red-soft); transform: translateY(-1px); }
 
-    /* full-bleed photo HERO */
-    .hero { padding: 90px 0 36px; }
-    .hero-stage { position: relative; border-radius: 24px; overflow: hidden; height: clamp(540px, 80vh, 800px); box-shadow: 0 30px 80px rgba(13,27,42,0.18); border: 1px solid rgba(13,27,42,0.06); }
-    .hero-media { position: absolute; inset: 0; }
-    .hero-media > picture { position: absolute; inset: 0; display: block; }
-    .hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: 70% center; display: block; }
-    .hero-scrim { position: absolute; inset: 0; background: linear-gradient(96deg, rgba(246,248,251,0.95) 0%, rgba(246,248,251,0.82) 24%, rgba(246,248,251,0.2) 46%, rgba(246,248,251,0) 60%); }
-    .hero-overlay { position: absolute; left: clamp(26px, 4vw, 56px); top: 50%; transform: translateY(-50%); max-width: min(540px, 54%); z-index: 3; }
-    .eyebrow { display: inline-flex; align-items: center; gap: 9px; font-size: 12px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: var(--red); background: rgba(196,43,43,0.08); border: 1px solid rgba(196,43,43,0.16); padding: 8px 15px; border-radius: 100px; margin-bottom: 24px; }
-    .eyebrow i { width: 6px; height: 6px; border-radius: 50%; background: var(--red); display: inline-block; }
-    h1 { font-size: clamp(33px, 3.7vw, 56px); font-weight: 800; line-height: 0.99; letter-spacing: -0.03em; color: var(--tx); }
-    h1 em, h1 b { font-style: normal; color: var(--red); font-weight: 800; }
-    .hero-sub { font-size: clamp(16px, 1.25vw, 18px); line-height: 1.65; color: var(--tx2); max-width: 470px; margin: 22px 0 24px; }
+    /* full-bleed photo HERO (Hourglass-style) */
+    .hero { padding: 0; }
+    .hero-stage { position: relative; margin: 14px 14px 0; border-radius: 26px; overflow: hidden; height: clamp(580px, 92vh, 940px); box-shadow: 0 30px 80px rgba(13,27,42,0.18); }
+    .hero-photo { position: absolute; inset: 0; display: block; }
+    .hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 60% center; display: block; }
+    .hero-scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(8,16,27,0.9) 0%, rgba(8,16,27,0.72) 22%, rgba(8,16,27,0.44) 44%, rgba(8,16,27,0.14) 60%, rgba(8,16,27,0) 76%), linear-gradient(102deg, rgba(8,16,27,0.72) 0%, rgba(8,16,27,0.36) 30%, rgba(8,16,27,0) 55%); }
+    .hero-overlay { position: absolute; left: clamp(26px, 5vw, 72px); right: clamp(26px, 5vw, 72px); bottom: clamp(40px, 6vw, 78px); max-width: 620px; z-index: 3; }
+    .hero-cards { position: absolute; right: clamp(18px, 3vw, 40px); bottom: clamp(18px, 3vw, 36px); z-index: 4; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; width: min(340px, 42%); }
+    .eyebrow { display: inline-flex; align-items: center; gap: 9px; font-size: 12px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: #fff; background: rgba(255,255,255,0.13); border: 1px solid rgba(255,255,255,0.24); padding: 8px 15px; border-radius: 100px; margin-bottom: 22px; backdrop-filter: blur(4px); }
+    .eyebrow i { width: 6px; height: 6px; border-radius: 50%; background: var(--red-soft); display: inline-block; box-shadow: 0 0 10px rgba(226,73,73,0.85); }
+    h1 { font-size: clamp(34px, 4.4vw, 68px); font-weight: 800; line-height: 0.98; letter-spacing: -0.03em; color: #fff; }
+    h1 em, h1 b { font-style: normal; color: var(--red-soft); font-weight: 800; }
+    .hero-sub { font-size: clamp(16px, 1.25vw, 18px); line-height: 1.65; color: rgba(255,255,255,0.84); max-width: 460px; margin: 22px 0 26px; }
     .benefits { list-style: none; display: flex; flex-direction: column; gap: 11px; margin-bottom: 32px; }
     .benefits li { display: flex; align-items: flex-start; gap: 11px; font-size: 15px; color: var(--tx); font-weight: 500; }
     .benefits svg { width: 20px; height: 20px; flex-shrink: 0; margin-top: 1px; }
@@ -89,16 +89,18 @@
     .btn-main:hover { background: var(--red-soft); transform: translateY(-2px); box-shadow: 0 14px 38px rgba(196,43,43,0.3); }
     .btn-ghost { background: #fff; color: var(--tx); font-size: 15px; font-weight: 600; padding: 15px 26px; border-radius: 100px; border: 1px solid var(--line); display: inline-flex; align-items: center; gap: 8px; transition: border-color .2s, transform .2s; will-change: transform; }
     .btn-ghost:hover { border-color: #C6CDD8; transform: translateY(-2px); }
+    .hero .btn-ghost { background: rgba(255,255,255,0.14); color: #fff; border-color: rgba(255,255,255,0.28); }
+    .hero .btn-ghost:hover { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.42); }
 
     /* hero visual: photo + floating app card + micro card */
     .hero-visual { position: relative; }
     .hero-photo { border-radius: 22px; overflow: hidden; box-shadow: 0 30px 70px rgba(13,27,42,0.16); border: 1px solid rgba(13,27,42,0.05); aspect-ratio: 16 / 10.2; }
     .hero-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .app-card { position: absolute; right: clamp(20px, 3vw, 44px); bottom: clamp(20px, 3vw, 40px); width: min(340px, 40%); background: #fff; border-radius: 14px; box-shadow: 0 24px 56px rgba(13,27,42,0.28); border: 1px solid rgba(13,27,42,0.06); overflow: hidden; z-index: 2; }
+    .app-card { width: 100%; background: #fff; border-radius: 14px; box-shadow: 0 24px 56px rgba(11,22,36,0.4); border: 1px solid rgba(255,255,255,0.5); overflow: hidden; }
     .app-bar { display: flex; gap: 6px; padding: 10px 13px; border-bottom: 1px solid var(--line); background: #FAFBFD; }
     .app-bar span { width: 9px; height: 9px; border-radius: 50%; background: #D5DCE6; }
     .app-card img { width: 100%; display: block; }
-    .micro-card { position: absolute; right: clamp(20px, 3vw, 44px); top: clamp(22px, 4vw, 46px); width: 232px; background: #fff; border-radius: 12px; padding: 14px 15px; box-shadow: 0 18px 44px rgba(13,27,42,0.2); border: 1px solid rgba(13,27,42,0.06); z-index: 2; }
+    .micro-card { width: 232px; background: #fff; border-radius: 12px; padding: 14px 15px; box-shadow: 0 18px 44px rgba(11,22,36,0.32); border: 1px solid rgba(255,255,255,0.5); }
     .mc-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 4px; }
     .mc-nm { font-size: 13px; font-weight: 700; color: var(--tx); }
     .mc-warn { font-family: var(--f-display); font-size: 13px; font-weight: 700; color: var(--red); background: rgba(196,43,43,0.1); padding: 2px 8px; border-radius: 100px; }
@@ -274,16 +276,15 @@
     /* MOBILE */
     @media (max-width: 980px) {
       .nav nav ul { display: none; }
-      .hero { padding: 92px 0 40px; }
-      .hero-stage { height: auto; display: flex; flex-direction: column; box-shadow: none; border: none; border-radius: 0; overflow: visible; }
-      .hero-media { position: relative; order: 2; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 50px rgba(13,27,42,0.14); }
-      .hero-media > picture { position: relative; }
-      .hero-media img { height: auto; aspect-ratio: 16 / 11; }
-      .hero-scrim { display: none; }
-      .hero-overlay { position: static; transform: none; max-width: 100%; order: 1; margin-bottom: 30px; }
-      h1 { font-size: clamp(32px, 8.4vw, 46px); }
-      .app-card { left: auto; right: 10px; bottom: -24px; width: 250px; }
-      .micro-card { right: auto; left: 10px; top: 14px; width: 190px; }
+      .hero { padding: 0; }
+      .hero-stage { margin: 10px 10px 0; height: clamp(580px, 86svh, 740px); border-radius: 22px; }
+      .hero-photo img { object-position: 60% center; }
+      .hero-scrim { background: linear-gradient(to top, rgba(8,16,27,0.95) 0%, rgba(8,16,27,0.88) 26%, rgba(8,16,27,0.66) 46%, rgba(8,16,27,0.34) 64%, rgba(8,16,27,0.08) 80%, rgba(8,16,27,0) 92%); }
+      .hero-overlay { left: clamp(20px, 6vw, 30px); right: clamp(20px, 6vw, 30px); bottom: clamp(28px, 7vw, 44px); max-width: 100%; }
+      h1 { font-size: clamp(30px, 8vw, 44px); }
+      .hero-cards { left: clamp(16px, 5vw, 26px); right: auto; bottom: auto; top: clamp(78px, 16vw, 108px); width: min(230px, 66%); align-items: flex-start; }
+      .hero-cards .app-card { display: none; }
+      .micro-card { width: 100%; }
     }
     @media (max-width: 920px) {
       .prob-grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; gap: 14px; margin: 0 calc(var(--pad) * -1); padding: 2px var(--pad) 12px; }
@@ -342,30 +343,28 @@
 
   <main id="main">
 
-    <!-- HERO (full-bleed photo, overlaid copy) -->
+    <!-- HERO (full-bleed photo, Hourglass-style overlay) -->
     <header class="hero">
-      <div class="inner">
-        <div class="hero-stage">
-          <div class="hero-media">
-            <picture><source srcset="../img/hero-light.webp" type="image/webp" /><img src="../img/hero-light.jpg" alt="Manager verificând o livrare cu Approvisor" width="1672" height="941" fetchpriority="high" /></picture>
-            <div class="hero-scrim" aria-hidden="true"></div>
-            <div class="app-card">
-              <div class="app-bar"><span></span><span></span><span></span></div>
-              <picture><source srcset="../img/screen-statistici.webp" type="image/webp" /><img src="../img/screen-statistici.png" alt="Statistici în Approvisor" loading="lazy" /></picture>
-            </div>
-            <div class="micro-card">
-              <div class="mc-top"><span class="mc-nm">Făină albă tip 550</span><span class="mc-warn">+6%</span></div>
-              <div class="mc-label">peste prețul negociat, pe factura de azi</div>
-            </div>
+      <div class="hero-stage">
+        <picture class="hero-photo"><source srcset="../img/hero-light.webp" type="image/webp" /><img src="../img/hero-light.jpg" alt="Manager verificând o livrare cu Approvisor" width="1672" height="941" fetchpriority="high" /></picture>
+        <div class="hero-scrim" aria-hidden="true"></div>
+        <div class="hero-overlay">
+          <div class="eyebrow rv"><i></i>Aprovizionare, facturi și stoc pentru HoReCa</div>
+          <h1 class="rv">Comenzi. Facturi. Stoc.<br><em>Într-un singur sistem.</em></h1>
+          <p class="hero-sub rv">Trimite comenzile către furnizori în câteva minute și urmărește stocul, prețurile și food cost-ul în timp real, pentru fiecare locație.</p>
+          <div class="hero-ctas rv">
+            <a href="#contact" class="btn-main magnetic">Solicită o demonstrație</a>
+            <a href="#module" class="btn-ghost magnetic">Vezi modulele</a>
           </div>
-          <div class="hero-overlay">
-            <div class="eyebrow rv"><i></i>Aprovizionare, facturi și stoc pentru HoReCa</div>
-            <h1 class="rv">Comenzi. Facturi. Stoc.<br><em>Într-un singur sistem.</em></h1>
-            <p class="hero-sub rv">Trimite comenzile către furnizori în câteva minute și urmărește stocul, prețurile și food cost-ul în timp real, pentru fiecare locație.</p>
-            <div class="hero-ctas rv">
-              <a href="#contact" class="btn-main magnetic">Solicită o demonstrație</a>
-              <a href="#module" class="btn-ghost magnetic">Vezi modulele</a>
-            </div>
+        </div>
+        <div class="hero-cards">
+          <div class="micro-card">
+            <div class="mc-top"><span class="mc-nm">Făină albă tip 550</span><span class="mc-warn">+6%</span></div>
+            <div class="mc-label">peste prețul negociat, pe factura de azi</div>
+          </div>
+          <div class="app-card">
+            <div class="app-bar"><span></span><span></span><span></span></div>
+            <picture><source srcset="../img/screen-statistici.webp" type="image/webp" /><img src="../img/screen-statistici.png" alt="Statistici în Approvisor" loading="lazy" /></picture>
           </div>
         </div>
       </div>
