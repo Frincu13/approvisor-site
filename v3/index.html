@@ -43,6 +43,7 @@
       --f-body: 'Satoshi', sans-serif;
     }
     html { scroll-behavior: smooth; }
+    section[id] { scroll-margin-top: 86px; }
     body { font-family: var(--f-body); background: var(--bg0); color: var(--tx); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
     h1, h2, .stat-big, .mv-big, .mod-name, .prob-idx, .fstep-name { font-family: var(--f-display); }
     ::selection { background: var(--red); color: #fff; }
@@ -273,7 +274,8 @@
     .rv { will-change: transform, opacity; }
 
     /* MOBILE */
-    @media (max-width: 980px) {
+    /* nav collapses to hamburger while the bar still fits 4 links + CTA */
+    @media (max-width: 1120px) {
       .nav-burger { display: flex; margin-left: auto; }
       .nav nav { position: absolute; z-index: 60; top: calc(100% + 6px); left: 14px; right: 14px; background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 10px; box-shadow: 0 22px 48px rgba(13,27,42,0.16); backdrop-filter: none; -webkit-backdrop-filter: none; opacity: 0; visibility: hidden; transform: translateY(-8px); transition: opacity .2s ease, transform .2s ease, visibility .2s ease; }
       .nav.menu-open nav { opacity: 1; visibility: visible; transform: none; }
@@ -282,6 +284,8 @@
       .nav.menu-open .nav-burger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
       .nav.menu-open .nav-burger span:nth-child(2) { opacity: 0; }
       .nav.menu-open .nav-burger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    }
+    @media (max-width: 980px) {
       .hero { padding: 0; }
       .hero-stage { margin: 0; height: 100svh; min-height: 560px; border-radius: 0; overflow: hidden; }
       .hero-photo { position: absolute; inset: 0; }
@@ -337,9 +341,10 @@
     <div class="nav-inner">
       <a href="#" class="logo"><img src="../img/logo.png" alt="Approvisor" /></a>
       <nav id="nav-links"><ul>
-        <li><a href="#module">Module</a></li>
         <li><a href="#cum-functioneaza">Cum funcționează</a></li>
+        <li><a href="#module">Module</a></li>
         <li><a href="#aplicatie">În aplicație</a></li>
+        <li><a href="#faq">Întrebări frecvente</a></li>
       </ul></nav>
       <button class="nav-burger" aria-label="Deschide meniul" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button>
       <a href="mailto:contact@approvisor.com?subject=Cerere%20demonstra%C8%9Bie%20Approvisor&amp;body=Bun%C4%83%20ziua%2C%0D%0A%0D%0AA%C8%99%20dori%20o%20demonstra%C8%9Bie%20Approvisor.%20V%C4%83%20las%20datele%20mele%3A%0D%0A%0D%0ANume%3A%0D%0ACompanie%3A%0D%0ANum%C4%83r%20de%20loca%C8%9Bii%3A%0D%0ATelefon%3A%0D%0AE-mail%3A%0D%0A%0D%0AV%C4%83%20mul%C8%9Bumesc!" class="nav-cta magnetic"><span class="cta-full">Solicită o demonstrație ↗</span><span class="cta-mini">Solicită demo ↗</span></a>
