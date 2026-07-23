@@ -65,13 +65,17 @@
     .nav-cta .cta-mini { display: none; }
     .nav-cta:hover { background: var(--red-soft); transform: translateY(-1px); }
 
-    /* light asymmetric HERO */
-    .hero { min-height: 100svh; display: flex; align-items: center; padding: 128px 0 60px; position: relative; }
-    .hero::before { content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(58% 55% at 84% 34%, rgba(196,43,43,0.06) 0%, rgba(196,43,43,0) 60%); }
-    .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 0.86fr 1.14fr; gap: clamp(30px, 4vw, 64px); align-items: center; width: 100%; }
+    /* full-bleed photo HERO */
+    .hero { padding: 90px 0 36px; }
+    .hero-stage { position: relative; border-radius: 24px; overflow: hidden; height: clamp(540px, 80vh, 800px); box-shadow: 0 30px 80px rgba(13,27,42,0.18); border: 1px solid rgba(13,27,42,0.06); }
+    .hero-media { position: absolute; inset: 0; }
+    .hero-media > picture { position: absolute; inset: 0; display: block; }
+    .hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: 70% center; display: block; }
+    .hero-scrim { position: absolute; inset: 0; background: linear-gradient(96deg, rgba(246,248,251,0.95) 0%, rgba(246,248,251,0.82) 24%, rgba(246,248,251,0.2) 46%, rgba(246,248,251,0) 60%); }
+    .hero-overlay { position: absolute; left: clamp(26px, 4vw, 56px); top: 50%; transform: translateY(-50%); max-width: min(540px, 54%); z-index: 3; }
     .eyebrow { display: inline-flex; align-items: center; gap: 9px; font-size: 12px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: var(--red); background: rgba(196,43,43,0.08); border: 1px solid rgba(196,43,43,0.16); padding: 8px 15px; border-radius: 100px; margin-bottom: 24px; }
     .eyebrow i { width: 6px; height: 6px; border-radius: 50%; background: var(--red); display: inline-block; }
-    h1 { font-size: clamp(38px, 4.6vw, 66px); font-weight: 800; line-height: 0.98; letter-spacing: -0.03em; color: var(--tx); }
+    h1 { font-size: clamp(33px, 3.7vw, 56px); font-weight: 800; line-height: 0.99; letter-spacing: -0.03em; color: var(--tx); }
     h1 em, h1 b { font-style: normal; color: var(--red); font-weight: 800; }
     .hero-sub { font-size: clamp(16px, 1.25vw, 18px); line-height: 1.65; color: var(--tx2); max-width: 470px; margin: 22px 0 24px; }
     .benefits { list-style: none; display: flex; flex-direction: column; gap: 11px; margin-bottom: 32px; }
@@ -90,11 +94,11 @@
     .hero-visual { position: relative; }
     .hero-photo { border-radius: 22px; overflow: hidden; box-shadow: 0 30px 70px rgba(13,27,42,0.16); border: 1px solid rgba(13,27,42,0.05); aspect-ratio: 16 / 10.2; }
     .hero-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .app-card { position: absolute; left: -34px; bottom: -34px; width: min(360px, 62%); background: #fff; border-radius: 14px; box-shadow: 0 24px 56px rgba(13,27,42,0.22); border: 1px solid rgba(13,27,42,0.06); overflow: hidden; }
+    .app-card { position: absolute; right: clamp(20px, 3vw, 44px); bottom: clamp(20px, 3vw, 40px); width: min(340px, 40%); background: #fff; border-radius: 14px; box-shadow: 0 24px 56px rgba(13,27,42,0.28); border: 1px solid rgba(13,27,42,0.06); overflow: hidden; z-index: 2; }
     .app-bar { display: flex; gap: 6px; padding: 10px 13px; border-bottom: 1px solid var(--line); background: #FAFBFD; }
     .app-bar span { width: 9px; height: 9px; border-radius: 50%; background: #D5DCE6; }
     .app-card img { width: 100%; display: block; }
-    .micro-card { position: absolute; left: 40%; top: 24px; width: 236px; background: #fff; border-radius: 12px; padding: 14px 15px; box-shadow: 0 18px 44px rgba(13,27,42,0.18); border: 1px solid rgba(13,27,42,0.06); }
+    .micro-card { position: absolute; right: clamp(20px, 3vw, 44px); top: clamp(22px, 4vw, 46px); width: 232px; background: #fff; border-radius: 12px; padding: 14px 15px; box-shadow: 0 18px 44px rgba(13,27,42,0.2); border: 1px solid rgba(13,27,42,0.06); z-index: 2; }
     .mc-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 4px; }
     .mc-nm { font-size: 13px; font-weight: 700; color: var(--tx); }
     .mc-warn { font-family: var(--f-display); font-size: 13px; font-weight: 700; color: var(--red); background: rgba(196,43,43,0.1); padding: 2px 8px; border-radius: 100px; }
@@ -270,12 +274,16 @@
     /* MOBILE */
     @media (max-width: 980px) {
       .nav nav ul { display: none; }
-      .hero { padding: 106px 0 54px; min-height: 0; }
-      .hero-grid { grid-template-columns: 1fr; gap: 44px; }
+      .hero { padding: 92px 0 40px; }
+      .hero-stage { height: auto; display: flex; flex-direction: column; box-shadow: none; border: none; border-radius: 0; overflow: visible; }
+      .hero-media { position: relative; order: 2; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 50px rgba(13,27,42,0.14); }
+      .hero-media > picture { position: relative; }
+      .hero-media img { height: auto; aspect-ratio: 16 / 11; }
+      .hero-scrim { display: none; }
+      .hero-overlay { position: static; transform: none; max-width: 100%; order: 1; margin-bottom: 30px; }
       h1 { font-size: clamp(32px, 8.4vw, 46px); }
-      .hero-photo { aspect-ratio: 16 / 11; }
-      .app-card { left: 10px; bottom: -26px; width: 250px; }
-      .micro-card { left: auto; right: 10px; top: 14px; width: 200px; }
+      .app-card { left: auto; right: 10px; bottom: -24px; width: 250px; }
+      .micro-card { right: auto; left: 10px; top: 14px; width: 190px; }
     }
     @media (max-width: 920px) {
       .prob-grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; gap: 14px; margin: 0 calc(var(--pad) * -1); padding: 2px var(--pad) 12px; }
@@ -334,34 +342,30 @@
 
   <main id="main">
 
-    <!-- HERO (light, asymmetric) -->
+    <!-- HERO (full-bleed photo, overlaid copy) -->
     <header class="hero">
-      <div class="inner hero-grid">
-        <div class="hero-copy">
-          <div class="eyebrow rv"><i></i>Aprovizionare, facturi și stoc pentru HoReCa</div>
-          <h1 class="rv">Comenzi. Facturi. Stoc.<br><em>Într-un singur sistem.</em></h1>
-          <p class="hero-sub rv">Trimite comenzile către furnizori în câteva minute și urmărește stocul, prețurile și food cost-ul în timp real, pentru fiecare locație.</p>
-          <ul class="benefits rv">
-            <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M7 12.5l3.2 3.2L17 9"/></svg>Comenzi către toți furnizorii dintr-o singură acțiune</li>
-            <li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M7 12.5l3.2 3.2L17 9"/></svg>Facturi verificate automat față de prețul negociat</li>
-          </ul>
-          <div class="hero-ctas rv">
-            <a href="#contact" class="btn-main magnetic">Solicită o demonstrație</a>
-            <a href="#module" class="btn-ghost magnetic">Vezi modulele</a>
-          </div>
-        </div>
-        <div class="hero-visual rv">
-          <div class="hero-photo">
+      <div class="inner">
+        <div class="hero-stage">
+          <div class="hero-media">
             <picture><source srcset="../img/hero-light.webp" type="image/webp" /><img src="../img/hero-light.jpg" alt="Manager verificând o livrare cu Approvisor" width="1672" height="941" fetchpriority="high" /></picture>
+            <div class="hero-scrim" aria-hidden="true"></div>
+            <div class="app-card">
+              <div class="app-bar"><span></span><span></span><span></span></div>
+              <picture><source srcset="../img/screen-statistici.webp" type="image/webp" /><img src="../img/screen-statistici.png" alt="Statistici în Approvisor" loading="lazy" /></picture>
+            </div>
+            <div class="micro-card">
+              <div class="mc-top"><span class="mc-nm">Făină albă tip 550</span><span class="mc-warn">+6%</span></div>
+              <div class="mc-label">peste prețul negociat, pe factura de azi</div>
+            </div>
           </div>
-          <div class="app-card">
-            <div class="app-bar"><span></span><span></span><span></span></div>
-            <picture><source srcset="../img/screen-statistici.webp" type="image/webp" /><img src="../img/screen-statistici.png" alt="Statistici în Approvisor" loading="lazy" /></picture>
-          </div>
-          <div class="micro-card">
-            <div class="mc-top"><span class="mc-nm">Făină albă tip 550</span><span class="mc-warn">+6%</span></div>
-            <div class="mc-label">peste prețul negociat, pe factura de azi</div>
-            <div class="mc-foot"><span></span>Diferență semnalată automat</div>
+          <div class="hero-overlay">
+            <div class="eyebrow rv"><i></i>Aprovizionare, facturi și stoc pentru HoReCa</div>
+            <h1 class="rv">Comenzi. Facturi. Stoc.<br><em>Într-un singur sistem.</em></h1>
+            <p class="hero-sub rv">Trimite comenzile către furnizori în câteva minute și urmărește stocul, prețurile și food cost-ul în timp real, pentru fiecare locație.</p>
+            <div class="hero-ctas rv">
+              <a href="#contact" class="btn-main magnetic">Solicită o demonstrație</a>
+              <a href="#module" class="btn-ghost magnetic">Vezi modulele</a>
+            </div>
           </div>
         </div>
       </div>
