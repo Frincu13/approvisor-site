@@ -91,6 +91,10 @@
     .benefits svg circle { fill: rgba(196,43,43,0.12); }
     .benefits svg path { stroke: var(--red); stroke-width: 2.4; fill: none; stroke-linecap: round; stroke-linejoin: round; }
     .hero-ctas { display: flex; gap: 13px; flex-wrap: wrap; }
+    .link-arrow { display: inline-flex; align-items: center; gap: 9px; font-size: 16px; font-weight: 600; color: var(--tx); padding: 4px 0; }
+    .link-arrow .ar { transition: transform .22s ease; }
+    .link-arrow:hover { color: var(--red); }
+    .link-arrow:hover .ar { transform: translateX(5px); }
 
     .btn-main { background: var(--red); color: #fff; font-size: 15px; font-weight: 700; padding: 15px 28px; border-radius: 100px; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 8px 22px rgba(35,22,26,0.18); transition: background .2s, transform .2s, box-shadow .2s; will-change: transform; }
     .btn-main:hover { background: var(--red-soft); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(35,22,26,0.24); }
@@ -364,8 +368,7 @@
           <h1 class="rv">Comenzi. Facturi. Stoc.<br><em>Într-un singur sistem.</em></h1>
           <p class="hero-sub rv">Trimite comenzile către furnizori în câteva minute și urmărește stocul, prețurile și food cost-ul la zi, pentru fiecare locație.</p>
           <div class="hero-ctas rv">
-            <a href="mailto:contact@approvisor.com?subject=Cerere%20demonstra%C8%9Bie%20Approvisor&amp;body=Bun%C4%83%20ziua%2C%0D%0A%0D%0AA%C8%99%20dori%20o%20demonstra%C8%9Bie%20Approvisor.%20V%C4%83%20las%20datele%20mele%3A%0D%0A%0D%0ANume%3A%0D%0ACompanie%3A%0D%0ANum%C4%83r%20de%20loca%C8%9Bii%3A%0D%0ATelefon%3A%0D%0AE-mail%3A%0D%0A%0D%0AV%C4%83%20mul%C8%9Bumesc!" class="btn-main magnetic">Solicită o demonstrație</a>
-            <a href="#module" class="btn-ghost magnetic">Vezi modulele</a>
+            <a href="#module" class="link-arrow">Vezi modulele <span class="ar" aria-hidden="true">&#8594;</span></a>
           </div>
         </div>
       </div>
