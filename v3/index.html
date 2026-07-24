@@ -806,9 +806,14 @@
 
       gsap.registerPlugin(ScrollTrigger);
 
-      /* hero intro (light asymmetric) */
-      gsap.set('.hero .rv', { autoAlpha: 0, y: 24 });
-      gsap.to('.hero .rv', { autoAlpha: 1, y: 0, duration: 0.9, stagger: 0.09, ease: 'power3.out', delay: 0.08 });
+      /* hero intro: headline wipes up out of a mask, the rest rises behind it */
+      var heroH1 = document.querySelector('.hero h1');
+      var heroRest = gsap.utils.toArray('.hero .rv').filter(function(el){ return el !== heroH1; });
+      gsap.set(heroRest, { autoAlpha: 0, y: 16 });
+      if (heroH1) gsap.set(heroH1, { clipPath: 'inset(0 0 110% 0)' });
+      gsap.timeline({ delay: 0.1 })
+        .to(heroH1, { clipPath: 'inset(0 0 -15% 0)', duration: 1.1, ease: 'expo.out' })
+        .to(heroRest, { autoAlpha: 1, y: 0, duration: 0.8, stagger: 0.09, ease: 'power3.out' }, '-=0.72');
 
 
       /* testimonials marquee (desktop): duplicate the cards into two halves for a seamless loop */
@@ -830,11 +835,33 @@
         }
       }
 
-      /* generic reveals */
+      /* section headings: masked wipe, not a fade-up */
+      gsap.utils.toArray('main h2.rv').forEach(function(h){
+        h.classList.remove('rv');
+        gsap.fromTo(h, { clipPath: 'inset(0 0 110% 0)' }, {
+          clipPath: 'inset(0 0 -15% 0)', duration: 1, ease: 'expo.out',
+          scrollTrigger: { trigger: h, start: 'top 86%', once: true }
+        });
+      });
+
+      /* grouped items animate as one choreographed set, not each on its own */
+      [['.prob-grid', '.prob-card'], ['.stats', '.stat'], ['.shots-track', '.shot'], ['.flow-steps', '.fstep']].forEach(function(pair){
+        var wrap = document.querySelector(pair[0]);
+        if (!wrap) return;
+        var items = gsap.utils.toArray(pair[1], wrap);
+        if (!items.length) return;
+        items.forEach(function(i){ i.classList.remove('rv'); });
+        gsap.fromTo(items, { autoAlpha: 0, y: 18 }, {
+          autoAlpha: 1, y: 0, duration: 0.7, ease: 'power2.out', stagger: 0.075,
+          scrollTrigger: { trigger: wrap, start: 'top 82%', once: true }
+        });
+      });
+
+      /* everything else: quieter than the old 34px fade-up */
       gsap.utils.toArray('main .rv').forEach(function(el){
         if (el.closest('.hero')) return;
-        gsap.fromTo(el, { autoAlpha: 0, y: 34 }, {
-          autoAlpha: 1, y: 0, duration: 0.9, ease: 'power3.out',
+        gsap.fromTo(el, { autoAlpha: 0, y: 12 }, {
+          autoAlpha: 1, y: 0, duration: 0.6, ease: 'power2.out',
           scrollTrigger: { trigger: el, start: 'top 88%', once: true }
         });
       });
